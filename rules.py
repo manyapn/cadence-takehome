@@ -10,12 +10,12 @@ from pydantic import BaseModel
 
 from core import Decision, IssueCategory, PatientSubmission
 from observations import DroppedFact, Reading, VerifiedObservations
-from resolve import DrugStatus, VitalResolution
+from resolve import DrugStatus, VitalResolution, resolve_lab
 from verify import names
 
 Status = Literal["pass", "fail", "unknown", "not_applicable"]
+UnknownCause = Literal["chart_gap", "processing_failure"]
 
-LAB_CODES = {"CBC": {"CBC", "LAB-CBC"}, "CMP": {"CMP", "LAB-CMP"}}
 VITAL_LIMITS = {
     "blood_pressure": "systolic >= 180 or diastolic >= 110 mmHg",
     "temperature": "> 100.4 F",
@@ -37,16 +37,20 @@ class Check(BaseModel):
     rule: str
     category: IssueCategory
     status: Status
+    unknown_cause: UnknownCause | None = None
     summary: str
     evidence: list[Evidence] = []
+    sources_checked: list[str] = []
 
 
 class Issue(BaseModel):
 
     category: IssueCategory
     rule: str
+    unknown_cause: UnknownCause | None = None
     finding: str
     evidence: list[Evidence]
+    sources_checked: list[str] = []
 
 
 class TriageResult(BaseModel):
@@ -55,6 +59,11 @@ class TriageResult(BaseModel):
     issues: list[Issue]
     checks: list[Check]
     explanation: str
+    unverified: list[DroppedFact] = []
+
+
+def documents_checked(submission: PatientSubmission) -> list[str]:
+    return [f"{document.type} ({document.date})" for document in submission.documents]
 
 
 def days_before_procedure(submission: PatientSubmission, when: str) -> int | None:
@@ -76,13 +85,14 @@ def check_hp(submission: PatientSubmission, verified: VerifiedObservations) -> C
     if not preop:
         status, evidence = "fail", []
         summary = f"No pre-operative H&P found in {len(submission.documents)} documents."
+        check["sources_checked"] = documents_checked(submission)
     else:
         newest = max(preop, key=lambda hp: documents[hp.doc_id].date)
         completed = documents[newest.doc_id].date
         evidence = [Evidence(source="note", reference=newest.doc_id, date=completed, quote=newest.quote)]
         days = days_before_procedure(submission, completed)
         if days is None:
-            status = "unknown"
+            status, check["unknown_cause"] = "unknown", "chart_gap"
             summary = f"H&P dated {completed}, but the procedure date is missing, so the 30-day window cannot be checked."
         else:
             status = "pass" if 0 <= days <= 30 else "fail"
@@ -135,6 +145,7 @@ def check_consent(submission: PatientSubmission, verified: VerifiedObservations)
         summary = "Consent on file is not signed by the patient."
     else:
         summary = f"No surgical consent found in {len(submission.documents)} documents."
+        check["sources_checked"] = documents_checked(submission)
     return Check(**check, status="fail", summary=summary, evidence=evidence(signed or verified.consents))
 
 
@@ -152,40 +163,48 @@ def check_lab(test: str, submission: PatientSubmission) -> Check:
         return Check(
             **check,
             status="unknown",
+            unknown_cause="chart_gap",
             summary="Procedure risk is missing, so it is unknown whether a CMP is required.",
         )
-    results = [
-        lab for lab in submission.labs if lab.code in LAB_CODES[test] and lab.status == "final" and lab.effective_at
-    ]
-    if not results:
+
+    def lab_evidence(lab) -> Evidence:
+        return Evidence(
+            source="structured",
+            reference=lab.id or "labs",
+            date=lab.effective_at,
+            value=f"{lab.code} {lab.display} ({lab.status})",
+        )
+
+    resolution = resolve_lab(submission, test)
+    latest = resolution.latest
+    not_counted = "".join(
+        f" A newer {test} dated {lab.effective_at[:10]} is marked {lab.status} and was not counted."
+        for lab in resolution.newer_not_final
+    )
+    evidence = [lab_evidence(lab) for lab in ([latest] if latest else []) + resolution.newer_not_final]
+    if latest is None:
         return Check(
             **check,
             status="fail",
-            summary=f"No final {test} result among {len(submission.labs)} lab results.",
+            summary=f"No final {test} result among {len(submission.labs)} lab results.{not_counted}",
+            evidence=evidence,
+            sources_checked=[f"{lab.code} {lab.display} ({(lab.effective_at or '')[:10]}, {lab.status})" for lab in submission.labs],
         )
-    latest = max(results, key=lambda lab: lab.effective_at)
-    evidence = [
-        Evidence(
-            source="structured",
-            reference=latest.id or "labs",
-            date=latest.effective_at,
-            value=f"{latest.code} {latest.display}",
-        )
-    ]
     days = days_before_procedure(submission, latest.effective_at)
     if risk is None or days is None:
         missing = "procedure risk" if risk is None else "procedure date"
         return Check(
             **check,
             status="unknown",
-            summary=f"Latest {test} is dated {latest.effective_at[:10]}, but the {missing} is missing, so its window cannot be checked.",
+            unknown_cause="chart_gap",
+            summary=f"Latest {test} is dated {latest.effective_at[:10]}, but the {missing} is missing, so its window cannot be checked.{not_counted}",
             evidence=evidence,
         )
     window = 14 if risk == "HIGH" else 30
     return Check(
         **check,
         status="pass" if 0 <= days <= window else "fail",
-        summary=f"Latest {test} ({latest.effective_at[:10]}) is {days} days before the procedure (limit {window} for {risk} risk).",
+        summary=f"Latest {test} ({latest.effective_at[:10]}) is {days} days before the procedure (limit {window} for {risk} risk).{not_counted}",
         evidence=evidence,
     )
 
@@ -234,7 +253,14 @@ def check_anticoagulation(submission: PatientSubmission, drugs: list[DrugStatus]
 
     current = [drug for drug in drugs if drug.status != "discontinued"]
     if not current:
-        return Check(**check, status="not_applicable", summary="No current anticoagulant in the medication list or notes.")
+        return Check(
+            **check,
+            status="not_applicable",
+            summary="No current anticoagulant in the medication list or notes.",
+            evidence=[item for drug in drugs for item in evidence(drug)],
+            sources_checked=[f"medication list: {medication.name} (active: {medication.active})" for medication in submission.medications]
+            + documents_checked(submission),
+        )
     open_drugs = [drug for drug in current if not covered(drug)]
     if not open_drugs:
         return Check(
@@ -265,9 +291,11 @@ def check_anticoagulation(submission: PatientSubmission, drugs: list[DrugStatus]
             f"The plan dated {', '.join(dates[plan.doc_id] for plan in drug.plans)} is for {drug.drug}, which the patient no longer takes."
         )
     definite = any(drug.status == "taking" and drug.recognised for drug in open_drugs)
+    uncertain = any(drug.status == "uncertain" for drug in open_drugs)
     return Check(
         **check,
         status="fail" if definite else "unknown",
+        unknown_cause=None if definite else "chart_gap" if uncertain else "processing_failure",
         summary=" ".join(findings),
         evidence=[item for drug in current + stale for item in evidence(drug)],
     )
@@ -321,7 +349,7 @@ def dropped_readings_that_matter(
     return [fact for fact in verified.dropped if fact.kind == "vital" and fact.claim["kind"] == kind and could_be_latest(fact)]
 
 
-def check_vital(kind: str, resolution: VitalResolution, dropped: list[DroppedFact]) -> Check:
+def check_vital(kind: str, resolution: VitalResolution, dropped: list[DroppedFact], sources_checked: list[str] = []) -> Check:
     check = {"name": kind, "rule": "Rule 4", "category": "ACUTE_SAFETY_EXCLUSION"}
     label = kind.replace("_", " ")
     over = [exceeds_limit(reading) for reading in resolution.governing]
@@ -334,7 +362,7 @@ def check_vital(kind: str, resolution: VitalResolution, dropped: list[DroppedFac
     if over and all(over):
         status, summary = "fail", f"Most recent {label} {latest} meets the exclusion limit ({VITAL_LIMITS[kind]})."
     elif dropped:
-        status = "unknown"
+        status, check["unknown_cause"] = "unknown", "processing_failure"
         summary = (
             f"A {label} reading extracted from a note could not be verified against its document,"
             f" so the most recent {label} is not established."
@@ -342,9 +370,10 @@ def check_vital(kind: str, resolution: VitalResolution, dropped: list[DroppedFac
         if latest:
             summary += f" The latest verified reading is {latest}."
     elif not over:
-        status, summary = "unknown", f"No {label} reading in the structured vitals or the notes."
+        status, check["unknown_cause"] = "unknown", "chart_gap"
+        summary = f"No {label} reading in the structured vitals or the notes."
     elif any(over):
-        status = "unknown"
+        status, check["unknown_cause"] = "unknown", "chart_gap"
         summary = (
             f"{label.capitalize()} readings {latest} cannot be put in order, and only one side of them"
             f" meets the exclusion limit ({VITAL_LIMITS[kind]})."
@@ -358,7 +387,13 @@ def check_vital(kind: str, resolution: VitalResolution, dropped: list[DroppedFac
     evidence = [reading_evidence(reading) for reading in resolution.governing + [entry.reading for entry in overridden]]
     if status == "unknown":
         evidence += dropped_evidence(dropped)
-    return Check(**check, status=status, summary=summary, evidence=evidence)
+    return Check(
+        **check,
+        status=status,
+        summary=summary,
+        evidence=evidence,
+        sources_checked=sources_checked if not resolution.governing else [],
+    )
 
 
 # -------------------------
@@ -379,6 +414,7 @@ def run_checks(
         return check.model_copy(
             update={
                 "status": "unknown",
+                "unknown_cause": "processing_failure",
                 "summary": f"{check.summary} This is not settled: an extracted {dropped[0].kind.replace('_', ' ')} could not be verified against its document.",
                 "evidence": check.evidence + dropped_evidence(dropped),
             }
@@ -394,19 +430,26 @@ def run_checks(
         check_lab("CMP", submission),
         anticoagulation,
         *(
-            check_vital(kind, vitals[kind], dropped_readings_that_matter(kind, vitals[kind], submission, verified))
+            check_vital(
+                kind,
+                vitals[kind],
+                dropped_readings_that_matter(kind, vitals[kind], submission, verified),
+                [f"structured vitals ({len(submission.vitals)} entries)"] + documents_checked(submission),
+            )
             for kind in ("blood_pressure", "temperature")
         ),
     ]
 
 
-def respond(checks: list[Check]) -> TriageResult:
+def respond(checks: list[Check], unverified: list[DroppedFact] = []) -> TriageResult:
     issues = [
         Issue(
             category=check.category if check.status == "fail" else "MISSING_REQUIRED_DATA",
             rule=check.rule,
+            unknown_cause=check.unknown_cause,
             finding=check.summary,
             evidence=check.evidence,
+            sources_checked=check.sources_checked,
         )
         for check in checks
         if check.status in ("fail", "unknown")
@@ -418,4 +461,10 @@ def respond(checks: list[Check]) -> TriageResult:
     else:
         decision = "READY"
     lines = [f"{check.rule} {check.name}: {check.status}. {check.summary}" for check in checks]
-    return TriageResult(decision=decision, issues=issues, checks=checks, explanation="\n".join([decision] + lines))
+    return TriageResult(
+        decision=decision,
+        issues=issues,
+        checks=checks,
+        explanation="\n".join([decision] + lines),
+        unverified=unverified,
+    )

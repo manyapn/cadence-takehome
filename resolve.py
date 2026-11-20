@@ -8,7 +8,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from core import Medication, PatientSubmission
+from core import LabResult, Medication, PatientSubmission
 from observations import AnticoagulantMention, AnticoagulationPlan, Reading, VerifiedObservations
 
 ANTICOAGULANTS = {
@@ -66,6 +66,38 @@ class DrugStatus(BaseModel):
     medications: list[Medication] = []
     mentions: list[AnticoagulantMention] = []
     plans: list[AnticoagulationPlan] = []
+
+
+class LabResolution(BaseModel):
+
+    latest: LabResult | None
+    newer_not_final: list[LabResult]
+
+
+def lab_test(lab: LabResult) -> str | None:
+    code = set(re.findall(r"[A-Z]+", (lab.code or "").upper()))
+    display = (lab.display or "").lower()
+    by_code = {"CBC", "CMP"} & code
+    by_display = {
+        test
+        for test, wordings in (("CBC", ("complete blood count", "hemogram", "cbc")), ("CMP", ("comprehensive metabolic", "cmp")))
+        if any(wording in display for wording in wordings)
+    }
+    tests = by_code | by_display
+    # A basic metabolic panel is not a CMP, and a code and display that disagree identify neither.
+    return tests.pop() if len(tests) == 1 and "basic metabolic" not in display and "BMP" not in code else None
+
+
+def resolve_lab(submission: PatientSubmission, test: str) -> LabResolution:
+    results = [lab for lab in submission.labs if lab_test(lab) == test and lab.effective_at]
+    final = [lab for lab in results if lab.status == "final"]
+    latest = max(final, key=lambda lab: lab.effective_at, default=None)
+    return LabResolution(
+        latest=latest,
+        newer_not_final=[
+            lab for lab in results if lab.status != "final" and (latest is None or lab.effective_at > latest.effective_at)
+        ],
+    )
 
 
 def anticoagulant(name: str) -> str | None:

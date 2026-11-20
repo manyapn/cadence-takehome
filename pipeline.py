@@ -29,4 +29,4 @@ def evaluate(submission: dict[str, object] | PatientSubmission, observations: Ob
     verified = verify(submission, observations)
     vitals = resolve_vitals(submission, verified.readings)
     drugs = resolve_anticoagulants(submission, verified)
-    return respond(run_checks(submission, verified, vitals, drugs))
+    return respond(run_checks(submission, verified, vitals, drugs), verified.dropped)
