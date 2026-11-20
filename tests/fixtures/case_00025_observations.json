@@ -1,0 +1,50 @@
+{
+  "vitals": [
+    {
+      "doc_id": "fde7e07e-cc2a-539a-ba42-11a22ddc452c",
+      "kind": "blood_pressure",
+      "systolic": 117,
+      "diastolic": 75,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 117/75"
+    },
+    {
+      "doc_id": "fde7e07e-cc2a-539a-ba42-11a22ddc452c",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.7,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 117/75 mmHg, HR 94, Temp 98.7 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "fde7e07e-cc2a-539a-ba42-11a22ddc452c",
+      "kind": "preop_evaluation",
+      "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "3aedd420-76a5-5bbc-9819-bcdd1920bcf8",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature: /s/ Lucas Haddad (electronically signed 03/21/2026 11:36)",
+      "procedure_named": "inguinal hernia repair",
+      "procedure_quote": "Procedure: inguinal hernia repair"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "fde7e07e-cc2a-539a-ba42-11a22ddc452c",
+      "procedure_date": "2026-03-26",
+      "pending": false,
+      "quote": "Planned procedure: inguinal hernia repair (scheduled for 03/26/2026)"
+    }
+  ]
+}

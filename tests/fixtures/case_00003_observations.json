@@ -1,0 +1,110 @@
+{
+  "vitals": [
+    {
+      "doc_id": "73381185-2b8a-5f4d-82b1-9481bbe6ea26",
+      "kind": "blood_pressure",
+      "systolic": 116,
+      "diastolic": 76,
+      "temperature": null,
+      "unit": null,
+      "time": "08:45",
+      "quote": "08:45: T 37.0 C, BP: 116/76"
+    },
+    {
+      "doc_id": "73381185-2b8a-5f4d-82b1-9481bbe6ea26",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 37.0,
+      "unit": "C",
+      "time": "08:45",
+      "quote": "08:45: T 37.0 C"
+    },
+    {
+      "doc_id": "8014efd4-3b29-56c4-914f-121eab6b6c3a",
+      "kind": "blood_pressure",
+      "systolic": 127,
+      "diastolic": 80,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  BP: 127/80"
+    },
+    {
+      "doc_id": "8014efd4-3b29-56c4-914f-121eab6b6c3a",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.1,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  BP: 127/80, HR 89, 98.1 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "8014efd4-3b29-56c4-914f-121eab6b6c3a",
+      "kind": "preop_evaluation",
+      "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+    },
+    {
+      "doc_id": "2ce5b1ae-bf18-59ce-be4b-b782d6646978",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "534e01b0-2ce4-5f2a-ab2d-d1838b5ed2bc",
+      "patient_signed": "yes",
+      "signature_quote": "Signed by patient: Danielle Nguyen, 02/19/2026 15:14. Witness: Andrew Wong.",
+      "procedure_named": "inguinal hernia repair",
+      "procedure_quote": "Procedure: inguinal hernia repair"
+    }
+  ],
+  "anticoagulant_mentions": [
+    {
+      "doc_id": "d9499cc6-2dc1-5a54-90a3-06ac28fbb710",
+      "drug_as_written": "Eliquis",
+      "generic_name": "apixaban",
+      "status": "taking",
+      "quote": "maintained on Eliquis 5 mg PO BID"
+    },
+    {
+      "doc_id": "73381185-2b8a-5f4d-82b1-9481bbe6ea26",
+      "drug_as_written": "Eliquis",
+      "generic_name": "apixaban",
+      "status": "taking",
+      "quote": "Eliquis 5 mg PO BID - taking as prescribed"
+    },
+    {
+      "doc_id": "8014efd4-3b29-56c4-914f-121eab6b6c3a",
+      "drug_as_written": "Eliquis",
+      "generic_name": "apixaban",
+      "status": "taking",
+      "quote": "Eliquis 5 mg PO BID"
+    }
+  ],
+  "anticoagulation_plans": [
+    {
+      "doc_id": "d9499cc6-2dc1-5a54-90a3-06ac28fbb710",
+      "drug_as_written": "Eliquis",
+      "preop": {
+        "label": "instruction",
+        "quote": "Hold Eliquis for the 2 days before surgery (last dose 03/01/2026; no doses in the 48 hours prior)"
+      },
+      "postop": {
+        "label": "instruction",
+        "quote": "Resume Eliquis 48 hours post-op if surgical hemostasis is adequate; no bridging required."
+      }
+    }
+  ],
+  "scheduling_statements": [
+    {
+      "doc_id": "8014efd4-3b29-56c4-914f-121eab6b6c3a",
+      "procedure_date": "2026-03-04",
+      "pending": false,
+      "quote": "Planned procedure: inguinal hernia repair (scheduled for 03/04/2026)"
+    }
+  ]
+}

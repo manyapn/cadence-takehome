@@ -1,0 +1,104 @@
+{
+  "vitals": [
+    {
+      "doc_id": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+      "kind": "blood_pressure",
+      "systolic": 125,
+      "diastolic": 78,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  BP 125/78"
+    },
+    {
+      "doc_id": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.2,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  BP 125/78 mmHg, HR 71, Temp: 98.2F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+      "kind": "preop_evaluation",
+      "quote": "HISTORY & PHYSICAL - PRE-OP"
+    },
+    {
+      "doc_id": "ea245b1c-8588-5769-a975-b2407ed76230",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "ad5690b4-7cef-5998-b791-4c2dd331edaf",
+      "patient_signed": "yes",
+      "signature_quote": "Signed by patient: Grace Okafor, 03/17/2026 11:04. Witness: Michael C. Rodriguez.",
+      "procedure_named": "coronary artery bypass grafting",
+      "procedure_quote": "Procedure: coronary artery bypass grafting"
+    }
+  ],
+  "anticoagulant_mentions": [
+    {
+      "doc_id": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+      "drug_as_written": "apixaban",
+      "generic_name": "apixaban",
+      "status": "taking",
+      "quote": "apixaban 5 mg PO BID"
+    },
+    {
+      "doc_id": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+      "drug_as_written": "warfarin",
+      "generic_name": "warfarin",
+      "status": "discontinued",
+      "quote": "Discontinued: warfarin"
+    },
+    {
+      "doc_id": "162990fe-f57c-564c-984e-41040fbe66e2",
+      "drug_as_written": "warfarin",
+      "generic_name": "warfarin",
+      "status": "taking",
+      "quote": "maintained on warfarin 5 mg PO daily"
+    },
+    {
+      "doc_id": "49e558c2-2d14-5dce-ab36-429608a3ec54",
+      "drug_as_written": "apixaban",
+      "generic_name": "apixaban",
+      "status": "taking",
+      "quote": "apixaban 5 mg PO BID - taking as prescribed"
+    },
+    {
+      "doc_id": "49e558c2-2d14-5dce-ab36-429608a3ec54",
+      "drug_as_written": "warfarin",
+      "generic_name": "warfarin",
+      "status": "discontinued",
+      "quote": "patient states warfarin was stopped last month and replaced with Eliquis by cardiology"
+    }
+  ],
+  "anticoagulation_plans": [
+    {
+      "doc_id": "162990fe-f57c-564c-984e-41040fbe66e2",
+      "drug_as_written": "warfarin",
+      "preop": {
+        "label": "instruction",
+        "quote": "Stop warfarin 5 days before surgery (last dose 03/13/2026)"
+      },
+      "postop": {
+        "label": "instruction",
+        "quote": "Resume warfarin at the usual home dose the evening of surgery if hemostasis is adequate"
+      }
+    }
+  ],
+  "scheduling_statements": [
+    {
+      "doc_id": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+      "procedure_date": "2026-03-19",
+      "pending": false,
+      "quote": "Planned procedure: coronary artery bypass grafting (scheduled for 03/19/2026)"
+    }
+  ]
+}

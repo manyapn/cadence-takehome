@@ -1,0 +1,58 @@
+{
+  "vitals": [
+    {
+      "doc_id": "a2719c6d-5189-5dd5-9ec7-70d31cee5373",
+      "kind": "blood_pressure",
+      "systolic": 118,
+      "diastolic": 80,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 118/80"
+    },
+    {
+      "doc_id": "a2719c6d-5189-5dd5-9ec7-70d31cee5373",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 97.6,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 118/80 mmHg, HR 66, 97.6 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "a2719c6d-5189-5dd5-9ec7-70d31cee5373",
+      "kind": "preop_evaluation",
+      "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "c67b0885-ec52-55ad-a229-4df9fcbaa58d",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature on file - signed in clinic 03/24/2026 08:12 (scanned copy attached).",
+      "procedure_named": "Roux-en-Y gastric bypass",
+      "procedure_quote": "Procedure: Roux-en-Y gastric bypass"
+    }
+  ],
+  "anticoagulant_mentions": [
+    {
+      "doc_id": "b2c28143-1c41-52c0-80fa-81ccbce6f3c1",
+      "drug_as_written": "Coumadin",
+      "generic_name": "warfarin",
+      "status": "uncertain",
+      "quote": "Coumadin: patient unable to confirm whether still taking; pharmacy fill history requested"
+    }
+  ],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "a2719c6d-5189-5dd5-9ec7-70d31cee5373",
+      "procedure_date": "2026-04-03",
+      "pending": false,
+      "quote": "Planned procedure: Roux-en-Y gastric bypass (scheduled for 04/03/2026)"
+    }
+  ]
+}

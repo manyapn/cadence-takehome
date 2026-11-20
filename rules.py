@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 from core import Decision, IssueCategory, PatientSubmission
 from observations import DroppedFact, Reading, VerifiedObservations
-from resolve import VitalResolution, anticoagulant
+from resolve import DrugStatus, VitalResolution
 from verify import names
 
 Status = Literal["pass", "fail", "unknown", "not_applicable"]
@@ -195,72 +195,81 @@ def check_lab(test: str, submission: PatientSubmission) -> Check:
 # -------------------------
 
 
-def check_anticoagulation(submission: PatientSubmission, verified: VerifiedObservations) -> Check:
+def check_anticoagulation(submission: PatientSubmission, drugs: list[DrugStatus]) -> Check:
     check = {"name": "anticoagulation_plan", "rule": "Rule 3", "category": "ANTICOAGULATION_MANAGEMENT"}
-    documents = {document.doc_id: document for document in submission.documents}
-    reported: dict[str, set[str]] = {}
-    evidence: dict[str, list[Evidence]] = {}
+    dates = {document.doc_id: document.date for document in submission.documents}
+    sides = (("preop", "before the procedure"), ("postop", "after the procedure"))
 
-    for medication in submission.medications:
-        if drug := anticoagulant(medication.name or ""):
-            status = {True: "taking", False: "discontinued", None: "uncertain"}[medication.active]
-            reported.setdefault(drug, set()).add(status)
-            evidence.setdefault(drug, []).append(
+    def covered(drug: DrugStatus) -> bool:
+        return any(plan.preop.label == plan.postop.label == "instruction" for plan in drug.plans)
+
+    def evidence(drug: DrugStatus) -> list[Evidence]:
+        return [
+            *(
                 Evidence(source="structured", reference="medications", value=f"{medication.name} (active: {medication.active})")
-            )
-    for mention in verified.anticoagulant_mentions:
-        if drug := anticoagulant(mention.drug_as_written):
-            reported.setdefault(drug, set()).add(mention.status)
-            evidence.setdefault(drug, []).append(
+                for medication in drug.medications
+            ),
+            *(
                 Evidence(
                     source="note",
                     reference=mention.doc_id,
-                    date=documents[mention.doc_id].date,
+                    date=dates[mention.doc_id],
                     value=f"{mention.drug_as_written}: {mention.status}",
                     quote=mention.quote,
                 )
-            )
+                for mention in drug.mentions
+            ),
+            *(
+                Evidence(
+                    source="note",
+                    reference=plan.doc_id,
+                    date=dates[plan.doc_id],
+                    value=f"{drug.drug} {wording}: {getattr(plan, side).label}",
+                    quote=getattr(plan, side).quote,
+                )
+                for plan in drug.plans
+                for side, wording in sides
+            ),
+        ]
 
-    taking = sorted(drug for drug, statuses in reported.items() if "taking" in statuses)
-    uncertain = sorted(drug for drug, statuses in reported.items() if "uncertain" in statuses and drug not in taking)
-    if not taking and not uncertain:
+    current = [drug for drug in drugs if drug.status != "discontinued"]
+    if not current:
         return Check(**check, status="not_applicable", summary="No current anticoagulant in the medication list or notes.")
-
-    gaps = []
-    for drug in taking:
-        plans = [plan for plan in verified.anticoagulation_plans if anticoagulant(plan.drug_as_written) == drug]
-        for plan in plans:
-            for side, label in ((plan.preop, "before"), (plan.postop, "after")):
-                if side.quote:
-                    evidence[drug].append(
-                        Evidence(
-                            source="note",
-                            reference=plan.doc_id,
-                            date=documents[plan.doc_id].date,
-                            value=f"{label} the procedure: {side.label}",
-                            quote=side.quote,
-                        )
-                    )
-        if not plans:
-            gaps.append(f"no documented plan for {drug}")
-        elif not any(plan.preop.label == plan.postop.label == "instruction" for plan in plans):
-            gaps.append(f"the plan for {drug} does not give instructions for both before and after the procedure")
-
-    listed = [item for drug in taking + uncertain for item in evidence[drug]]
-    if gaps:
-        return Check(**check, status="fail", summary=f"Patient takes {', '.join(taking)}: {'; '.join(gaps)}.", evidence=listed)
-    if uncertain:
+    open_drugs = [drug for drug in current if not covered(drug)]
+    if not open_drugs:
         return Check(
             **check,
-            status="unknown",
-            summary=f"It is unclear whether the patient currently takes {', '.join(uncertain)}.",
-            evidence=listed,
+            status="pass",
+            summary=f"A plan covers {', '.join(drug.drug for drug in current)} before and after the procedure.",
+            evidence=[item for drug in current for item in evidence(drug)],
         )
+
+    findings = []
+    for drug in open_drugs:
+        if drug.status == "uncertain":
+            findings.append(f"It is not confirmed whether the patient currently takes {drug.drug}, and no complete plan covers it.")
+        elif not drug.recognised:
+            findings.append(
+                f"The notes report {drug.drug} as an anticoagulant the patient takes. It is not in the drug table,"
+                " so it could not be confirmed as one, and no complete plan covers it."
+            )
+        elif not drug.plans:
+            findings.append(f"Patient takes {drug.drug} and there is no documented perioperative plan for it.")
+        else:
+            for plan in drug.plans:
+                labels = ", ".join(f"{wording} is {getattr(plan, side).label}" for side, wording in sides)
+                findings.append(f"Patient takes {drug.drug}, and the plan dated {dates[plan.doc_id]} is incomplete: {labels}.")
+    stale = [drug for drug in drugs if drug.status == "discontinued" and drug.plans]
+    for drug in stale:
+        findings.append(
+            f"The plan dated {', '.join(dates[plan.doc_id] for plan in drug.plans)} is for {drug.drug}, which the patient no longer takes."
+        )
+    definite = any(drug.status == "taking" and drug.recognised for drug in open_drugs)
     return Check(
         **check,
-        status="pass",
-        summary=f"Patient takes {', '.join(taking)}, with a plan covering before and after the procedure.",
-        evidence=listed,
+        status="fail" if definite else "unknown",
+        summary=" ".join(findings),
+        evidence=[item for drug in current + stale for item in evidence(drug)],
     )
 
 
@@ -361,6 +370,7 @@ def run_checks(
     submission: PatientSubmission,
     verified: VerifiedObservations,
     vitals: dict[str, VitalResolution],
+    drugs: list[DrugStatus],
 ) -> list[Check]:
     def unsettled_by_drops(check: Check, when: tuple[str, ...], *kinds: str) -> Check:
         dropped = [fact for fact in verified.dropped if fact.kind in kinds]
@@ -374,7 +384,7 @@ def run_checks(
             }
         )
 
-    anticoagulation = check_anticoagulation(submission, verified)
+    anticoagulation = check_anticoagulation(submission, drugs)
     anticoagulation = unsettled_by_drops(anticoagulation, ("not_applicable", "pass"), "anticoagulant_mention")
     anticoagulation = unsettled_by_drops(anticoagulation, ("fail",), "anticoagulation_plan")
     return [

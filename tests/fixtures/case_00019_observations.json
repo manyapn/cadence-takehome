@@ -1,0 +1,63 @@
+{
+  "vitals": [
+    {
+      "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
+      "kind": "blood_pressure",
+      "systolic": 129,
+      "diastolic": 75,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 129/75"
+    },
+    {
+      "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 99.1,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 129/75 mmHg, HR 87, Temperature 99.1 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
+      "kind": "preop_evaluation",
+      "quote": "H&P: PREOPERATIVE EVALUATION"
+    },
+    {
+      "doc_id": "f0db2b51-2c34-57c9-b304-75de71e7a16f",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "e8a353b9-ab05-586e-bcdf-0ed310af672c",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature: /s/ Mateo Kowalski (electronically signed 03/17/2026 11:45)",
+      "procedure_named": "thyroidectomy",
+      "procedure_quote": "Procedure: thyroidectomy"
+    }
+  ],
+  "anticoagulant_mentions": [
+    {
+      "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
+      "drug_as_written": "warfarin",
+      "generic_name": "warfarin",
+      "status": "discontinued",
+      "quote": "completed 6 months of warfarin, discontinued by hematology in early 2020 with no recurrence. Not currently anticoagulated."
+    }
+  ],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
+      "procedure_date": "2026-03-20",
+      "pending": false,
+      "quote": "Planned procedure: thyroidectomy (scheduled for 03/20/2026)"
+    }
+  ]
+}

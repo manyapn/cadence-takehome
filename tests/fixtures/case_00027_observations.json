@@ -1,0 +1,63 @@
+{
+  "vitals": [
+    {
+      "doc_id": "367d2eb5-6e4d-5192-a1fa-ef30e6670f17",
+      "kind": "blood_pressure",
+      "systolic": 131,
+      "diastolic": 72,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 131/72"
+    },
+    {
+      "doc_id": "367d2eb5-6e4d-5192-a1fa-ef30e6670f17",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.4,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 131/72 mmHg, HR 78, T 98.4 F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "367d2eb5-6e4d-5192-a1fa-ef30e6670f17",
+      "kind": "preop_evaluation",
+      "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+    },
+    {
+      "doc_id": "eb9fad3d-8211-5e4e-8b8d-b28882f88709",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "a0fd6579-12e0-5e10-8142-e4b7ff75da74",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature on file - signed in clinic 03/23/2026 11:58 (scanned copy attached).",
+      "procedure_named": "lumbar laminectomy",
+      "procedure_quote": "Procedure: lumbar laminectomy"
+    }
+  ],
+  "anticoagulant_mentions": [
+    {
+      "doc_id": "3dcc4322-04a1-5e71-bcd0-ca6ac504bf89",
+      "drug_as_written": "Eliquis",
+      "generic_name": "apixaban",
+      "status": "taking",
+      "quote": "Patient also reports taking Eliquis 5 mg (BID), prescribed by an outside cardiologist"
+    }
+  ],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "367d2eb5-6e4d-5192-a1fa-ef30e6670f17",
+      "procedure_date": "2026-03-28",
+      "pending": false,
+      "quote": "Planned procedure: lumbar laminectomy (scheduled for 03/28/2026)"
+    }
+  ]
+}

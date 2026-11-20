@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import re
 from decimal import Decimal
+from typing import Literal
 
 from pydantic import BaseModel
 
-from core import PatientSubmission
-from observations import Reading
+from core import Medication, PatientSubmission
+from observations import AnticoagulantMention, AnticoagulationPlan, Reading, VerifiedObservations
 
 ANTICOAGULANTS = {
     "warfarin": "warfarin",
@@ -24,7 +25,23 @@ ANTICOAGULANTS = {
     "savaysa": "edoxaban",
     "enoxaparin": "enoxaparin",
     "lovenox": "enoxaparin",
+    "dalteparin": "dalteparin",
+    "fragmin": "dalteparin",
+    "fondaparinux": "fondaparinux",
+    "arixtra": "fondaparinux",
     "heparin": "heparin",
+}
+ANTIPLATELETS = {
+    "aspirin",
+    "asa",
+    "clopidogrel",
+    "plavix",
+    "prasugrel",
+    "effient",
+    "ticagrelor",
+    "brilinta",
+    "dipyridamole",
+    "cilostazol",
 }
 
 
@@ -41,11 +58,51 @@ class VitalResolution(BaseModel):
     superseded: list[Superseded]
 
 
+class DrugStatus(BaseModel):
+
+    drug: str
+    recognised: bool
+    status: Literal["taking", "discontinued", "uncertain"]
+    medications: list[Medication] = []
+    mentions: list[AnticoagulantMention] = []
+    plans: list[AnticoagulationPlan] = []
+
+
 def anticoagulant(name: str) -> str | None:
     for word in re.findall(r"[a-z]+", name.lower()):
         if word in ANTICOAGULANTS:
             return ANTICOAGULANTS[word]
     return None
+
+
+def resolve_anticoagulants(submission: PatientSubmission, verified: VerifiedObservations) -> list[DrugStatus]:
+    dates = {document.doc_id: document.date or "" for document in submission.documents}
+    drugs: dict[str, DrugStatus] = {}
+
+    def entry(drug: str, recognised: bool) -> DrugStatus:
+        return drugs.setdefault(drug, DrugStatus(drug=drug, recognised=recognised, status="uncertain"))
+
+    for medication in submission.medications:
+        if drug := anticoagulant(medication.name or ""):
+            entry(drug, True).medications.append(medication)
+    for mention in verified.anticoagulant_mentions:
+        if drug := anticoagulant(mention.drug_as_written) or anticoagulant(mention.generic_name):
+            entry(drug, True).mentions.append(mention)
+        elif not ANTIPLATELETS & set(re.findall(r"[a-z]+", f"{mention.drug_as_written} {mention.generic_name}".lower())):
+            # The extractor called it an anticoagulant and the table cannot confirm or deny it.
+            entry(mention.generic_name.strip().lower() or mention.drug_as_written.lower(), False).mentions.append(mention)
+    for plan in verified.anticoagulation_plans:
+        drug = anticoagulant(plan.drug_as_written) or plan.drug_as_written.strip().lower()
+        if drug in drugs:
+            drugs[drug].plans.append(plan)
+
+    for drug in drugs.values():
+        says = {{True: "taking", False: "discontinued", None: "uncertain"}[medication.active] for medication in drug.medications}
+        if drug.mentions:
+            newest = max(dates[mention.doc_id] for mention in drug.mentions)
+            says |= {mention.status for mention in drug.mentions if dates[mention.doc_id] == newest}
+        drug.status = says.pop() if len(says) == 1 else "uncertain"
+    return sorted(drugs.values(), key=lambda drug: drug.drug)
 
 
 def structured_readings(submission: PatientSubmission) -> list[Reading]:

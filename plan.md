@@ -38,7 +38,7 @@ The model reads. Code decides.
 | stage | file | job |
 |---|---|---|
 | read | `extract.py` | One model call. Reports every relevant observation in the notes, each with a `doc_id` and a verbatim quote. It never picks a "latest" value and never applies policy. |
-| verify | `verify.py` | Each quote must be in its cited document and contain the numbers it claims. A BP quote holds exactly one `systolic/diastolic` pair, and it is the claimed pair. Within one note, time order and text order must agree. Failed facts are dropped and recorded. |
+| verify | `verify.py` | Each quote must be in its cited document (matching on letters, digits, and `. / :` only; the output carries the document's own wording) and contain the numbers it claims. A BP quote holds exactly one `systolic/diastolic` pair, and it is the claimed pair. Within one note, time order and text order must agree. Failed facts are dropped and recorded. |
 | resolve | `resolve.py` | Decides which observation governs and records why one superseded another. No thresholds here. |
 | rules | `rules.py` | One check per policy requirement, returning `pass`, `fail`, `unknown`, or `not_applicable` with evidence. Every check runs, even after an exclusion. |
 | respond | `rules.py` | `decision`, `issues`, and `explanation` are all derived from the same check results. No second model call. |
@@ -77,8 +77,10 @@ The date of a note reading comes from the document's `date` field in code, not f
 - Labs: map code and display to CBC, CMP, or neither. `final` results only. Newest first.
 - H&P: the newest document classified as a pre-op evaluation.
 - Consent: a consent counts when the patient signed it and it names the scheduled procedure. A later signed consent supersedes an earlier pending one.
-- Anticoagulants: per drug, combine the structured `active` flag with note mentions into taking, discontinued, or uncertain. Brand and generic names map to one generic through a fixed table. Antiplatelets are not in the table.
-- Plans: match each plan to the drug the patient is currently taking and carry its pre-op and post-op labels and quotes through unchanged.
+- Anticoagulants: per drug, combine the structured `active` flag with note mentions into taking, discontinued, or uncertain. Among notes the newest document decides. If the medication list and the newest note disagree, the status is uncertain.
+- Brand and generic names map to one generic through a fixed table. Known antiplatelets are ignored even if the extractor reports them.
+- A drug the extractor calls an anticoagulant that is in neither table is kept and marked unrecognised. If a complete plan covers it the rule passes either way; if not, the check is `unknown`, because code cannot confirm it is an anticoagulant.
+- Plans: match each plan to the drug the patient is currently taking and carry its pre-op and post-op labels and quotes through unchanged. A drug is covered only when one document gives an instruction for both sides.
 
 ### rules contract
 

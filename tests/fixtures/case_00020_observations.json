@@ -1,0 +1,90 @@
+{
+  "vitals": [
+    {
+      "doc_id": "2ace2018-11e3-54eb-b3c6-386c8970c914",
+      "kind": "blood_pressure",
+      "systolic": 118,
+      "diastolic": 76,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  BP 118/76"
+    },
+    {
+      "doc_id": "2ace2018-11e3-54eb-b3c6-386c8970c914",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 97.4,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  BP 118/76 mmHg, HR 79, Temp: 97.4F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "bfea860b-565f-5d3d-8d2a-374360e56a45",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    },
+    {
+      "doc_id": "2ace2018-11e3-54eb-b3c6-386c8970c914",
+      "kind": "preop_evaluation",
+      "quote": "HISTORY & PHYSICAL - PRE-OP"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "f3a0b3d9-d4ab-5a75-8778-9a4fe856957e",
+      "patient_signed": "yes",
+      "signature_quote": "Signed by patient: James Nguyen, 03/10/2026 14:48. Witness: Nicole L. O'Connor.",
+      "procedure_named": "total knee arthroplasty",
+      "procedure_quote": "Procedure: total knee arthroplasty"
+    }
+  ],
+  "anticoagulant_mentions": [
+    {
+      "doc_id": "0eb67951-00cf-5b04-81cb-85dc8a56b3c8",
+      "drug_as_written": "warfarin",
+      "generic_name": "warfarin",
+      "status": "taking",
+      "quote": "maintained on warfarin 5 mg PO daily"
+    },
+    {
+      "doc_id": "2ace2018-11e3-54eb-b3c6-386c8970c914",
+      "drug_as_written": "Coumadin",
+      "generic_name": "warfarin",
+      "status": "taking",
+      "quote": "Coumadin 5 mg PO daily (INR goal 2-3)"
+    },
+    {
+      "doc_id": "d1dae22c-b4f5-50a5-9a32-dd415e4be9e7",
+      "drug_as_written": "Coumadin",
+      "generic_name": "warfarin",
+      "status": "taking",
+      "quote": "Coumadin 5 mg PO daily (INR goal 2-3) - taking as prescribed"
+    }
+  ],
+  "anticoagulation_plans": [
+    {
+      "doc_id": "0eb67951-00cf-5b04-81cb-85dc8a56b3c8",
+      "drug_as_written": "warfarin",
+      "preop": {
+        "label": "instruction",
+        "quote": "Stop warfarin 5 days before surgery (last dose 03/15/2026)"
+      },
+      "postop": {
+        "label": "deferred",
+        "quote": "Post-operative anticoagulation will be addressed after surgery."
+      }
+    }
+  ],
+  "scheduling_statements": [
+    {
+      "doc_id": "2ace2018-11e3-54eb-b3c6-386c8970c914",
+      "procedure_date": "2026-03-21",
+      "pending": false,
+      "quote": "Planned procedure: total knee arthroplasty (scheduled for 03/21/2026)"
+    }
+  ]
+}

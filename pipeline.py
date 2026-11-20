@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from core import PatientSubmission
 from observations import Observations
-from resolve import resolve_vitals
+from resolve import resolve_anticoagulants, resolve_vitals
 from rules import TriageResult, respond, run_checks
 from verify import verify
 
@@ -28,4 +28,5 @@ def evaluate(submission: dict[str, object] | PatientSubmission, observations: Ob
 
     verified = verify(submission, observations)
     vitals = resolve_vitals(submission, verified.readings)
-    return respond(run_checks(submission, verified, vitals))
+    drugs = resolve_anticoagulants(submission, verified)
+    return respond(run_checks(submission, verified, vitals, drugs))
