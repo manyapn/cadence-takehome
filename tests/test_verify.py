@@ -19,7 +19,7 @@ from verify import verify
 
 NURSING_TEXT = """NURSING CHECK-IN
 Readings:
-    07:50   BP 172/96,  Temp 38.0 C
+    07:50   BP 172/96,  HR 69,  Temp 38.0 C
     08:20   BP 150/88 on repeat
 Oral temperature 99.5 F at discharge desk.
 Patient states she takes Eliquis every morning."""
@@ -95,7 +95,7 @@ def test_verbatim_quote_becomes_a_reading_dated_from_the_document(submission: Pa
 
 
 def test_quote_with_collapsed_indentation_passes(submission: PatientSubmission) -> None:
-    result = verify(submission, observations(vitals=[blood_pressure("07:50 BP 172/96, Temp 38.0 C", time="07:50")]))
+    result = verify(submission, observations(vitals=[blood_pressure("07:50 BP 172/96, HR 69", time="07:50")]))
 
     assert result.dropped == []
     assert len(result.readings) == 1
@@ -115,6 +115,56 @@ def test_real_quote_with_wrong_numbers_is_dropped(submission: PatientSubmission)
 
     assert result.readings == []
     assert result.dropped[0].reason == "quote does not contain 130/88"
+
+
+def test_systolic_and_diastolic_must_be_written_as_a_pair(submission: PatientSubmission) -> None:
+    result = verify(submission, observations(vitals=[blood_pressure("07:50 BP 172/96, HR 69", 172, 69)]))
+
+    assert result.readings == []
+    assert result.dropped[0].reason == "quote does not contain 172/69"
+
+
+def test_blood_pressure_quote_must_hold_one_blood_pressure(submission: PatientSubmission) -> None:
+    quote = "07:50 BP 172/96, HR 69, Temp 38.0 C 08:20 BP 150/88"
+    result = verify(submission, observations(vitals=[blood_pressure(quote, 150, 88)]))
+
+    assert result.readings == []
+    assert result.dropped[0].reason == "quote contains 2 blood pressures"
+
+
+def test_time_order_must_agree_with_text_order_within_a_note() -> None:
+    def note(doc_id: str, first: str, second: str) -> dict[str, str]:
+        return {"doc_id": doc_id, "date": "2026-04-07", "text": f"{first} BP 172/96\n{second} BP 150/88"}
+
+    submission = PatientSubmission.model_validate(
+        {"documents": [note("backwards", "9:40", "09:10"), note("forwards", "9:10", "09:40")]}
+    )
+
+    def readings(doc_id: str, first: str, second: str) -> list[VitalObservation]:
+        return [
+            blood_pressure(f"{first} BP 172/96", 172, 96, time=first, doc_id=doc_id),
+            blood_pressure(f"{second} BP 150/88", 150, 88, time=second, doc_id=doc_id),
+        ]
+
+    result = verify(
+        submission,
+        observations(vitals=readings("backwards", "9:40", "09:10") + readings("forwards", "9:10", "09:40")),
+    )
+
+    assert [(reading.reference, reading.time) for reading in result.readings] == [("forwards", "09:10"), ("forwards", "09:40")]
+    assert [(dropped.doc_id, dropped.reason) for dropped in result.dropped] == [
+        ("backwards", "time order and text order disagree in this note")
+    ] * 2
+
+
+def test_twelve_hour_time_is_dropped() -> None:
+    submission = PatientSubmission.model_validate(
+        {"documents": [{"doc_id": "nursing", "date": "2026-04-07", "text": "2:15 PM BP 150/88"}]}
+    )
+    result = verify(submission, observations(vitals=[blood_pressure("2:15 PM BP 150/88", 150, 88, time="2:15")]))
+
+    assert result.readings == []
+    assert result.dropped[0].reason == "2:15 is a 12-hour time"
 
 
 def test_quote_from_a_different_document_is_dropped(submission: PatientSubmission) -> None:

@@ -20,6 +20,7 @@ from observations import (
 )
 
 NUMBER = re.compile(r"\d+(?:\.\d+)?")
+BLOOD_PRESSURE = re.compile(r"(?<![\d/])(\d{2,3})\s*/\s*(\d{2,3})(?![\d/]|\.\d)")
 UNIT_AFTER_VALUE = re.compile(r"\s*(?:°|degrees?)?\s*([FC])(?:ahrenheit|elsius)?\b")
 
 
@@ -48,7 +49,10 @@ def vital_problem(vital: VitalObservation) -> str | None:
     if vital.kind == "blood_pressure":
         if vital.systolic is None or vital.diastolic is None:
             return "blood pressure without both systolic and diastolic"
-        if not {vital.systolic, vital.diastolic} <= numbers_in(vital.quote):
+        pairs = [(int(systolic), int(diastolic)) for systolic, diastolic in BLOOD_PRESSURE.findall(vital.quote)]
+        if len(pairs) > 1:
+            return f"quote contains {len(pairs)} blood pressures"
+        if pairs != [(vital.systolic, vital.diastolic)]:
             return f"quote does not contain {vital.systolic}/{vital.diastolic}"
     else:
         if vital.temperature is None or vital.unit is None:
@@ -62,8 +66,14 @@ def vital_problem(vital: VitalObservation) -> str | None:
         )
         if not stated:
             return f"quote does not contain {value} {vital.unit}"
-    if vital.time is not None and vital.time not in vital.quote:
-        return f"quote does not contain the time {vital.time}"
+    if vital.time is not None:
+        if not re.fullmatch(r"\d{1,2}:\d{2}", vital.time):
+            return f"{vital.time} is not a clock time"
+        written = re.search(rf"(?<![\d:]){vital.time}(?![\d:])(\s*[ap]\.?m\b)?", vital.quote, re.IGNORECASE)
+        if written is None:
+            return f"quote does not contain the time {vital.time}"
+        if written.group(1):
+            return f"{vital.time} is a 12-hour time"
     return None
 
 
@@ -129,6 +139,7 @@ def verify(submission: PatientSubmission, observations: Observations) -> Verifie
             DroppedFact(kind=kind, doc_id=observation.doc_id, reason=reason, claim=observation.model_dump())
         )
 
+    readings: list[tuple[VitalObservation, Reading]] = []
     for vital in observations.vitals:
         if (document := cited("vital", vital)) is None:
             continue
@@ -137,24 +148,37 @@ def verify(submission: PatientSubmission, observations: Observations) -> Verifie
         if problem:
             drop("vital", vital, problem)
             continue
-        verified.readings.append(
-            Reading(
-                kind=vital.kind,
-                systolic=vital.systolic if vital.kind == "blood_pressure" else None,
-                diastolic=vital.diastolic if vital.kind == "blood_pressure" else None,
-                temperature_f=(
-                    to_fahrenheit(Decimal(str(vital.temperature)), vital.unit)
-                    if vital.kind == "temperature"
-                    else None
+        readings.append(
+            (
+                vital,
+                Reading(
+                    kind=vital.kind,
+                    systolic=vital.systolic if vital.kind == "blood_pressure" else None,
+                    diastolic=vital.diastolic if vital.kind == "blood_pressure" else None,
+                    temperature_f=(
+                        to_fahrenheit(Decimal(str(vital.temperature)), vital.unit)
+                        if vital.kind == "temperature"
+                        else None
+                    ),
+                    source="note",
+                    reference=vital.doc_id,
+                    date=document.date,
+                    time=vital.time.zfill(5) if vital.time else None,
+                    quote=vital.quote,
+                    offset=offset,
                 ),
-                source="note",
-                reference=vital.doc_id,
-                date=document.date,
-                time=vital.time,
-                quote=vital.quote,
-                offset=offset,
             )
         )
+
+    for vital, reading in readings:
+        timed = sorted(
+            (other for _, other in readings if (other.reference, other.kind) == (reading.reference, reading.kind) and other.time),
+            key=lambda other: other.offset,
+        )
+        if [other.time for other in timed] != sorted(other.time for other in timed):
+            drop("vital", vital, "time order and text order disagree in this note")
+        else:
+            verified.readings.append(reading)
 
     for hp in observations.hp_documents:
         if (document := cited("hp_document", hp)) is None:
