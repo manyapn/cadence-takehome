@@ -1,0 +1,160 @@
+{
+  "decision": "NOT_CLEARED",
+  "issues": [
+    {
+      "category": "REQUIRED_DOCUMENTATION",
+      "rule": "Rule 1",
+      "finding": "Consent on file is not signed by the patient.",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "58a87237-6d24-57aa-979d-3f0cc34438fd",
+          "date": "2026-03-26",
+          "value": "patient signed: no; procedure: thyroidectomy",
+          "quote": "E-signature request sent to patient portal 03/26/2026 11:22; status: NOT COMPLETED as of this note."
+        },
+        {
+          "source": "note",
+          "reference": "58a87237-6d24-57aa-979d-3f0cc34438fd",
+          "date": "2026-03-26",
+          "value": "patient signed: no; procedure: thyroidectomy",
+          "quote": "Procedure: thyroidectomy"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "category": "ACUTE_SAFETY_EXCLUSION",
+      "rule": "Rule 4",
+      "finding": "Most recent blood pressure 148/110 mmHg (2026-03-24 10:12) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "Pre-op clinic, 2026-03-24T10:12:00Z",
+          "date": "2026-03-24 10:12",
+          "value": "148/110 mmHg"
+        }
+      ],
+      "sources_checked": []
+    }
+  ],
+  "checks": [
+    {
+      "name": "history_and_physical",
+      "rule": "Rule 1",
+      "category": "REQUIRED_DOCUMENTATION",
+      "status": "pass",
+      "summary": "H&P dated 2026-03-15 is 14 days before the procedure (limit 30).",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "33321cd5-cb32-5c39-9e90-d220bc27aecd",
+          "date": "2026-03-15",
+          "quote": "H&P: PREOPERATIVE EVALUATION"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "surgical_consent",
+      "rule": "Rule 1",
+      "category": "REQUIRED_DOCUMENTATION",
+      "status": "fail",
+      "summary": "Consent on file is not signed by the patient.",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "58a87237-6d24-57aa-979d-3f0cc34438fd",
+          "date": "2026-03-26",
+          "value": "patient signed: no; procedure: thyroidectomy",
+          "quote": "E-signature request sent to patient portal 03/26/2026 11:22; status: NOT COMPLETED as of this note."
+        },
+        {
+          "source": "note",
+          "reference": "58a87237-6d24-57aa-979d-3f0cc34438fd",
+          "date": "2026-03-26",
+          "value": "patient signed: no; procedure: thyroidectomy",
+          "quote": "Procedure: thyroidectomy"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "cbc",
+      "rule": "Rule 2",
+      "category": "REQUIRED_TESTING",
+      "status": "pass",
+      "summary": "Latest CBC (2026-03-08) is 21 days before the procedure (limit 30 for MODERATE risk).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "636a1173-b1cd-50bb-847c-e41b59040b6a",
+          "date": "2026-03-08T08:31:00Z",
+          "value": "CBC Hemogram/CBC (final)"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "cmp",
+      "rule": "Rule 2",
+      "category": "REQUIRED_TESTING",
+      "status": "not_applicable",
+      "summary": "CMP is not required for a MODERATE risk procedure.",
+      "evidence": [],
+      "sources_checked": []
+    },
+    {
+      "name": "anticoagulation_plan",
+      "rule": "Rule 3",
+      "category": "ANTICOAGULATION_MANAGEMENT",
+      "status": "not_applicable",
+      "summary": "No current anticoagulant in the medication list or notes.",
+      "evidence": [],
+      "sources_checked": [
+        "medication list: atorvastatin 40 mg PO nightly (active: True)",
+        "medication list: levothyroxine 75 mcg PO daily (active: True)",
+        "medication list: lisinopril 20 mg PO daily (active: True)",
+        "medication list: sertraline 50 mg PO daily (active: True)",
+        "Social Work Note (2026-02-24)",
+        "History & Physical (scanned) (2026-03-15)",
+        "Surgery Consent (scanned) (2026-03-26)",
+        "Pre-op Nursing Intake (2026-03-26)"
+      ]
+    },
+    {
+      "name": "blood_pressure",
+      "rule": "Rule 4",
+      "category": "ACUTE_SAFETY_EXCLUSION",
+      "status": "fail",
+      "summary": "Most recent blood pressure 148/110 mmHg (2026-03-24 10:12) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "Pre-op clinic, 2026-03-24T10:12:00Z",
+          "date": "2026-03-24 10:12",
+          "value": "148/110 mmHg"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "temperature",
+      "rule": "Rule 4",
+      "category": "ACUTE_SAFETY_EXCLUSION",
+      "status": "pass",
+      "summary": "Most recent temperature 99.1 F (2026-03-24 10:15) is below the exclusion limit (> 100.4 F).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "Pre-op clinic, 2026-03-24T10:15:00Z",
+          "date": "2026-03-24 10:15",
+          "value": "99.1 F"
+        }
+      ],
+      "sources_checked": []
+    }
+  ],
+  "explanation": "NOT_CLEARED\nRule 1 history_and_physical: pass. H&P dated 2026-03-15 is 14 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Consent on file is not signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-08) is 21 days before the procedure (limit 30 for MODERATE risk).\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: fail. Most recent blood pressure 148/110 mmHg (2026-03-24 10:12) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 99.1 F (2026-03-24 10:15) is below the exclusion limit (> 100.4 F).",
+  "unverified": []
+}

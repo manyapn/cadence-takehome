@@ -53,8 +53,8 @@ def numbers_in(text: str) -> set[Decimal]:
 
 
 def names(quote: str, value: str) -> bool:
-    squash = lambda s: " ".join(s.split()).casefold()
-    return squash(value) in squash(quote)
+    matched = lambda s: "".join(MATCHED.findall(s)).casefold()
+    return matched(value) in matched(quote)
 
 
 def to_fahrenheit(value: Decimal, unit: str) -> Decimal:

@@ -330,6 +330,21 @@ def test_anticoagulant_mention_must_name_the_drug_in_its_quote(submission: Patie
     assert result.dropped[0].reason == "quote does not name Xarelto"
 
 
+def test_drug_name_ending_in_a_symbol_is_still_found_in_its_quote() -> None:
+    submission = PatientSubmission.model_validate(
+        {"documents": [{"doc_id": "hp", "date": "2026-04-01", "text": "Stopped: warfarin (Coumadin)\nNo other changes."}]}
+    )
+    stopped = AnticoagulantMention(
+        doc_id="hp",
+        drug_as_written="warfarin (Coumadin)",
+        generic_name="warfarin",
+        status="discontinued",
+        quote="Stopped: warfarin (Coumadin)",
+    )
+
+    assert verify(submission, observations(anticoagulant_mentions=[stopped])).dropped == []
+
+
 def test_plan_sides_need_quotes_from_a_document_that_names_the_drug(submission: PatientSubmission) -> None:
     hold = PlanSide(label="instruction", quote="last dose three days before the operation.")
     restart = PlanSide(label="instruction", quote="Restart the evening after the operation if no bleeding.")

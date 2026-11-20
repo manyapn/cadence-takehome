@@ -1,0 +1,249 @@
+{
+  "decision": "NEEDS_FOLLOW_UP",
+  "issues": [
+    {
+      "category": "ANTICOAGULATION_MANAGEMENT",
+      "rule": "Rule 3",
+      "finding": "Patient takes apixaban and there is no documented perioperative plan for it. The plan dated 2026-02-06 is for warfarin, which the patient no longer takes.",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "medications",
+          "value": "apixaban 5 mg PO BID (active: True)"
+        },
+        {
+          "source": "note",
+          "reference": "49e558c2-2d14-5dce-ab36-429608a3ec54",
+          "date": "2026-03-17",
+          "value": "apixaban: taking",
+          "quote": "apixaban 5 mg PO BID - taking as prescribed"
+        },
+        {
+          "source": "note",
+          "reference": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+          "date": "2026-03-05",
+          "value": "apixaban: taking",
+          "quote": "apixaban 5 mg PO BID"
+        },
+        {
+          "source": "structured",
+          "reference": "medications",
+          "value": "warfarin 5 mg PO daily (active: False)"
+        },
+        {
+          "source": "note",
+          "reference": "162990fe-f57c-564c-984e-41040fbe66e2",
+          "date": "2026-02-06",
+          "value": "warfarin: taking",
+          "quote": "maintained on warfarin 5 mg PO daily"
+        },
+        {
+          "source": "note",
+          "reference": "49e558c2-2d14-5dce-ab36-429608a3ec54",
+          "date": "2026-03-17",
+          "value": "warfarin: discontinued",
+          "quote": "patient states warfarin was stopped last month and replaced with Eliquis by cardiology"
+        },
+        {
+          "source": "note",
+          "reference": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+          "date": "2026-03-05",
+          "value": "warfarin: discontinued",
+          "quote": "Discontinued: warfarin"
+        },
+        {
+          "source": "note",
+          "reference": "162990fe-f57c-564c-984e-41040fbe66e2",
+          "date": "2026-02-06",
+          "value": "warfarin before the procedure: instruction",
+          "quote": "Stop warfarin 5 days before surgery (last dose 03/13/2026"
+        },
+        {
+          "source": "note",
+          "reference": "162990fe-f57c-564c-984e-41040fbe66e2",
+          "date": "2026-02-06",
+          "value": "warfarin after the procedure: instruction",
+          "quote": "Resume warfarin at the usual home dose the evening of surgery if hemostasis is adequate"
+        }
+      ],
+      "sources_checked": []
+    }
+  ],
+  "checks": [
+    {
+      "name": "history_and_physical",
+      "rule": "Rule 1",
+      "category": "REQUIRED_DOCUMENTATION",
+      "status": "pass",
+      "summary": "H&P dated 2026-03-05 is 14 days before the procedure (limit 30).",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+          "date": "2026-03-05",
+          "quote": "HISTORY & PHYSICAL - PRE-OP"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "surgical_consent",
+      "rule": "Rule 1",
+      "category": "REQUIRED_DOCUMENTATION",
+      "status": "pass",
+      "summary": "Consent for coronary artery bypass grafting is signed by the patient.",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "ad5690b4-7cef-5998-b791-4c2dd331edaf",
+          "date": "2026-03-17",
+          "value": "patient signed: yes; procedure: coronary artery bypass grafting",
+          "quote": "Signed by patient: Grace Okafor, 03/17/2026 11:04. Witness: Michael C. Rodriguez."
+        },
+        {
+          "source": "note",
+          "reference": "ad5690b4-7cef-5998-b791-4c2dd331edaf",
+          "date": "2026-03-17",
+          "value": "patient signed: yes; procedure: coronary artery bypass grafting",
+          "quote": "Procedure: coronary artery bypass grafting"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "cbc",
+      "rule": "Rule 2",
+      "category": "REQUIRED_TESTING",
+      "status": "pass",
+      "summary": "Latest CBC (2026-03-17) is 2 days before the procedure (limit 14 for HIGH risk).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "ae0bfa90-c7a1-5273-8f14-76f098230390",
+          "date": "2026-03-17T09:40:00Z",
+          "value": "CBC Hemogram/CBC (final)"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "cmp",
+      "rule": "Rule 2",
+      "category": "REQUIRED_TESTING",
+      "status": "pass",
+      "summary": "Latest CMP (2026-03-13) is 6 days before the procedure (limit 14 for HIGH risk).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "6019dea2-dcc4-5cdf-8180-a4170282fca1",
+          "date": "2026-03-13T09:10:00Z",
+          "value": "CMP CMP (Comprehensive Metabolic Panel) (final)"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "anticoagulation_plan",
+      "rule": "Rule 3",
+      "category": "ANTICOAGULATION_MANAGEMENT",
+      "status": "fail",
+      "summary": "Patient takes apixaban and there is no documented perioperative plan for it. The plan dated 2026-02-06 is for warfarin, which the patient no longer takes.",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "medications",
+          "value": "apixaban 5 mg PO BID (active: True)"
+        },
+        {
+          "source": "note",
+          "reference": "49e558c2-2d14-5dce-ab36-429608a3ec54",
+          "date": "2026-03-17",
+          "value": "apixaban: taking",
+          "quote": "apixaban 5 mg PO BID - taking as prescribed"
+        },
+        {
+          "source": "note",
+          "reference": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+          "date": "2026-03-05",
+          "value": "apixaban: taking",
+          "quote": "apixaban 5 mg PO BID"
+        },
+        {
+          "source": "structured",
+          "reference": "medications",
+          "value": "warfarin 5 mg PO daily (active: False)"
+        },
+        {
+          "source": "note",
+          "reference": "162990fe-f57c-564c-984e-41040fbe66e2",
+          "date": "2026-02-06",
+          "value": "warfarin: taking",
+          "quote": "maintained on warfarin 5 mg PO daily"
+        },
+        {
+          "source": "note",
+          "reference": "49e558c2-2d14-5dce-ab36-429608a3ec54",
+          "date": "2026-03-17",
+          "value": "warfarin: discontinued",
+          "quote": "patient states warfarin was stopped last month and replaced with Eliquis by cardiology"
+        },
+        {
+          "source": "note",
+          "reference": "d0fdac8a-87e7-571d-a47c-334b3edb69ce",
+          "date": "2026-03-05",
+          "value": "warfarin: discontinued",
+          "quote": "Discontinued: warfarin"
+        },
+        {
+          "source": "note",
+          "reference": "162990fe-f57c-564c-984e-41040fbe66e2",
+          "date": "2026-02-06",
+          "value": "warfarin before the procedure: instruction",
+          "quote": "Stop warfarin 5 days before surgery (last dose 03/13/2026"
+        },
+        {
+          "source": "note",
+          "reference": "162990fe-f57c-564c-984e-41040fbe66e2",
+          "date": "2026-02-06",
+          "value": "warfarin after the procedure: instruction",
+          "quote": "Resume warfarin at the usual home dose the evening of surgery if hemostasis is adequate"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "blood_pressure",
+      "rule": "Rule 4",
+      "category": "ACUTE_SAFETY_EXCLUSION",
+      "status": "pass",
+      "summary": "Most recent blood pressure 117/78 mmHg (2026-03-14 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "Primary care visit, 2026-03-14T10:12:00Z",
+          "date": "2026-03-14 10:12",
+          "value": "117/78 mmHg"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "temperature",
+      "rule": "Rule 4",
+      "category": "ACUTE_SAFETY_EXCLUSION",
+      "status": "pass",
+      "summary": "Most recent temperature 97.6 F (2026-03-14 10:15) is below the exclusion limit (> 100.4 F).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "Primary care visit, 2026-03-14T10:15:00Z",
+          "date": "2026-03-14 10:15",
+          "value": "97.6 F"
+        }
+      ],
+      "sources_checked": []
+    }
+  ],
+  "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-05 is 14 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for coronary artery bypass grafting is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-17) is 2 days before the procedure (limit 14 for HIGH risk).\nRule 2 cmp: pass. Latest CMP (2026-03-13) is 6 days before the procedure (limit 14 for HIGH risk).\nRule 3 anticoagulation_plan: fail. Patient takes apixaban and there is no documented perioperative plan for it. The plan dated 2026-02-06 is for warfarin, which the patient no longer takes.\nRule 4 blood_pressure: pass. Most recent blood pressure 117/78 mmHg (2026-03-14 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 97.6 F (2026-03-14 10:15) is below the exclusion limit (> 100.4 F).",
+  "unverified": []
+}

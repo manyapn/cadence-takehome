@@ -1,0 +1,132 @@
+{
+  "decision": "READY",
+  "issues": [],
+  "checks": [
+    {
+      "name": "history_and_physical",
+      "rule": "Rule 1",
+      "category": "REQUIRED_DOCUMENTATION",
+      "status": "pass",
+      "summary": "H&P dated 2026-02-21 is 24 days before the procedure (limit 30).",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "81e2f72a-f558-5c73-853d-5383ea9f59b1",
+          "date": "2026-02-21",
+          "quote": "referred by General Surgery for pre-operative evaluation prior to inguinal hernia repair"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "surgical_consent",
+      "rule": "Rule 1",
+      "category": "REQUIRED_DOCUMENTATION",
+      "status": "pass",
+      "summary": "Consent for inguinal hernia repair is signed by the patient.",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "08378923-717b-50f8-9bb1-0d78e19d1f66",
+          "date": "2026-03-13",
+          "value": "patient signed: yes; procedure: inguinal hernia repair",
+          "quote": "Patient signature on file - signed in clinic 03/13/2026 12:06 (scanned copy attached)."
+        },
+        {
+          "source": "note",
+          "reference": "08378923-717b-50f8-9bb1-0d78e19d1f66",
+          "date": "2026-03-13",
+          "value": "patient signed: yes; procedure: inguinal hernia repair",
+          "quote": "Procedure: inguinal hernia repair"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "cbc",
+      "rule": "Rule 2",
+      "category": "REQUIRED_TESTING",
+      "status": "pass",
+      "summary": "Latest CBC (2026-03-02) is 15 days before the procedure (limit 30 for LOW risk).",
+      "evidence": [
+        {
+          "source": "structured",
+          "reference": "95160d11-dffe-537b-9158-0c7225297bf3",
+          "date": "2026-03-02T10:55:00Z",
+          "value": "CBC Complete Blood Count (final)"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "cmp",
+      "rule": "Rule 2",
+      "category": "REQUIRED_TESTING",
+      "status": "not_applicable",
+      "summary": "CMP is not required for a LOW risk procedure.",
+      "evidence": [],
+      "sources_checked": []
+    },
+    {
+      "name": "anticoagulation_plan",
+      "rule": "Rule 3",
+      "category": "ANTICOAGULATION_MANAGEMENT",
+      "status": "not_applicable",
+      "summary": "No current anticoagulant in the medication list or notes.",
+      "evidence": [],
+      "sources_checked": [
+        "medication list: ASA 81 mg PO daily (active: True)",
+        "medication list: acetaminophen 650 mg PO q6h PRN pain (active: True)",
+        "medication list: sertraline 50 mg PO daily (active: True)",
+        "medication list: tamsulosin 0.4 mg PO nightly (active: True)",
+        "Procedure Consent Form (2026-03-13)",
+        "Nursing Pre-procedure Assessment (2026-03-15)",
+        "H&P [PDF] (2026-02-21)",
+        "History and Physical (2025-06-22)"
+      ]
+    },
+    {
+      "name": "blood_pressure",
+      "rule": "Rule 4",
+      "category": "ACUTE_SAFETY_EXCLUSION",
+      "status": "pass",
+      "summary": "Most recent blood pressure 137/78 mmHg (2026-03-15 08:30) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg). It supersedes 189/112 mmHg (later in the same note).",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "1f5be5f7-1a56-5e66-9c45-2e94e55b0271",
+          "date": "2026-03-15 08:30",
+          "value": "137/78 mmHg",
+          "quote": "ADDENDUM 08:30: Re-measured 137/78 mmHg following 24 minutes in a quiet room."
+        },
+        {
+          "source": "note",
+          "reference": "1f5be5f7-1a56-5e66-9c45-2e94e55b0271",
+          "date": "2026-03-15 08:06",
+          "value": "189/112 mmHg",
+          "quote": "08:06  NIBP 189/112"
+        }
+      ],
+      "sources_checked": []
+    },
+    {
+      "name": "temperature",
+      "rule": "Rule 4",
+      "category": "ACUTE_SAFETY_EXCLUSION",
+      "status": "pass",
+      "summary": "Most recent temperature 98.78 F (2026-03-15 08:06) is below the exclusion limit (> 100.4 F).",
+      "evidence": [
+        {
+          "source": "note",
+          "reference": "1f5be5f7-1a56-5e66-9c45-2e94e55b0271",
+          "date": "2026-03-15 08:06",
+          "value": "98.78 F",
+          "quote": "08:06  NIBP 189/112, T 37.1 C"
+        }
+      ],
+      "sources_checked": []
+    }
+  ],
+  "explanation": "READY\nRule 1 history_and_physical: pass. H&P dated 2026-02-21 is 24 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for inguinal hernia repair is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-02) is 15 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 137/78 mmHg (2026-03-15 08:30) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg). It supersedes 189/112 mmHg (later in the same note).\nRule 4 temperature: pass. Most recent temperature 98.78 F (2026-03-15 08:06) is below the exclusion limit (> 100.4 F).",
+  "unverified": []
+}
