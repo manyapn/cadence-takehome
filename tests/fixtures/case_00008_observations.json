@@ -1,0 +1,42 @@
+{
+  "vitals": [
+    {
+      "doc_id": "78f571e3-f616-55d8-bb2f-6271c32914ab",
+      "kind": "blood_pressure",
+      "systolic": 130,
+      "diastolic": 78,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  BP: 130/78"
+    },
+    {
+      "doc_id": "78f571e3-f616-55d8-bb2f-6271c32914ab",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 97.5,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  BP: 130/78, HR 75, T 97.5 F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "78f571e3-f616-55d8-bb2f-6271c32914ab",
+      "kind": "preop_evaluation",
+      "quote": "HISTORY & PHYSICAL - PRE-OP"
+    }
+  ],
+  "consents": [],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "78f571e3-f616-55d8-bb2f-6271c32914ab",
+      "procedure_date": "2026-03-09",
+      "pending": false,
+      "quote": "Planned procedure: hepatic lobectomy (scheduled for 03/09/2026)"
+    }
+  ]
+}

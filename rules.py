@@ -165,6 +165,7 @@ def check_lab(test: str, submission: PatientSubmission) -> Check:
             status="unknown",
             unknown_cause="chart_gap",
             summary="Procedure risk is missing, so it is unknown whether a CMP is required.",
+            sources_checked=["procedure record: procedure_risk is empty"],
         )
 
     def lab_evidence(lab) -> Evidence:

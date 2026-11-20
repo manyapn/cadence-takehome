@@ -1,0 +1,82 @@
+{
+  "vitals": [
+    {
+      "doc_id": "3c6a3975-6233-5c32-b7bf-59172cfe5850",
+      "kind": "blood_pressure",
+      "systolic": 121,
+      "diastolic": 80,
+      "temperature": null,
+      "unit": null,
+      "time": "08:54",
+      "quote": "08:54: BP: 121/80"
+    },
+    {
+      "doc_id": "3c6a3975-6233-5c32-b7bf-59172cfe5850",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 37.2,
+      "unit": "C",
+      "time": "08:45",
+      "quote": "08:45: Temp: 37.2C"
+    },
+    {
+      "doc_id": "674f877e-428c-57fd-92d3-c22c0771de25",
+      "kind": "blood_pressure",
+      "systolic": 119,
+      "diastolic": 73,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  119/73"
+    },
+    {
+      "doc_id": "674f877e-428c-57fd-92d3-c22c0771de25",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.0,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  119/73 mmHg, HR 70, Temperature 98.0 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "674f877e-428c-57fd-92d3-c22c0771de25",
+      "kind": "preop_evaluation",
+      "quote": "H&P: PREOPERATIVE EVALUATION"
+    },
+    {
+      "doc_id": "e6a5d9c9-b502-58f9-8179-78f75d4d2899",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "cb708d0a-014f-54bb-9c64-9fd18c43c3f0",
+      "patient_signed": "yes",
+      "signature_quote": "Signed by patient: Danielle Lopez, 03/03/2026 16:44. Witness: Lauren Hernandez.",
+      "procedure_named": "hepatic lobectomy",
+      "procedure_quote": "Procedure: hepatic lobectomy"
+    },
+    {
+      "doc_id": "933b18e2-333d-5170-8df5-efe4711b3964",
+      "patient_signed": "no",
+      "signature_quote": "Patient signature: pending",
+      "procedure_named": "hepatic lobectomy",
+      "procedure_quote": "Procedure: hepatic lobectomy"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "674f877e-428c-57fd-92d3-c22c0771de25",
+      "procedure_date": "2026-03-08",
+      "pending": false,
+      "quote": "Planned procedure: hepatic lobectomy (scheduled for 03/08/2026)"
+    }
+  ]
+}

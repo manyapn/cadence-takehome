@@ -1,0 +1,55 @@
+{
+  "vitals": [
+    {
+      "doc_id": "9a8936fe-1125-50e6-9232-5bd863853ff7",
+      "kind": "blood_pressure",
+      "systolic": 121,
+      "diastolic": 72,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 121/72"
+    },
+    {
+      "doc_id": "9a8936fe-1125-50e6-9232-5bd863853ff7",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 97.9,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 121/72 mmHg, HR 92, 97.9 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "4ec27afa-d10c-589f-a28a-275fc0bc52dd",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    },
+    {
+      "doc_id": "9a8936fe-1125-50e6-9232-5bd863853ff7",
+      "kind": "preop_evaluation",
+      "quote": "HISTORY & PHYSICAL - PRE-OP"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "3b9a681b-b9d4-57ae-88a7-e5cd84ac06cb",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature: /s/ Lucas Simmons (electronically signed 04/06/2026 15:12)",
+      "procedure_named": "carpal tunnel release",
+      "procedure_quote": "Procedure: carpal tunnel release"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "9a8936fe-1125-50e6-9232-5bd863853ff7",
+      "procedure_date": "2026-04-11",
+      "pending": false,
+      "quote": "Planned procedure: carpal tunnel release (scheduled for 04/11/2026)"
+    }
+  ]
+}

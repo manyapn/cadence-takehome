@@ -1,0 +1,50 @@
+{
+  "vitals": [
+    {
+      "doc_id": "6fed8663-8ff1-5d5a-a2bf-fda87b3ee5db",
+      "kind": "blood_pressure",
+      "systolic": 128,
+      "diastolic": 73,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  BP: 128/73"
+    },
+    {
+      "doc_id": "6fed8663-8ff1-5d5a-a2bf-fda87b3ee5db",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.9,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  BP: 128/73, HR 71, T 98.9 F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "6fed8663-8ff1-5d5a-a2bf-fda87b3ee5db",
+      "kind": "preop_evaluation",
+      "quote": "H&P: PREOPERATIVE EVALUATION"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "0778e173-59f7-582d-b41e-f4846de5fe20",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature: /s/ Maya Simmons (electronically signed 03/11/2026 08:53)",
+      "procedure_named": "tonsillectomy",
+      "procedure_quote": "Procedure: tonsillectomy"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "6fed8663-8ff1-5d5a-a2bf-fda87b3ee5db",
+      "procedure_date": "2026-03-15",
+      "pending": false,
+      "quote": "Planned procedure: tonsillectomy (scheduled for 03/15/2026)"
+    }
+  ]
+}

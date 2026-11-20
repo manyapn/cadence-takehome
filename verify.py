@@ -98,7 +98,7 @@ def checked_hp(hp: HpDocument, text: str) -> HpDocument | str:
     return hp.model_copy(update={"quote": found[1]}) if found else NOT_FOUND
 
 
-def checked_consent(consent: ConsentObservation, text: str) -> ConsentObservation | str:
+def checked_consent(consent: ConsentObservation, text: str, patient: tuple[str, ...] = ()) -> ConsentObservation | str:
     if consent.patient_signed == "yes" and consent.signature_quote is None:
         return "signed consent without a signature quote"
     if consent.procedure_named is not None and consent.procedure_quote is None:
@@ -110,6 +110,9 @@ def checked_consent(consent: ConsentObservation, text: str) -> ConsentObservatio
                 return NOT_FOUND
             as_written[field] = found[1]
     consent = consent.model_copy(update=as_written)
+    # A clinician's sign-off quoted as the signature must not pass as the patient's.
+    if consent.patient_signed == "yes" and not any(names(consent.signature_quote, who) for who in ("patient", *patient)):
+        return "signature quote does not refer to the patient"
     if consent.procedure_named is not None and not names(consent.procedure_quote, consent.procedure_named):
         return f"quote does not name {consent.procedure_named}"
     return consent
@@ -156,6 +159,8 @@ def checked_scheduling(statement: SchedulingStatement, text: str) -> SchedulingS
 
 def verify(submission: PatientSubmission, observations: Observations) -> VerifiedObservations:
     documents: dict[str, Document] = {d.doc_id: d for d in submission.documents if d.doc_id}
+    name = submission.patient.name if submission.patient else None
+    patient = tuple(part for part in (name.given, name.family) if part) if name else ()
     verified = VerifiedObservations()
 
     def cited(kind: str, observation) -> Document | None:
@@ -225,7 +230,7 @@ def verify(submission: PatientSubmission, observations: Observations) -> Verifie
         for item in items:
             if (document := cited(kind, item)) is None:
                 continue
-            outcome = checked(item, document.text or "")
+            outcome = checked(item, document.text or "", *((patient,) if kind == "consent" else ()))
             if isinstance(outcome, str):
                 drop(kind, item, outcome)
             else:

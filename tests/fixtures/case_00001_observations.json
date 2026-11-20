@@ -1,0 +1,75 @@
+{
+  "vitals": [
+    {
+      "doc_id": "c36ac41e-58a2-5c54-977c-6304f096cd75",
+      "kind": "blood_pressure",
+      "systolic": 126,
+      "diastolic": 70,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  NIBP 126/70"
+    },
+    {
+      "doc_id": "c36ac41e-58a2-5c54-977c-6304f096cd75",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 97.4,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  NIBP 126/70, HR 63, T 97.4 F"
+    },
+    {
+      "doc_id": "71fc916f-d0a6-5945-ab4b-52b1b6f52b8e",
+      "kind": "blood_pressure",
+      "systolic": 127,
+      "diastolic": 80,
+      "temperature": null,
+      "unit": null,
+      "time": "08:44",
+      "quote": "08:44  BP 127/80"
+    },
+    {
+      "doc_id": "71fc916f-d0a6-5945-ab4b-52b1b6f52b8e",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 36.6,
+      "unit": "C",
+      "time": "08:44",
+      "quote": "08:44  BP 127/80, Temperature 36.6 °C"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "64856c30-0162-5b84-87ab-47b1b4ffa750",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    },
+    {
+      "doc_id": "c36ac41e-58a2-5c54-977c-6304f096cd75",
+      "kind": "preop_evaluation",
+      "quote": "HISTORY & PHYSICAL - PRE-OP"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "d180b145-70c9-5e2a-a7e6-e1815ea596a9",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature on file - signed in clinic 02/25/2026 13:37 (scanned copy attached).",
+      "procedure_named": "cataract extraction",
+      "procedure_quote": "Procedure: cataract extraction"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "c36ac41e-58a2-5c54-977c-6304f096cd75",
+      "procedure_date": "2026-03-02",
+      "pending": false,
+      "quote": "Planned procedure: cataract extraction (scheduled for 03/02/2026)"
+    }
+  ]
+}

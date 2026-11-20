@@ -1,0 +1,55 @@
+{
+  "vitals": [
+    {
+      "doc_id": "a360f382-325d-5835-8459-b0c70efa1278",
+      "kind": "blood_pressure",
+      "systolic": 116,
+      "diastolic": 76,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 116/76"
+    },
+    {
+      "doc_id": "a360f382-325d-5835-8459-b0c70efa1278",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.3,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  Blood pressure 116/76 mmHg, HR 94, Temp 98.3 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "a360f382-325d-5835-8459-b0c70efa1278",
+      "kind": "preop_evaluation",
+      "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+    },
+    {
+      "doc_id": "d425a209-e2f5-5a3e-ba0a-39cf676be334",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "9ce841d2-3610-5034-b971-158e11ec0d86",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature: /s/ Maya Haddad (electronically signed 03/10/2026 16:53)",
+      "procedure_named": "abdominal aortic aneurysm repair",
+      "procedure_quote": "Procedure: abdominal aortic aneurysm repair"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "a360f382-325d-5835-8459-b0c70efa1278",
+      "procedure_date": "2026-03-18",
+      "pending": false,
+      "quote": "Planned procedure: abdominal aortic aneurysm repair (scheduled for 03/18/2026)"
+    }
+  ]
+}

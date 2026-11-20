@@ -1,0 +1,16 @@
+{
+  "vitals": [],
+  "hp_documents": [],
+  "consents": [
+    {
+      "doc_id": "31776655-e987-506a-9aac-db2db313bd83",
+      "patient_signed": "yes",
+      "signature_quote": "Signed by patient: Ava Patel, 03/08/2026 16:31. Witness: Christopher Rodriguez.",
+      "procedure_named": "esophagectomy",
+      "procedure_quote": "Procedure: esophagectomy"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": []
+}

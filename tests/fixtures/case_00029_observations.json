@@ -1,0 +1,55 @@
+{
+  "vitals": [
+    {
+      "doc_id": "20fab676-c9c2-5e99-b8ca-c5ec02c5f340",
+      "kind": "blood_pressure",
+      "systolic": 122,
+      "diastolic": 73,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  122/73"
+    },
+    {
+      "doc_id": "20fab676-c9c2-5e99-b8ca-c5ec02c5f340",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 99.1,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  122/73 mmHg, HR 71, 99.1 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "95d46190-1f38-5227-b55a-43cfb010ca83",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    },
+    {
+      "doc_id": "20fab676-c9c2-5e99-b8ca-c5ec02c5f340",
+      "kind": "preop_evaluation",
+      "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "c4b4910f-efad-50c5-8c07-b2828e2897b3",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature: /s/ Noah Patel (electronically signed 03/25/2026 15:26)",
+      "procedure_named": "abdominal aortic aneurysm repair",
+      "procedure_quote": "Procedure: abdominal aortic aneurysm repair"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "20fab676-c9c2-5e99-b8ca-c5ec02c5f340",
+      "procedure_date": "2026-03-30",
+      "pending": false,
+      "quote": "Planned procedure: abdominal aortic aneurysm repair (scheduled for 03/30/2026)"
+    }
+  ]
+}

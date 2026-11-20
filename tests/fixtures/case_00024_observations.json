@@ -1,0 +1,55 @@
+{
+  "vitals": [
+    {
+      "doc_id": "1dfcd7d4-b8c6-542b-a04f-ea54859bf637",
+      "kind": "blood_pressure",
+      "systolic": 130,
+      "diastolic": 80,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  BP 130/80"
+    },
+    {
+      "doc_id": "1dfcd7d4-b8c6-542b-a04f-ea54859bf637",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.3,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  BP 130/80, HR 92, Temp: 98.3F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "33e0e7cd-b3b8-54e8-b660-ce29601565c6",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    },
+    {
+      "doc_id": "1dfcd7d4-b8c6-542b-a04f-ea54859bf637",
+      "kind": "preop_evaluation",
+      "quote": "HISTORY & PHYSICAL - PRE-OP"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "a96cef37-6d02-5b1a-a9c0-1874d04d0568",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature on file - signed in clinic 03/15/2026 08:27 (scanned copy attached).",
+      "procedure_named": "coronary artery bypass grafting",
+      "procedure_quote": "Procedure: coronary artery bypass grafting"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "1dfcd7d4-b8c6-542b-a04f-ea54859bf637",
+      "procedure_date": "2026-03-25",
+      "pending": false,
+      "quote": "Planned procedure: thyroidectomy (scheduled for 03/25/2026)"
+    }
+  ]
+}

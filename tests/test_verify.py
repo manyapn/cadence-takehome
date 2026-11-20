@@ -4,7 +4,7 @@ from decimal import Decimal
 
 import pytest
 
-from core import PatientSubmission
+from core import PatientInfo, PatientName, PatientSubmission
 from observations import (
     AnticoagulantMention,
     AnticoagulationPlan,
@@ -30,7 +30,8 @@ Restart the evening after the operation if no bleeding."""
 
 CONSENT_TEXT = """CONSENT FORM
 Operation: left knee arthroscopy on 04/09/2026
-Signed by the patient, 04/02/2026."""
+Signed by the patient, 04/02/2026.
+Countersigned by R. Ames, MD"""
 
 
 @pytest.fixture
@@ -285,6 +286,7 @@ def test_consent_needs_its_quotes(submission: PatientSubmission) -> None:
                 consent(signature_quote=None),
                 consent(signature_quote="Signed by the patient and a witness."),
                 consent(procedure_named="hip replacement"),
+                consent(signature_quote="Countersigned by R. Ames, MD"),
             ]
         ),
     )
@@ -294,7 +296,22 @@ def test_consent_needs_its_quotes(submission: PatientSubmission) -> None:
         "signed consent without a signature quote",
         "quote not found in document",
         "quote does not name hip replacement",
+        "signature quote does not refer to the patient",
     ]
+
+
+def test_signature_quote_may_name_the_patient_instead(submission: PatientSubmission) -> None:
+    submission.patient = PatientInfo(name=PatientName(given="Ines", family="Okoro"))
+    submission.documents[2].text += "\n/s/ Ines Okoro 04/02/2026"
+    signed = ConsentObservation(
+        doc_id="consent",
+        patient_signed="yes",
+        signature_quote="/s/ Ines Okoro 04/02/2026",
+        procedure_named=None,
+        procedure_quote=None,
+    )
+
+    assert verify(submission, observations(consents=[signed])).dropped == []
 
 
 def test_anticoagulant_mention_must_name_the_drug_in_its_quote(submission: PatientSubmission) -> None:

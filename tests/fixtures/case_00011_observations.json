@@ -1,0 +1,40 @@
+{
+  "vitals": [
+    {
+      "doc_id": "8e3e65c9-48f3-5a95-bb47-d609b772313f",
+      "kind": "blood_pressure",
+      "systolic": 117,
+      "diastolic": 71,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  NIBP 117/71"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "8e3e65c9-48f3-5a95-bb47-d609b772313f",
+      "kind": "preop_evaluation",
+      "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "45278cc4-bb41-5cb1-990e-9f32df3cb1af",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature on file - signed in clinic 03/07/2026 10:02 (scanned copy attached).",
+      "procedure_named": "lumbar laminectomy",
+      "procedure_quote": "Procedure: lumbar laminectomy"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "8e3e65c9-48f3-5a95-bb47-d609b772313f",
+      "procedure_date": null,
+      "pending": true,
+      "quote": "Planned procedure: lumbar laminectomy (date to be determined pending OR availability)"
+    }
+  ]
+}

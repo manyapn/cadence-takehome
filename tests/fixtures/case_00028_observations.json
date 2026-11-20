@@ -1,0 +1,56 @@
+{
+  "vitals": [
+    {
+      "doc_id": "33321cd5-cb32-5c39-9e90-d220bc27aecd",
+      "kind": "blood_pressure",
+      "systolic": 132,
+      "diastolic": 80,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "Vitals 10:05  NIBP 132/80"
+    },
+    {
+      "doc_id": "33321cd5-cb32-5c39-9e90-d220bc27aecd",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.4,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "Vitals 10:05  NIBP 132/80, HR 81, Temp 98.4 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "33321cd5-cb32-5c39-9e90-d220bc27aecd",
+      "kind": "preop_evaluation",
+      "quote": "H&P: PREOPERATIVE EVALUATION"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "58a87237-6d24-57aa-979d-3f0cc34438fd",
+      "patient_signed": "no",
+      "signature_quote": "E-signature request sent to patient portal 03/26/2026 11:22; status: NOT COMPLETED as of this note.",
+      "procedure_named": "thyroidectomy",
+      "procedure_quote": "Procedure: thyroidectomy"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "33321cd5-cb32-5c39-9e90-d220bc27aecd",
+      "procedure_date": "2026-03-29",
+      "pending": false,
+      "quote": "Planned procedure: thyroidectomy (scheduled for 03/29/2026)"
+    },
+    {
+      "doc_id": "33321cd5-cb32-5c39-9e90-d220bc27aecd",
+      "procedure_date": "2026-03-29",
+      "pending": false,
+      "quote": "Thyroidectomy scheduled for 03/29/2026 with Endocrine Surgery."
+    }
+  ]
+}

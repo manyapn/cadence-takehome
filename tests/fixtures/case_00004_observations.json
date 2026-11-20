@@ -1,0 +1,105 @@
+{
+  "vitals": [
+    {
+      "doc_id": "45c71dad-c0de-5cfe-9dc8-bd8c497bef2b",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.1,
+      "unit": "F",
+      "time": "08:45",
+      "quote": "08:45  98.1 °F"
+    },
+    {
+      "doc_id": "45c71dad-c0de-5cfe-9dc8-bd8c497bef2b",
+      "kind": "blood_pressure",
+      "systolic": 140,
+      "diastolic": 78,
+      "temperature": null,
+      "unit": null,
+      "time": "08:53",
+      "quote": "08:53: Repeat BP 140/78"
+    },
+    {
+      "doc_id": "e1e2f93e-7b59-5ee7-bddf-e6fadd65c8ca",
+      "kind": "blood_pressure",
+      "systolic": 134,
+      "diastolic": 79,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "10:05  BP: 134/79"
+    },
+    {
+      "doc_id": "e1e2f93e-7b59-5ee7-bddf-e6fadd65c8ca",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 98.6,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "10:05  BP: 134/79, HR 64, 98.6 °F"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "e1e2f93e-7b59-5ee7-bddf-e6fadd65c8ca",
+      "kind": "preop_evaluation",
+      "quote": "H&P: PREOPERATIVE EVALUATION"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "188693e7-83c2-53ed-84a4-cf13130d45f2",
+      "patient_signed": "yes",
+      "signature_quote": "Signed by patient: Mateo Okafor, 03/03/2026 11:30. Witness: Stephanie A. Moore.",
+      "procedure_named": "thyroidectomy",
+      "procedure_quote": "Procedure: thyroidectomy"
+    }
+  ],
+  "anticoagulant_mentions": [
+    {
+      "doc_id": "39d3585a-4921-5911-bf8a-758787d2038e",
+      "drug_as_written": "warfarin",
+      "generic_name": "warfarin",
+      "status": "taking",
+      "quote": "maintained on warfarin 5 mg PO daily (INR goal 2-3)"
+    },
+    {
+      "doc_id": "45c71dad-c0de-5cfe-9dc8-bd8c497bef2b",
+      "drug_as_written": "warfarin",
+      "generic_name": "warfarin",
+      "status": "taking",
+      "quote": "warfarin 5 mg PO daily (INR goal 2-3) - taking as prescribed"
+    },
+    {
+      "doc_id": "e1e2f93e-7b59-5ee7-bddf-e6fadd65c8ca",
+      "drug_as_written": "warfarin",
+      "generic_name": "warfarin",
+      "status": "taking",
+      "quote": "warfarin 5 mg PO daily (INR goal 2-3)"
+    }
+  ],
+  "anticoagulation_plans": [
+    {
+      "doc_id": "39d3585a-4921-5911-bf8a-758787d2038e",
+      "drug_as_written": "warfarin",
+      "preop": {
+        "label": "instruction",
+        "quote": "Stop warfarin 5 days before surgery (last dose 02/27/2026); check INR the day before surgery with goal <1.5."
+      },
+      "postop": {
+        "label": "instruction",
+        "quote": "Resume warfarin at the usual home dose the evening of surgery if hemostasis is adequate, with enoxaparin bridging restarted 48-72 hours post-op until INR is therapeutic."
+      }
+    }
+  ],
+  "scheduling_statements": [
+    {
+      "doc_id": "e1e2f93e-7b59-5ee7-bddf-e6fadd65c8ca",
+      "procedure_date": "2026-03-05",
+      "pending": false,
+      "quote": "Planned procedure: thyroidectomy (scheduled for 03/05/2026)"
+    }
+  ]
+}
