@@ -1,68 +1,68 @@
 {
-  "generated_at": "2026-11-20T04:17:35.887766+00:00",
+  "generated_at": "2026-11-20T04:29:11.389457+00:00",
   "mode": "eval",
   "primary_score": {
     "name": "aggregate_local_score_pct",
-    "value_pct": 95.33,
+    "value_pct": 100.0,
     "goal": "maximize"
   },
-  "eval_id": "eval_6affc9d8c38881919317622cc382048c",
-  "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+  "eval_id": "eval_6affcc9037dc8191ab89959168124781",
+  "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
   "run_status": "completed",
-  "run_report_url": "https://platform.openai.com/evaluations/eval_6affc9d8c38881919317622cc382048c?project_id=proj_VlXVmJhtuY3gNdJ44ikByhIw&run_id=evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+  "run_report_url": "https://platform.openai.com/evaluations/eval_6affcc9037dc8191ab89959168124781?project_id=proj_VlXVmJhtuY3gNdJ44ikByhIw&run_id=evalrun_6affcc9107fc8191883bb675ededaeca",
   "run_result_counts": {
     "errored": 0,
-    "failed": 5,
-    "passed": 45,
+    "failed": 0,
+    "passed": 50,
     "total": 50
   },
   "run_per_testing_criteria_results": [
     {
-      "failed": 2,
-      "passed": 48,
-      "testing_criteria": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
-      "testing_criteria_id": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194"
+      "failed": 0,
+      "passed": 50,
+      "testing_criteria": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
+      "testing_criteria_id": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381"
     },
     {
       "failed": 0,
       "passed": 50,
-      "testing_criteria": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
-      "testing_criteria_id": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba"
+      "testing_criteria": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
+      "testing_criteria_id": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd"
     },
     {
-      "failed": 5,
-      "passed": 45,
-      "testing_criteria": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
-      "testing_criteria_id": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f"
+      "failed": 0,
+      "passed": 50,
+      "testing_criteria": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
+      "testing_criteria_id": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53"
     }
   ],
   "criteria_summary_from_output_items": {
-    "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194": {
-      "passed": 48,
-      "failed": 2,
-      "total": 50,
-      "pass_rate_pct": 96.0
-    },
-    "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba": {
+    "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381": {
       "passed": 50,
       "failed": 0,
       "total": 50,
       "pass_rate_pct": 100.0
     },
-    "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f": {
-      "passed": 45,
-      "failed": 5,
+    "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd": {
+      "passed": 50,
+      "failed": 0,
       "total": 50,
-      "pass_rate_pct": 90.0
+      "pass_rate_pct": 100.0
+    },
+    "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53": {
+      "passed": 50,
+      "failed": 0,
+      "total": 50,
+      "pass_rate_pct": 100.0
     }
   },
   "local_metrics_summary": {
     "records": 50,
     "json_schema_valid_rate_pct": 100.0,
-    "decision_match_oracle_rate_pct": 96.0,
-    "issue_categories_match_oracle_rate_pct": 90.0,
-    "aggregate_local_score_pct": 95.33,
-    "primary_score_pct": 95.33
+    "decision_match_oracle_rate_pct": 100.0,
+    "issue_categories_match_oracle_rate_pct": 100.0,
+    "aggregate_local_score_pct": 100.0,
+    "primary_score_pct": 100.0
   },
   "records": [
     {
@@ -644,20 +644,20 @@
             "category": "ACUTE_SAFETY_EXCLUSION",
             "status": "pass",
             "unknown_cause": null,
-            "summary": "Most recent temperature 97.88 F (2026-02-28 08:44) is below the exclusion limit (> 100.4 F).",
+            "summary": "Most recent temperature 97.88 F (2026-02-28) is below the exclusion limit (> 100.4 F).",
             "evidence": [
               {
                 "source": "note",
                 "reference": "71fc916f-d0a6-5945-ab4b-52b1b6f52b8e",
-                "date": "2026-02-28 08:44",
+                "date": "2026-02-28",
                 "value": "97.88 F",
-                "quote": "08:44  BP 127/80, Temperature 36.6 \u00b0C"
+                "quote": "Temperature 36.6 \u00b0C"
               }
             ],
             "sources_checked": []
           }
         ],
-        "explanation": "READY\nRule 1 history_and_physical: pass. H&P dated 2026-02-10 is 20 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for cataract extraction is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-02-08) is 22 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 127/80 mmHg (2026-02-28 08:44) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 97.88 F (2026-02-28 08:44) is below the exclusion limit (> 100.4 F).",
+        "explanation": "READY\nRule 1 history_and_physical: pass. H&P dated 2026-02-10 is 20 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for cataract extraction is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-02-08) is 22 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 127/80 mmHg (2026-02-28 08:44) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 97.88 F (2026-02-28) is below the exclusion limit (> 100.4 F).",
         "unverified": []
       },
       "parse_error": null,
@@ -826,14 +826,14 @@
             "category": "ACUTE_SAFETY_EXCLUSION",
             "rule": "Rule 4",
             "unknown_cause": null,
-            "finding": "Most recent temperature 101.48 F (2026-03-01 08:30) meets the exclusion limit (> 100.4 F).",
+            "finding": "Most recent temperature 101.48 F (2026-03-01) meets the exclusion limit (> 100.4 F).",
             "evidence": [
               {
                 "source": "note",
                 "reference": "9e15fc88-0a97-5473-98a7-8eebec5ea8e3",
-                "date": "2026-03-01 08:30",
+                "date": "2026-03-01",
                 "value": "101.48 F",
-                "quote": "08:30: Blood pressure 127/75 mmHg, Temperature 38.6 \u00b0C"
+                "quote": "38.6 \u00b0C (oral"
               }
             ],
             "sources_checked": []
@@ -954,20 +954,20 @@
             "category": "ACUTE_SAFETY_EXCLUSION",
             "status": "fail",
             "unknown_cause": null,
-            "summary": "Most recent temperature 101.48 F (2026-03-01 08:30) meets the exclusion limit (> 100.4 F).",
+            "summary": "Most recent temperature 101.48 F (2026-03-01) meets the exclusion limit (> 100.4 F).",
             "evidence": [
               {
                 "source": "note",
                 "reference": "9e15fc88-0a97-5473-98a7-8eebec5ea8e3",
-                "date": "2026-03-01 08:30",
+                "date": "2026-03-01",
                 "value": "101.48 F",
-                "quote": "08:30: Blood pressure 127/75 mmHg, Temperature 38.6 \u00b0C"
+                "quote": "38.6 \u00b0C (oral"
               }
             ],
             "sources_checked": []
           }
         ],
-        "explanation": "NOT_CLEARED\nRule 1 history_and_physical: pass. H&P dated 2026-02-07 is 24 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Consent on file is not signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-02-26) is 5 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 127/75 mmHg (2026-03-01 08:30) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: fail. Most recent temperature 101.48 F (2026-03-01 08:30) meets the exclusion limit (> 100.4 F).",
+        "explanation": "NOT_CLEARED\nRule 1 history_and_physical: pass. H&P dated 2026-02-07 is 24 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Consent on file is not signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-02-26) is 5 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 127/75 mmHg (2026-03-01 08:30) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: fail. Most recent temperature 101.48 F (2026-03-01) meets the exclusion limit (> 100.4 F).",
         "unverified": []
       },
       "parse_error": null,
@@ -1173,7 +1173,7 @@
                 "reference": "534e01b0-2ce4-5f2a-ab2d-d1838b5ed2bc",
                 "date": "2026-02-19",
                 "value": "patient signed: yes; procedure: inguinal hernia repair",
-                "quote": "Signed by patient: Danielle Nguyen, 02/19/2026 15:14."
+                "quote": "Signed by patient: Danielle Nguyen, 02/19/2026 15:14"
               },
               {
                 "source": "note",
@@ -1246,22 +1246,22 @@
                 "source": "note",
                 "reference": "d9499cc6-2dc1-5a54-90a3-06ac28fbb710",
                 "date": "2026-02-23",
-                "value": "Eliquis 5 mg PO BID: taking",
-                "quote": "Patient with paroxysmal atrial fibrillation (CHA2DS2-VASc 5, HAS-BLED 1) maintained on Eliquis 5 mg PO BID."
+                "value": "Eliquis: taking",
+                "quote": "maintained on Eliquis 5 mg PO BID"
               },
               {
                 "source": "note",
                 "reference": "d9499cc6-2dc1-5a54-90a3-06ac28fbb710",
                 "date": "2026-02-23",
                 "value": "apixaban before the procedure: instruction",
-                "quote": "Hold Eliquis for the 2 days before surgery (last dose 03/01/2026; no doses in the 48 hours prior)."
+                "quote": "Hold Eliquis for the 2 days before surgery (last dose 03/01/2026; no doses in the 48 hours prior"
               },
               {
                 "source": "note",
                 "reference": "d9499cc6-2dc1-5a54-90a3-06ac28fbb710",
                 "date": "2026-02-23",
                 "value": "apixaban after the procedure: instruction",
-                "quote": "Resume Eliquis 48 hours post-op if surgical hemostasis is adequate; no bridging required."
+                "quote": "Resume Eliquis 48 hours post-op if surgical hemostasis is adequate; no bridging required"
               }
             ],
             "sources_checked": []
@@ -1500,10 +1500,10 @@
             "evidence": [
               {
                 "source": "note",
-                "reference": "d0644981-1200-5ade-8bdb-26aa540814bc",
+                "reference": "e1e2f93e-7b59-5ee7-bddf-e6fadd65c8ca",
                 "date": "2026-02-24",
                 "value": null,
-                "quote": "PRE-ANESTHESIA EVALUATION"
+                "quote": "H&P: PREOPERATIVE EVALUATION"
               }
             ],
             "sources_checked": []
@@ -1521,7 +1521,7 @@
                 "reference": "188693e7-83c2-53ed-84a4-cf13130d45f2",
                 "date": "2026-03-03",
                 "value": "patient signed: yes; procedure: thyroidectomy",
-                "quote": "Signed by patient: Mateo Okafor, 03/03/2026 11:30."
+                "quote": "Signed by patient: Mateo Okafor, 03/03/2026 11:30"
               },
               {
                 "source": "note",
@@ -1599,10 +1599,17 @@
               },
               {
                 "source": "note",
+                "reference": "e1e2f93e-7b59-5ee7-bddf-e6fadd65c8ca",
+                "date": "2026-02-24",
+                "value": "warfarin 5 mg PO daily (INR goal 2-3): taking",
+                "quote": "warfarin 5 mg PO daily (INR goal 2-3"
+              },
+              {
+                "source": "note",
                 "reference": "39d3585a-4921-5911-bf8a-758787d2038e",
                 "date": "2026-02-24",
                 "value": "warfarin before the procedure: instruction",
-                "quote": "Stop warfarin 5 days before surgery (last dose 02/27/2026); check INR the day before surgery with goal <1.5. Bridge with enoxaparin 1 mg/kg SC q12h starting 3 days prior, last dose 24 hours pre-op."
+                "quote": "Stop warfarin 5 days before surgery (last dose 02/27/2026); check INR the day before surgery with goal <1.5."
               },
               {
                 "source": "note",
@@ -1824,29 +1831,6 @@
               }
             ],
             "sources_checked": []
-          },
-          {
-            "category": "MISSING_REQUIRED_DATA",
-            "rule": "Rule 4",
-            "unknown_cause": "processing_failure",
-            "finding": "A temperature reading extracted from a note could not be verified against its document, so the most recent temperature is not established. The latest verified reading is 98.0 F (2026-03-01 10:15).",
-            "evidence": [
-              {
-                "source": "structured",
-                "reference": "Primary care visit, 2026-03-01T10:15:00Z",
-                "date": "2026-03-01 10:15",
-                "value": "98.0 F",
-                "quote": null
-              },
-              {
-                "source": "note",
-                "reference": "7aefc9ae-14a0-55b9-957f-861d3e532a3b",
-                "date": null,
-                "value": "unverified vital: quote does not contain the time 09:05",
-                "quote": null
-              }
-            ],
-            "sources_checked": []
           }
         ],
         "checks": [
@@ -1863,7 +1847,7 @@
                 "reference": "92040c30-7556-5d4d-a4d1-ffae8724ebaf",
                 "date": "2026-02-14",
                 "value": null,
-                "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+                "quote": "PREOPERATIVE HISTORY AND PHYSICAL\nDate of service: 02/14/2026\nPatient: Mia Lopez    DOB: 01/02/1975\nPlanned procedure: colonic resection (scheduled for 03/06/2026)\n\nCHIEF COMPLAINT: Sigmoid mass found on screening colonoscopy.\n\nHISTORY OF PRESENT ILLNESS: 51-year-old female referred by Colorectal Surgery for pre-operative evaluation prior to colonic resection."
               }
             ],
             "sources_checked": []
@@ -1881,7 +1865,7 @@
                 "reference": "e43cff65-6e3d-5335-9f7f-a6d861ffb414",
                 "date": "2026-02-22",
                 "value": "patient signed: yes; procedure: colonic resection",
-                "quote": "Patient signature on file - signed in clinic 02/22/2026 12:41 (scanned copy attached"
+                "quote": "Patient signature on file - signed in clinic 02/22/2026 12:41 (scanned copy attached)."
               },
               {
                 "source": "note",
@@ -1969,69 +1953,31 @@
             "name": "temperature",
             "rule": "Rule 4",
             "category": "ACUTE_SAFETY_EXCLUSION",
-            "status": "unknown",
-            "unknown_cause": "processing_failure",
-            "summary": "A temperature reading extracted from a note could not be verified against its document, so the most recent temperature is not established. The latest verified reading is 98.0 F (2026-03-01 10:15).",
+            "status": "pass",
+            "unknown_cause": null,
+            "summary": "Most recent temperature 98.06 F (2026-03-03 09:05) is below the exclusion limit (> 100.4 F).",
             "evidence": [
-              {
-                "source": "structured",
-                "reference": "Primary care visit, 2026-03-01T10:15:00Z",
-                "date": "2026-03-01 10:15",
-                "value": "98.0 F",
-                "quote": null
-              },
               {
                 "source": "note",
                 "reference": "7aefc9ae-14a0-55b9-957f-861d3e532a3b",
-                "date": null,
-                "value": "unverified vital: quote does not contain the time 09:05",
-                "quote": null
+                "date": "2026-03-03 09:05",
+                "value": "98.06 F",
+                "quote": "09:05  BP 157/117, Temp 36.7 \u00b0C"
               }
             ],
             "sources_checked": []
           }
         ],
-        "explanation": "NOT_CLEARED\nRule 1 history_and_physical: pass. H&P dated 2026-02-14 is 20 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for colonic resection is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-02-22) is 12 days before the procedure (limit 14 for HIGH risk).\nRule 2 cmp: pass. Latest CMP (2026-02-23) is 11 days before the procedure (limit 14 for HIGH risk).\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: fail. Most recent blood pressure 157/117 mmHg (2026-03-03 09:05) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: unknown. A temperature reading extracted from a note could not be verified against its document, so the most recent temperature is not established. The latest verified reading is 98.0 F (2026-03-01 10:15).",
-        "unverified": [
-          {
-            "kind": "vital",
-            "doc_id": "7aefc9ae-14a0-55b9-957f-861d3e532a3b",
-            "reason": "quote does not contain the time 09:05",
-            "claim": {
-              "doc_id": "7aefc9ae-14a0-55b9-957f-861d3e532a3b",
-              "kind": "temperature",
-              "systolic": null,
-              "diastolic": null,
-              "temperature": 36.7,
-              "unit": "C",
-              "time": "09:05",
-              "quote": "36.7 \u00b0C"
-            }
-          },
-          {
-            "kind": "vital",
-            "doc_id": "92040c30-7556-5d4d-a4d1-ffae8724ebaf",
-            "reason": "quote does not contain the time 10:05",
-            "claim": {
-              "doc_id": "92040c30-7556-5d4d-a4d1-ffae8724ebaf",
-              "kind": "temperature",
-              "systolic": null,
-              "diastolic": null,
-              "temperature": 98.8,
-              "unit": "F",
-              "time": "10:05",
-              "quote": "Temperature 98.8 \u00b0F"
-            }
-          }
-        ]
+        "explanation": "NOT_CLEARED\nRule 1 history_and_physical: pass. H&P dated 2026-02-14 is 20 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for colonic resection is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-02-22) is 12 days before the procedure (limit 14 for HIGH risk).\nRule 2 cmp: pass. Latest CMP (2026-02-23) is 11 days before the procedure (limit 14 for HIGH risk).\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: fail. Most recent blood pressure 157/117 mmHg (2026-03-03 09:05) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.06 F (2026-03-03 09:05) is below the exclusion limit (> 100.4 F).",
+        "unverified": []
       },
       "parse_error": null,
       "metrics": {
         "json_schema_valid": true,
         "decision_match_oracle": true,
-        "issue_categories_match_oracle": false
+        "issue_categories_match_oracle": true
       },
-      "aggregate_local_score": 66.66666666666666
+      "aggregate_local_score": 100.0
     },
     {
       "record_index": 6,
@@ -2218,14 +2164,14 @@
             "category": "REQUIRED_DOCUMENTATION",
             "status": "pass",
             "unknown_cause": null,
-            "summary": "H&P dated 2026-03-03 is 4 days before the procedure (limit 30).",
+            "summary": "H&P dated 2026-02-14 is 21 days before the procedure (limit 30).",
             "evidence": [
               {
                 "source": "note",
-                "reference": "a20e4d3a-7810-529d-b3e7-61a556a6e5f2",
-                "date": "2026-03-03",
+                "reference": "6cf7f91d-8ab7-5200-ad40-4ed666791fdb",
+                "date": "2026-02-14",
                 "value": null,
-                "quote": "ANESTHESIA PRE-ASSESSMENT"
+                "quote": "HISTORY & PHYSICAL - PRE-OP"
               }
             ],
             "sources_checked": []
@@ -2348,7 +2294,7 @@
             "sources_checked": []
           }
         ],
-        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-03 is 4 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for Roux-en-Y gastric bypass is signed by the patient.\nRule 2 cbc: fail. Latest CBC (2026-01-22) is 44 days before the procedure (limit 30 for MODERATE risk). A newer CBC dated 2026-03-04 is marked entered-in-error and was not counted.\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 116/77 mmHg (2026-03-04 08:49) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.1 F (2026-03-04 08:45) is below the exclusion limit (> 100.4 F).",
+        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-02-14 is 21 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for Roux-en-Y gastric bypass is signed by the patient.\nRule 2 cbc: fail. Latest CBC (2026-01-22) is 44 days before the procedure (limit 30 for MODERATE risk). A newer CBC dated 2026-03-04 is marked entered-in-error and was not counted.\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 116/77 mmHg (2026-03-04 08:49) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.1 F (2026-03-04 08:45) is below the exclusion limit (> 100.4 F).",
         "unverified": []
       },
       "parse_error": null,
@@ -3389,14 +3335,14 @@
             "category": "REQUIRED_DOCUMENTATION",
             "status": "pass",
             "unknown_cause": null,
-            "summary": "H&P dated 2026-03-07 is 4 days before the procedure (limit 30).",
+            "summary": "H&P dated 2026-03-03 is 8 days before the procedure (limit 30).",
             "evidence": [
               {
                 "source": "note",
-                "reference": "65f7f08d-32d2-58de-ab47-86a5319484af",
-                "date": "2026-03-07",
+                "reference": "077cf182-cea5-57fa-b586-2a82708af5a1",
+                "date": "2026-03-03",
                 "value": null,
-                "quote": "ANESTHESIA PRE-ASSESSMENT"
+                "quote": "H&P: PREOPERATIVE EVALUATION"
               }
             ],
             "sources_checked": []
@@ -3509,7 +3455,7 @@
             "sources_checked": []
           }
         ],
-        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-07 is 4 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Consent on file is not signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-06) is 5 days before the procedure (limit 30 for MODERATE risk).\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 121/70 mmHg (2026-03-06 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.4 F (2026-03-06 10:15) is below the exclusion limit (> 100.4 F).",
+        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-03 is 8 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Consent on file is not signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-06) is 5 days before the procedure (limit 30 for MODERATE risk).\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 121/70 mmHg (2026-03-06 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.4 F (2026-03-06 10:15) is below the exclusion limit (> 100.4 F).",
         "unverified": []
       },
       "parse_error": null,
@@ -4271,6 +4217,28 @@
         "decision": "NEEDS_FOLLOW_UP",
         "issues": [
           {
+            "category": "REQUIRED_DOCUMENTATION",
+            "rule": "Rule 1",
+            "unknown_cause": null,
+            "finding": "No pre-operative H&P found in 5 documents. A 'Anesthesia Screening Note' dated 2026-03-07 was read as a pre-operative evaluation but not counted, because neither its type nor its heading calls it an H&P.",
+            "evidence": [
+              {
+                "source": "note",
+                "reference": "3fb51913-7872-57a5-85d3-103c169d845f",
+                "date": "2026-03-07",
+                "value": null,
+                "quote": "PRE-ANESTHESIA EVALUATION\nDate: 03/07/2026\nProposed procedure: esophagectomy"
+              }
+            ],
+            "sources_checked": [
+              "Surgical Consent (2026-03-08)",
+              "Radiology Report (2026-02-07)",
+              "Anesthesia Screening Note (2026-03-07)",
+              "Patient Portal Message (2026-03-02)",
+              "Pre-Admission Testing Visit (2026-03-12)"
+            ]
+          },
+          {
             "category": "MISSING_REQUIRED_DATA",
             "rule": "Rule 4",
             "unknown_cause": "chart_gap",
@@ -4291,19 +4259,25 @@
             "name": "history_and_physical",
             "rule": "Rule 1",
             "category": "REQUIRED_DOCUMENTATION",
-            "status": "pass",
+            "status": "fail",
             "unknown_cause": null,
-            "summary": "H&P dated 2026-03-07 is 7 days before the procedure (limit 30).",
+            "summary": "No pre-operative H&P found in 5 documents. A 'Anesthesia Screening Note' dated 2026-03-07 was read as a pre-operative evaluation but not counted, because neither its type nor its heading calls it an H&P.",
             "evidence": [
               {
                 "source": "note",
                 "reference": "3fb51913-7872-57a5-85d3-103c169d845f",
                 "date": "2026-03-07",
                 "value": null,
-                "quote": "PRE-ANESTHESIA EVALUATION\nDate: 03/07/2026\nProposed procedure: esophagectomy\n\nASA physical status: II."
+                "quote": "PRE-ANESTHESIA EVALUATION\nDate: 03/07/2026\nProposed procedure: esophagectomy"
               }
             ],
-            "sources_checked": []
+            "sources_checked": [
+              "Surgical Consent (2026-03-08)",
+              "Radiology Report (2026-02-07)",
+              "Anesthesia Screening Note (2026-03-07)",
+              "Patient Portal Message (2026-03-02)",
+              "Pre-Admission Testing Visit (2026-03-12)"
+            ]
           },
           {
             "name": "surgical_consent",
@@ -4419,16 +4393,16 @@
             ]
           }
         ],
-        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-07 is 7 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for esophagectomy is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-11) is 3 days before the procedure (limit 14 for HIGH risk).\nRule 2 cmp: pass. Latest CMP (2026-03-07) is 7 days before the procedure (limit 14 for HIGH risk).\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 116/75 mmHg (2026-03-09 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: unknown. No temperature reading in the structured vitals or the notes.",
+        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: fail. No pre-operative H&P found in 5 documents. A 'Anesthesia Screening Note' dated 2026-03-07 was read as a pre-operative evaluation but not counted, because neither its type nor its heading calls it an H&P.\nRule 1 surgical_consent: pass. Consent for esophagectomy is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-11) is 3 days before the procedure (limit 14 for HIGH risk).\nRule 2 cmp: pass. Latest CMP (2026-03-07) is 7 days before the procedure (limit 14 for HIGH risk).\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 116/75 mmHg (2026-03-09 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: unknown. No temperature reading in the structured vitals or the notes.",
         "unverified": []
       },
       "parse_error": null,
       "metrics": {
         "json_schema_valid": true,
         "decision_match_oracle": true,
-        "issue_categories_match_oracle": false
+        "issue_categories_match_oracle": true
       },
-      "aggregate_local_score": 66.66666666666666
+      "aggregate_local_score": 100.0
     },
     {
       "record_index": 14,
@@ -4575,7 +4549,7 @@
                 "reference": "6fed8663-8ff1-5d5a-a2bf-fda87b3ee5db",
                 "date": "2026-02-12",
                 "value": null,
-                "quote": "H&P: PREOPERATIVE EVALUATION\nDate of service: 02/12/2026\nPatient: Maya Simmons    DOB: 01/02/1943\nPlanned procedure: tonsillectomy (scheduled for 03/15/2026"
+                "quote": "H&P: PREOPERATIVE EVALUATION"
               }
             ],
             "sources_checked": []
@@ -4595,7 +4569,7 @@
                 "reference": "6fed8663-8ff1-5d5a-a2bf-fda87b3ee5db",
                 "date": "2026-02-12",
                 "value": null,
-                "quote": "H&P: PREOPERATIVE EVALUATION\nDate of service: 02/12/2026\nPatient: Maya Simmons    DOB: 01/02/1943\nPlanned procedure: tonsillectomy (scheduled for 03/15/2026"
+                "quote": "H&P: PREOPERATIVE EVALUATION"
               }
             ],
             "sources_checked": []
@@ -5732,7 +5706,7 @@
                 "reference": "49e558c2-2d14-5dce-ab36-429608a3ec54",
                 "date": "2026-03-17",
                 "value": "apixaban 5 mg PO BID: taking",
-                "quote": "apixaban 5 mg PO BID - taking as prescribed"
+                "quote": "apixaban 5 mg PO BID"
               },
               {
                 "source": "note",
@@ -5880,7 +5854,7 @@
                 "reference": "49e558c2-2d14-5dce-ab36-429608a3ec54",
                 "date": "2026-03-17",
                 "value": "apixaban 5 mg PO BID: taking",
-                "quote": "apixaban 5 mg PO BID - taking as prescribed"
+                "quote": "apixaban 5 mg PO BID"
               },
               {
                 "source": "note",
@@ -6131,44 +6105,8 @@
         "rationale": "Warfarin shows up in the med list, but it's marked inactive, and the 02/23 H&P says it was a 6-month course for a provoked DVT in 2019 that hematology stopped in early 2020, and he's not currently anticoagulated. So no plan is needed. H&P 02/23 is 25 days out, CBC 03/11, consent e-signed 03/17, and vitals on 03/15 were 119/71 and 98.3 F."
       },
       "parsed_output": {
-        "decision": "NEEDS_FOLLOW_UP",
-        "issues": [
-          {
-            "category": "MISSING_REQUIRED_DATA",
-            "rule": "Rule 3",
-            "unknown_cause": "processing_failure",
-            "finding": "No current anticoagulant in the medication list or notes. This is not settled: an extracted anticoagulant mention could not be verified against its document.",
-            "evidence": [
-              {
-                "source": "structured",
-                "reference": "medications",
-                "date": null,
-                "value": "warfarin (Coumadin) 5 mg PO daily (active: False)",
-                "quote": null
-              },
-              {
-                "source": "note",
-                "reference": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
-                "date": null,
-                "value": "unverified anticoagulant_mention: quote does not name warfarin (Coumadin)",
-                "quote": null
-              }
-            ],
-            "sources_checked": [
-              "medication list: omeprazole 20 mg PO daily (active: True)",
-              "medication list: sertraline 50 mg PO daily (active: True)",
-              "medication list: tamsulosin 0.4 mg PO nightly (active: True)",
-              "medication list: warfarin (Coumadin) 5 mg PO daily (active: False)",
-              "Clinic Follow-up Note (2026-03-15)",
-              "Outpatient H&P (2026-02-23)",
-              "Anesthesia Screening Note (2026-03-15)",
-              "Pre-Admission Testing Visit (2026-03-18)",
-              "Clinic Follow-up Note (2026-02-16)",
-              "Procedure Consent Form (2026-03-17)",
-              "Clinic H&P (external) (2025-10-15)"
-            ]
-          }
-        ],
+        "decision": "READY",
+        "issues": [],
         "checks": [
           {
             "name": "history_and_physical",
@@ -6245,9 +6183,9 @@
             "name": "anticoagulation_plan",
             "rule": "Rule 3",
             "category": "ANTICOAGULATION_MANAGEMENT",
-            "status": "unknown",
-            "unknown_cause": "processing_failure",
-            "summary": "No current anticoagulant in the medication list or notes. This is not settled: an extracted anticoagulant mention could not be verified against its document.",
+            "status": "not_applicable",
+            "unknown_cause": null,
+            "summary": "No current anticoagulant in the medication list or notes.",
             "evidence": [
               {
                 "source": "structured",
@@ -6259,9 +6197,9 @@
               {
                 "source": "note",
                 "reference": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
-                "date": null,
-                "value": "unverified anticoagulant_mention: quote does not name warfarin (Coumadin)",
-                "quote": null
+                "date": "2026-02-23",
+                "value": "warfarin (Coumadin): discontinued",
+                "quote": "Discontinued: warfarin (Coumadin"
               }
             ],
             "sources_checked": [
@@ -6315,29 +6253,16 @@
             "sources_checked": []
           }
         ],
-        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-02-23 is 25 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for thyroidectomy is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-11) is 9 days before the procedure (limit 30 for MODERATE risk).\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: unknown. No current anticoagulant in the medication list or notes. This is not settled: an extracted anticoagulant mention could not be verified against its document.\nRule 4 blood_pressure: pass. Most recent blood pressure 119/71 mmHg (2026-03-15 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.3 F (2026-03-15 10:15) is below the exclusion limit (> 100.4 F).",
-        "unverified": [
-          {
-            "kind": "anticoagulant_mention",
-            "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
-            "reason": "quote does not name warfarin (Coumadin)",
-            "claim": {
-              "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
-              "drug_as_written": "warfarin (Coumadin)",
-              "generic_name": "warfarin",
-              "status": "discontinued",
-              "quote": "Discontinued: warfarin (Coumadin)"
-            }
-          }
-        ]
+        "explanation": "READY\nRule 1 history_and_physical: pass. H&P dated 2026-02-23 is 25 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for thyroidectomy is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-11) is 9 days before the procedure (limit 30 for MODERATE risk).\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 119/71 mmHg (2026-03-15 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.3 F (2026-03-15 10:15) is below the exclusion limit (> 100.4 F).",
+        "unverified": []
       },
       "parse_error": null,
       "metrics": {
         "json_schema_valid": true,
-        "decision_match_oracle": false,
-        "issue_categories_match_oracle": false
+        "decision_match_oracle": true,
+        "issue_categories_match_oracle": true
       },
-      "aggregate_local_score": 33.33333333333333
+      "aggregate_local_score": 100.0
     },
     {
       "record_index": 20,
@@ -6524,7 +6449,7 @@
                 "source": "note",
                 "reference": "2ace2018-11e3-54eb-b3c6-386c8970c914",
                 "date": "2026-03-09",
-                "value": "Coumadin 5 mg PO daily: taking",
+                "value": "Coumadin: taking",
                 "quote": "Coumadin 5 mg PO daily (INR goal 2-3"
               },
               {
@@ -6532,7 +6457,7 @@
                 "reference": "0eb67951-00cf-5b04-81cb-85dc8a56b3c8",
                 "date": "2026-03-15",
                 "value": "warfarin before the procedure: instruction",
-                "quote": "Stop warfarin 5 days before surgery (last dose 03/15/2026); check INR the day before surgery with goal <1.5. Bridge with enoxaparin 1 mg/kg SC q12h starting 3 days prior, last dose 24 hours pre-op."
+                "quote": "Stop warfarin 5 days before surgery (last dose 03/15/2026); check INR the day before surgery with goal <1.5"
               },
               {
                 "source": "note",
@@ -6643,7 +6568,7 @@
                 "source": "note",
                 "reference": "2ace2018-11e3-54eb-b3c6-386c8970c914",
                 "date": "2026-03-09",
-                "value": "Coumadin 5 mg PO daily: taking",
+                "value": "Coumadin: taking",
                 "quote": "Coumadin 5 mg PO daily (INR goal 2-3"
               },
               {
@@ -6651,7 +6576,7 @@
                 "reference": "0eb67951-00cf-5b04-81cb-85dc8a56b3c8",
                 "date": "2026-03-15",
                 "value": "warfarin before the procedure: instruction",
-                "quote": "Stop warfarin 5 days before surgery (last dose 03/15/2026); check INR the day before surgery with goal <1.5. Bridge with enoxaparin 1 mg/kg SC q12h starting 3 days prior, last dose 24 hours pre-op."
+                "quote": "Stop warfarin 5 days before surgery (last dose 03/15/2026); check INR the day before surgery with goal <1.5"
               },
               {
                 "source": "note",
@@ -6836,7 +6761,7 @@
                 "reference": "25c3256a-0441-5af1-9864-5cd6296fafb3",
                 "date": "2026-02-06",
                 "value": null,
-                "quote": "H&P: PREOPERATIVE EVALUATION\nDate of service: 02/06/2026\nPatient: Ethan Kowalski    DOB: 01/02/1983\nPlanned procedure: carpal tunnel release (scheduled for 03/22/2026"
+                "quote": "H&P: PREOPERATIVE EVALUATION"
               }
             ],
             "sources_checked": []
@@ -6870,7 +6795,7 @@
                 "reference": "25c3256a-0441-5af1-9864-5cd6296fafb3",
                 "date": "2026-02-06",
                 "value": null,
-                "quote": "H&P: PREOPERATIVE EVALUATION\nDate of service: 02/06/2026\nPatient: Ethan Kowalski    DOB: 01/02/1983\nPlanned procedure: carpal tunnel release (scheduled for 03/22/2026"
+                "quote": "H&P: PREOPERATIVE EVALUATION"
               }
             ],
             "sources_checked": []
@@ -7116,7 +7041,7 @@
                 "reference": "fa4b60c8-1252-532e-8386-f1813d0b107d",
                 "date": "2026-03-15",
                 "value": "patient signed: no; procedure: tonsillectomy",
-                "quote": "Patient requested additional time to review the form with family and will return the signed consent at the day-of-surgery check-in.\nPatient signature: pending"
+                "quote": "Patient signature: pending"
               },
               {
                 "source": "note",
@@ -7166,14 +7091,14 @@
             "category": "REQUIRED_DOCUMENTATION",
             "status": "pass",
             "unknown_cause": null,
-            "summary": "H&P dated 2026-03-18 is 5 days before the procedure (limit 30).",
+            "summary": "H&P dated 2026-03-01 is 22 days before the procedure (limit 30).",
             "evidence": [
               {
                 "source": "note",
-                "reference": "463947fe-893e-5a0e-8744-e82f7cb83f35",
-                "date": "2026-03-18",
+                "reference": "c5bfa7ba-e3ed-5194-9f3d-d53519a564e2",
+                "date": "2026-03-01",
                 "value": null,
-                "quote": "PRE-ANESTHESIA EVALUATION\nDate: 03/18/2026\nProposed procedure: tonsillectomy\n\nASA physical status: II.\nAirway: Mallampati I, thyromental distance >3 FB, full dentition.\nSTOP-BANG: 4. Uses CPAP nightly.\nPrior anesthesia: PONV after 2018 surgery."
+                "quote": "HISTORY & PHYSICAL - PRE-OP"
               }
             ],
             "sources_checked": []
@@ -7191,7 +7116,7 @@
                 "reference": "fa4b60c8-1252-532e-8386-f1813d0b107d",
                 "date": "2026-03-15",
                 "value": "patient signed: no; procedure: tonsillectomy",
-                "quote": "Patient requested additional time to review the form with family and will return the signed consent at the day-of-surgery check-in.\nPatient signature: pending"
+                "quote": "Patient signature: pending"
               },
               {
                 "source": "note",
@@ -7284,7 +7209,7 @@
             ]
           }
         ],
-        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-18 is 5 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Consent on file is not signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-05) is 18 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: unknown. No blood pressure reading in the structured vitals or the notes.\nRule 4 temperature: unknown. No temperature reading in the structured vitals or the notes.",
+        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-01 is 22 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Consent on file is not signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-05) is 18 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: unknown. No blood pressure reading in the structured vitals or the notes.\nRule 4 temperature: unknown. No temperature reading in the structured vitals or the notes.",
         "unverified": []
       },
       "parse_error": null,
@@ -7470,21 +7395,21 @@
                 "source": "note",
                 "reference": "289befe2-1d8a-5534-92d9-5695947b8fc9",
                 "date": "2026-03-14",
-                "value": "dabigatran: taking",
-                "quote": "Patient with atrial fibrillation (CHA2DS2-VASc 2, HAS-BLED 2) maintained on dabigatran 150 mg PO BID."
+                "value": "dabigatran 150 mg PO BID: taking",
+                "quote": "maintained on dabigatran 150 mg PO BID"
               },
               {
                 "source": "note",
                 "reference": "5105686c-c169-5cd8-b9e3-b95716151b59",
                 "date": "2026-03-21",
-                "value": "dabigatran (Pradaxa): taking",
+                "value": "dabigatran (Pradaxa) 150 mg PO BID: taking",
                 "quote": "dabigatran (Pradaxa) 150 mg PO BID - taking as prescribed"
               },
               {
                 "source": "note",
                 "reference": "9248ac8a-267f-521f-be9c-f6774c0935a4",
                 "date": "2026-03-06",
-                "value": "dabigatran (Pradaxa): taking",
+                "value": "dabigatran (Pradaxa) 150 mg PO BID: taking",
                 "quote": "dabigatran (Pradaxa) 150 mg PO BID"
               }
             ],
@@ -7582,21 +7507,21 @@
                 "source": "note",
                 "reference": "289befe2-1d8a-5534-92d9-5695947b8fc9",
                 "date": "2026-03-14",
-                "value": "dabigatran: taking",
-                "quote": "Patient with atrial fibrillation (CHA2DS2-VASc 2, HAS-BLED 2) maintained on dabigatran 150 mg PO BID."
+                "value": "dabigatran 150 mg PO BID: taking",
+                "quote": "maintained on dabigatran 150 mg PO BID"
               },
               {
                 "source": "note",
                 "reference": "5105686c-c169-5cd8-b9e3-b95716151b59",
                 "date": "2026-03-21",
-                "value": "dabigatran (Pradaxa): taking",
+                "value": "dabigatran (Pradaxa) 150 mg PO BID: taking",
                 "quote": "dabigatran (Pradaxa) 150 mg PO BID - taking as prescribed"
               },
               {
                 "source": "note",
                 "reference": "9248ac8a-267f-521f-be9c-f6774c0935a4",
                 "date": "2026-03-06",
-                "value": "dabigatran (Pradaxa): taking",
+                "value": "dabigatran (Pradaxa) 150 mg PO BID: taking",
                 "quote": "dabigatran (Pradaxa) 150 mg PO BID"
               }
             ],
@@ -7640,7 +7565,23 @@
           }
         ],
         "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-06 is 18 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for total knee arthroplasty is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-20) is 4 days before the procedure (limit 30 for MODERATE risk).\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: fail. Patient takes dabigatran and there is no documented perioperative plan for it.\nRule 4 blood_pressure: pass. Most recent blood pressure 123/78 mmHg (2026-03-19 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.7 F (2026-03-19 10:15) is below the exclusion limit (> 100.4 F).",
-        "unverified": []
+        "unverified": [
+          {
+            "kind": "vital",
+            "doc_id": "9248ac8a-267f-521f-be9c-f6774c0935a4",
+            "reason": "quote not found in document",
+            "claim": {
+              "doc_id": "9248ac8a-267f-521f-be9c-f6774c0935a4",
+              "kind": "temperature",
+              "systolic": null,
+              "diastolic": null,
+              "temperature": 97.5,
+              "unit": "F",
+              "time": "10:05",
+              "quote": "10:05  ... Temp: 97.5F"
+            }
+          }
+        ]
       },
       "parse_error": null,
       "metrics": {
@@ -7831,14 +7772,14 @@
             "category": "REQUIRED_DOCUMENTATION",
             "status": "pass",
             "unknown_cause": null,
-            "summary": "H&P dated 2026-03-18 is 7 days before the procedure (limit 30).",
+            "summary": "H&P dated 2026-03-08 is 17 days before the procedure (limit 30).",
             "evidence": [
               {
                 "source": "note",
-                "reference": "c5148b3e-bb95-5559-ac31-c782139f9440",
-                "date": "2026-03-18",
+                "reference": "1dfcd7d4-b8c6-542b-a04f-ea54859bf637",
+                "date": "2026-03-08",
                 "value": null,
-                "quote": "ANESTHESIA PRE-ASSESSMENT"
+                "quote": "HISTORY & PHYSICAL - PRE-OP"
               }
             ],
             "sources_checked": []
@@ -7953,7 +7894,7 @@
             "sources_checked": []
           }
         ],
-        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-18 is 7 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Signed consent names coronary artery bypass grafting, not the scheduled Elective thyroidectomy.\nRule 2 cbc: pass. Latest CBC (2026-03-16) is 9 days before the procedure (limit 30 for MODERATE risk).\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 127/77 mmHg (2026-03-20 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.8 F (2026-03-20 10:15) is below the exclusion limit (> 100.4 F).",
+        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-08 is 17 days before the procedure (limit 30).\nRule 1 surgical_consent: fail. Signed consent names coronary artery bypass grafting, not the scheduled Elective thyroidectomy.\nRule 2 cbc: pass. Latest CBC (2026-03-16) is 9 days before the procedure (limit 30 for MODERATE risk).\nRule 2 cmp: not_applicable. CMP is not required for a MODERATE risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 127/77 mmHg (2026-03-20 10:12) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.8 F (2026-03-20 10:15) is below the exclusion limit (> 100.4 F).",
         "unverified": []
       },
       "parse_error": null,
@@ -8441,7 +8382,7 @@
                 "reference": "1301dd21-c875-5827-90de-c2c7c559916c",
                 "date": "2026-03-17",
                 "value": null,
-                "quote": "being evaluated prior to tonsillectomy"
+                "quote": "pre-operative evaluation prior to tonsillectomy"
               }
             ],
             "sources_checked": []
@@ -9417,7 +9358,7 @@
                 "reference": "20fab676-c9c2-5e99-b8ca-c5ec02c5f340",
                 "date": "2026-03-10",
                 "value": null,
-                "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+                "quote": "PREOPERATIVE HISTORY AND PHYSICAL\nDate of service: 03/10/2026\nPatient: Noah Patel    DOB: 01/01/1962\nPlanned procedure: abdominal aortic aneurysm repair (scheduled for 03/30/2026"
               }
             ],
             "sources_checked": []
@@ -10310,14 +10251,14 @@
             "category": "REQUIRED_DOCUMENTATION",
             "status": "pass",
             "unknown_cause": null,
-            "summary": "H&P dated 2026-03-28 is 5 days before the procedure (limit 30).",
+            "summary": "H&P dated 2026-03-25 is 8 days before the procedure (limit 30).",
             "evidence": [
               {
                 "source": "note",
-                "reference": "cedaeeee-03f1-535a-bbb1-798c9b3a8a4f",
-                "date": "2026-03-28",
+                "reference": "d1282783-0221-5f17-ad65-cf1e2950ac32",
+                "date": "2026-03-25",
                 "value": null,
-                "quote": "PRE-ANESTHESIA EVALUATION"
+                "quote": "HISTORY & PHYSICAL - PRE-OP"
               }
             ],
             "sources_checked": []
@@ -10418,13 +10359,13 @@
                 "reference": "41ff2483-f4a7-5eea-b7fd-04e6b97e83cd",
                 "date": "2026-03-31",
                 "value": "98.2 F",
-                "quote": "Temperature 98.2 \u00b0F"
+                "quote": "Temperature 98.2 \u00b0F (oral"
               }
             ],
             "sources_checked": []
           }
         ],
-        "explanation": "NOT_CLEARED\nRule 1 history_and_physical: pass. H&P dated 2026-03-28 is 5 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for knee arthroscopy is signed by the patient.\nRule 2 cbc: fail. No final CBC result among 1 lab results.\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: fail. Most recent blood pressure 181/98 mmHg (2026-03-31 09:38) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.2 F (2026-03-31) is below the exclusion limit (> 100.4 F).",
+        "explanation": "NOT_CLEARED\nRule 1 history_and_physical: pass. H&P dated 2026-03-25 is 8 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for knee arthroscopy is signed by the patient.\nRule 2 cbc: fail. No final CBC result among 1 lab results.\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: fail. Most recent blood pressure 181/98 mmHg (2026-03-31 09:38) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.2 F (2026-03-31) is below the exclusion limit (> 100.4 F).",
         "unverified": []
       },
       "parse_error": null,
@@ -10603,7 +10544,7 @@
                 "reference": "a2719c6d-5189-5dd5-9ec7-70d31cee5373",
                 "date": "2026-03-09",
                 "value": null,
-                "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+                "quote": "PREOPERATIVE HISTORY AND PHYSICAL\nDate of service: 03/09/2026\nPatient: Mia Nguyen    DOB: 01/02/1975\nPlanned procedure: Roux-en-Y gastric bypass (scheduled for 04/03/2026"
               }
             ],
             "sources_checked": []
@@ -11141,7 +11082,7 @@
                 "reference": "8f9e6571-395c-530f-ac45-cadd4962a751",
                 "date": "2026-03-23",
                 "value": null,
-                "quote": "PREOPERATIVE HISTORY AND PHYSICAL"
+                "quote": "PREOPERATIVE HISTORY AND PHYSICAL\nDate of service: 03/23/2026\nPatient: Lucas Carter    DOB: 01/02/1983\nPlanned procedure: knee arthroscopy (scheduled for 04/05/2026"
               }
             ],
             "sources_checked": []
@@ -11453,7 +11394,7 @@
                 "reference": "156eb2ff-9629-5cd6-b7b4-7657d6668187",
                 "date": "2026-03-31",
                 "value": "rivaroxaban before the procedure: deferred",
-                "quote": "Periprocedural management of rivaroxaban to be determined by the surgical team"
+                "quote": "Periprocedural management of rivaroxaban to be determined by the surgical team; happy to assist if needed."
               },
               {
                 "source": "note",
@@ -11574,7 +11515,7 @@
                 "reference": "156eb2ff-9629-5cd6-b7b4-7657d6668187",
                 "date": "2026-03-31",
                 "value": "rivaroxaban before the procedure: deferred",
-                "quote": "Periprocedural management of rivaroxaban to be determined by the surgical team"
+                "quote": "Periprocedural management of rivaroxaban to be determined by the surgical team; happy to assist if needed."
               },
               {
                 "source": "note",
@@ -11799,7 +11740,7 @@
                 "reference": "cf037b51-48fa-586e-b884-7648f110f04d",
                 "date": "2026-04-01",
                 "value": null,
-                "quote": "H&P: PREOPERATIVE EVALUATION\nDate of service: 04/01/2026\nPatient: Nora Okafor    DOB: 01/02/1971\nPlanned procedure: tonsillectomy (scheduled for 04/07/2026"
+                "quote": "H&P: PREOPERATIVE EVALUATION"
               }
             ],
             "sources_checked": []
@@ -11817,7 +11758,7 @@
                 "reference": "4fb1264a-be4c-5b69-bd78-522f6d95c11e",
                 "date": "2026-03-31",
                 "value": "patient signed: yes; procedure: tonsillectomy",
-                "quote": "Signed by patient: Nora Okafor, 03/31/2026 09:14."
+                "quote": "Signed by patient: Nora Okafor, 03/31/2026 09:14"
               },
               {
                 "source": "note",
@@ -12120,7 +12061,7 @@
                 "reference": "6fa954e5-6cea-505e-92e1-07d7188d734d",
                 "date": "2026-04-06",
                 "value": "Coumadin 5 mg: taking",
-                "quote": "Patient also reports taking Coumadin 5 mg (daily (INR goal 2-3)), prescribed by an outside cardiologist"
+                "quote": "Patient also reports taking Coumadin 5 mg (daily (INR goal 2-3"
               }
             ],
             "sources_checked": []
@@ -12211,7 +12152,7 @@
                 "reference": "6fa954e5-6cea-505e-92e1-07d7188d734d",
                 "date": "2026-04-06",
                 "value": "Coumadin 5 mg: taking",
-                "quote": "Patient also reports taking Coumadin 5 mg (daily (INR goal 2-3)), prescribed by an outside cardiologist"
+                "quote": "Patient also reports taking Coumadin 5 mg (daily (INR goal 2-3"
               }
             ],
             "sources_checked": []
@@ -12267,7 +12208,7 @@
               "temperature": 97.5,
               "unit": "F",
               "time": "10:05",
-              "quote": "Vitals 10:05  ... T 97.5 F"
+              "quote": "10:05  ... T 97.5 F"
             }
           }
         ]
@@ -12459,7 +12400,7 @@
                 "reference": "82ccdcb2-2a5f-510f-ad67-2a9225539fd7",
                 "date": "2026-03-15",
                 "value": null,
-                "quote": "PREOPERATIVE HISTORY AND PHYSICAL\nDate of service: 03/15/2026\nPatient: Danielle Carter    DOB: 01/02/1967\nPlanned procedure: coronary artery bypass grafting (scheduled for 04/09/2026)\n\nCHIEF COMPLAINT: Exertional chest pressure.\n\nHISTORY OF PRESENT ILLNESS: 59-year-old female referred by Cardiothoracic Surgery for pre-operative evaluation prior to coronary artery bypass grafting."
+                "quote": "PREOPERATIVE HISTORY AND PHYSICAL\nDate of service: 03/15/2026\nPatient: Danielle Carter    DOB: 01/02/1967\nPlanned procedure: coronary artery bypass grafting (scheduled for 04/09/2026"
               }
             ],
             "sources_checked": []
@@ -13396,7 +13337,7 @@
                 "reference": "5802f239-d106-5d7a-94bb-d62b07fd3660",
                 "date": "2026-03-24",
                 "value": null,
-                "quote": "PREOPERATIVE HISTORY AND PHYSICAL\nDate of service: 03/24/2026\nPatient: Elena Okafor    DOB: 01/02/1943\nPlanned procedure: hepatic lobectomy (scheduled for 04/12/2026"
+                "quote": "PREOPERATIVE HISTORY AND PHYSICAL\nDate of service: 03/24/2026\nPatient: Elena Okafor    DOB: 01/02/1943\nPlanned procedure: hepatic lobectomy (scheduled for 04/12/2026)\n\nCHIEF COMPLAINT: Right hepatic lobe lesion.\n\nHISTORY OF PRESENT ILLNESS: 83-year-old female referred by Hepatobiliary Surgery for pre-operative evaluation prior to hepatic lobectomy."
               }
             ],
             "sources_checked": []
@@ -13486,24 +13427,17 @@
               },
               {
                 "source": "note",
-                "reference": "5802f239-d106-5d7a-94bb-d62b07fd3660",
-                "date": "2026-03-24",
-                "value": "rivaroxaban 20 mg PO daily with evening meal: taking",
-                "quote": "rivaroxaban 20 mg PO daily with evening meal"
-              },
-              {
-                "source": "note",
                 "reference": "6be6a3e2-a5b9-55b2-b167-3f012624af5f",
                 "date": "2026-04-02",
                 "value": "rivaroxaban 20 mg PO daily with evening meal: taking",
-                "quote": "Patient with persistent atrial fibrillation (CHA2DS2-VASc 3, HAS-BLED 2) maintained on rivaroxaban 20 mg PO daily with evening meal."
+                "quote": "maintained on rivaroxaban 20 mg PO daily with evening meal"
               },
               {
                 "source": "note",
                 "reference": "6be6a3e2-a5b9-55b2-b167-3f012624af5f",
                 "date": "2026-04-02",
                 "value": "rivaroxaban before the procedure: instruction",
-                "quote": "Hold rivaroxaban for the 2 days before surgery (last dose 04/09/2026; no doses in the 48 hours prior)."
+                "quote": "Hold rivaroxaban for the 2 days before surgery (last dose 04/09/2026; no doses in the 48 hours prior"
               },
               {
                 "source": "note",
@@ -13684,41 +13618,8 @@
         "rationale": "Warfarin (Coumadin) shows up in the med list but it's marked inactive, and the 03/26 H&P says hematology stopped it in early 2020 and she isn't anticoagulated now, so no stop/restart plan is needed. H&P is 18 days out, CBC from 03/28 is 16 days, consent was signed 04/04, and the 04/11 nursing visit has BP 130/72 and temp 98.6 F."
       },
       "parsed_output": {
-        "decision": "NEEDS_FOLLOW_UP",
-        "issues": [
-          {
-            "category": "MISSING_REQUIRED_DATA",
-            "rule": "Rule 3",
-            "unknown_cause": "processing_failure",
-            "finding": "No current anticoagulant in the medication list or notes. This is not settled: an extracted anticoagulant mention could not be verified against its document.",
-            "evidence": [
-              {
-                "source": "structured",
-                "reference": "medications",
-                "date": null,
-                "value": "warfarin (Coumadin) 5 mg PO daily (active: False)",
-                "quote": null
-              },
-              {
-                "source": "note",
-                "reference": "4e124e5e-7eda-5094-8e14-d95e2652b4d3",
-                "date": null,
-                "value": "unverified anticoagulant_mention: quote does not name warfarin (Coumadin)",
-                "quote": null
-              }
-            ],
-            "sources_checked": [
-              "medication list: vitamin D3 2000 IU PO daily (active: True)",
-              "medication list: warfarin (Coumadin) 5 mg PO daily (active: False)",
-              "Pre-Admission Testing Visit (2026-04-11)",
-              "Social Work Note (2026-03-27)",
-              "Clinic H&P (2026-03-26)",
-              "Physical Therapy Evaluation (2026-03-31)",
-              "Consent - Elective Procedure (2026-04-04)",
-              "Pre-anesthesia Evaluation (2026-04-09)"
-            ]
-          }
-        ],
+        "decision": "READY",
+        "issues": [],
         "checks": [
           {
             "name": "history_and_physical",
@@ -13795,9 +13696,9 @@
             "name": "anticoagulation_plan",
             "rule": "Rule 3",
             "category": "ANTICOAGULATION_MANAGEMENT",
-            "status": "unknown",
-            "unknown_cause": "processing_failure",
-            "summary": "No current anticoagulant in the medication list or notes. This is not settled: an extracted anticoagulant mention could not be verified against its document.",
+            "status": "not_applicable",
+            "unknown_cause": null,
+            "summary": "No current anticoagulant in the medication list or notes.",
             "evidence": [
               {
                 "source": "structured",
@@ -13809,9 +13710,9 @@
               {
                 "source": "note",
                 "reference": "4e124e5e-7eda-5094-8e14-d95e2652b4d3",
-                "date": null,
-                "value": "unverified anticoagulant_mention: quote does not name warfarin (Coumadin)",
-                "quote": null
+                "date": "2026-03-26",
+                "value": "warfarin (Coumadin): discontinued",
+                "quote": "Discontinued: warfarin (Coumadin"
               }
             ],
             "sources_checked": [
@@ -13849,42 +13750,29 @@
             "category": "ACUTE_SAFETY_EXCLUSION",
             "status": "pass",
             "unknown_cause": null,
-            "summary": "Most recent temperature 98.6 F (2026-04-11 08:45) is below the exclusion limit (> 100.4 F).",
+            "summary": "Most recent temperature 98.6 F (2026-04-11) is below the exclusion limit (> 100.4 F).",
             "evidence": [
               {
                 "source": "note",
                 "reference": "0414f8fb-4ea7-5b14-9dc0-ac90d79f5aed",
-                "date": "2026-04-11 08:45",
+                "date": "2026-04-11",
                 "value": "98.6 F",
-                "quote": "08:45: Recheck: Temp 98.6 \u00b0F"
+                "quote": "Temp 98.6 \u00b0F"
               }
             ],
             "sources_checked": []
           }
         ],
-        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-03-26 is 18 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for cataract extraction is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-28) is 16 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: unknown. No current anticoagulant in the medication list or notes. This is not settled: an extracted anticoagulant mention could not be verified against its document.\nRule 4 blood_pressure: pass. Most recent blood pressure 130/72 mmHg (2026-04-11 08:40) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.6 F (2026-04-11 08:45) is below the exclusion limit (> 100.4 F).",
-        "unverified": [
-          {
-            "kind": "anticoagulant_mention",
-            "doc_id": "4e124e5e-7eda-5094-8e14-d95e2652b4d3",
-            "reason": "quote does not name warfarin (Coumadin)",
-            "claim": {
-              "doc_id": "4e124e5e-7eda-5094-8e14-d95e2652b4d3",
-              "drug_as_written": "warfarin (Coumadin)",
-              "generic_name": "warfarin",
-              "status": "discontinued",
-              "quote": "Discontinued: warfarin (Coumadin)"
-            }
-          }
-        ]
+        "explanation": "READY\nRule 1 history_and_physical: pass. H&P dated 2026-03-26 is 18 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for cataract extraction is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-03-28) is 16 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: not_applicable. No current anticoagulant in the medication list or notes.\nRule 4 blood_pressure: pass. Most recent blood pressure 130/72 mmHg (2026-04-11 08:40) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 98.6 F (2026-04-11) is below the exclusion limit (> 100.4 F).",
+        "unverified": []
       },
       "parse_error": null,
       "metrics": {
         "json_schema_valid": true,
-        "decision_match_oracle": false,
-        "issue_categories_match_oracle": false
+        "decision_match_oracle": true,
+        "issue_categories_match_oracle": true
       },
-      "aggregate_local_score": 33.33333333333333
+      "aggregate_local_score": 100.0
     },
     {
       "record_index": 44,
@@ -15210,6 +15098,28 @@
         "decision": "NEEDS_FOLLOW_UP",
         "issues": [
           {
+            "category": "REQUIRED_DOCUMENTATION",
+            "rule": "Rule 1",
+            "unknown_cause": null,
+            "finding": "No pre-operative H&P found in 5 documents. A 'Pre-anesthesia Evaluation' dated 2026-02-27 was read as a pre-operative evaluation but not counted, because neither its type nor its heading calls it an H&P.",
+            "evidence": [
+              {
+                "source": "note",
+                "reference": "6e7e7706-6b5a-5515-b89e-710a61cc942f",
+                "date": "2026-02-27",
+                "value": null,
+                "quote": "PRE-ANESTHESIA EVALUATION\nDate: 02/27/2026\nProposed procedure: knee arthroscopy\n\nASA physical status: II."
+              }
+            ],
+            "sources_checked": [
+              "Hematology Consultation (2026-02-24)",
+              "Consent - Elective Procedure (2026-02-21)",
+              "Pre-anesthesia Evaluation (2026-02-27)",
+              "Patient Portal Message (2026-02-19)",
+              "Pre-op Nursing Intake (2026-03-01)"
+            ]
+          },
+          {
             "category": "ANTICOAGULATION_MANAGEMENT",
             "rule": "Rule 3",
             "unknown_cause": null,
@@ -15227,7 +15137,7 @@
                 "reference": "54f61c78-6d38-532a-a803-154689d052cc",
                 "date": "2026-02-24",
                 "value": "Savaysa: taking",
-                "quote": "maintained on Savaysa 60 mg PO daily"
+                "quote": "Patient with prior pulmonary embolism (HAS-BLED 2) maintained on Savaysa 60 mg PO daily."
               },
               {
                 "source": "note",
@@ -15245,19 +15155,25 @@
             "name": "history_and_physical",
             "rule": "Rule 1",
             "category": "REQUIRED_DOCUMENTATION",
-            "status": "pass",
+            "status": "fail",
             "unknown_cause": null,
-            "summary": "H&P dated 2026-02-27 is 5 days before the procedure (limit 30).",
+            "summary": "No pre-operative H&P found in 5 documents. A 'Pre-anesthesia Evaluation' dated 2026-02-27 was read as a pre-operative evaluation but not counted, because neither its type nor its heading calls it an H&P.",
             "evidence": [
               {
                 "source": "note",
                 "reference": "6e7e7706-6b5a-5515-b89e-710a61cc942f",
                 "date": "2026-02-27",
                 "value": null,
-                "quote": "PRE-ANESTHESIA EVALUATION\nDate: 02/27/2026\nProposed procedure: knee arthroscopy"
+                "quote": "PRE-ANESTHESIA EVALUATION\nDate: 02/27/2026\nProposed procedure: knee arthroscopy\n\nASA physical status: II."
               }
             ],
-            "sources_checked": []
+            "sources_checked": [
+              "Hematology Consultation (2026-02-24)",
+              "Consent - Elective Procedure (2026-02-21)",
+              "Pre-anesthesia Evaluation (2026-02-27)",
+              "Patient Portal Message (2026-02-19)",
+              "Pre-op Nursing Intake (2026-03-01)"
+            ]
           },
           {
             "name": "surgical_consent",
@@ -15332,7 +15248,7 @@
                 "reference": "54f61c78-6d38-532a-a803-154689d052cc",
                 "date": "2026-02-24",
                 "value": "Savaysa: taking",
-                "quote": "maintained on Savaysa 60 mg PO daily"
+                "quote": "Patient with prior pulmonary embolism (HAS-BLED 2) maintained on Savaysa 60 mg PO daily."
               },
               {
                 "source": "note",
@@ -15381,16 +15297,16 @@
             "sources_checked": []
           }
         ],
-        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: pass. H&P dated 2026-02-27 is 5 days before the procedure (limit 30).\nRule 1 surgical_consent: pass. Consent for knee arthroscopy is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-02-20) is 12 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: fail. Patient takes edoxaban and there is no documented perioperative plan for it.\nRule 4 blood_pressure: pass. Most recent blood pressure 128/79 mmHg (2026-03-01 08:45) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 97.9 F (2026-03-01 08:45) is below the exclusion limit (> 100.4 F).",
+        "explanation": "NEEDS_FOLLOW_UP\nRule 1 history_and_physical: fail. No pre-operative H&P found in 5 documents. A 'Pre-anesthesia Evaluation' dated 2026-02-27 was read as a pre-operative evaluation but not counted, because neither its type nor its heading calls it an H&P.\nRule 1 surgical_consent: pass. Consent for knee arthroscopy is signed by the patient.\nRule 2 cbc: pass. Latest CBC (2026-02-20) is 12 days before the procedure (limit 30 for LOW risk).\nRule 2 cmp: not_applicable. CMP is not required for a LOW risk procedure.\nRule 3 anticoagulation_plan: fail. Patient takes edoxaban and there is no documented perioperative plan for it.\nRule 4 blood_pressure: pass. Most recent blood pressure 128/79 mmHg (2026-03-01 08:45) is below the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg).\nRule 4 temperature: pass. Most recent temperature 97.9 F (2026-03-01 08:45) is below the exclusion limit (> 100.4 F).",
         "unverified": []
       },
       "parse_error": null,
       "metrics": {
         "json_schema_valid": true,
         "decision_match_oracle": true,
-        "issue_categories_match_oracle": false
+        "issue_categories_match_oracle": true
       },
-      "aggregate_local_score": 66.66666666666666
+      "aggregate_local_score": 100.0
     },
     {
       "record_index": 49,
@@ -15699,8 +15615,8 @@
   ],
   "output_items": [
     {
-      "id": "outputitem_6affc9de819c81919463da23ede4eb09",
-      "created_at": 1795148254,
+      "id": "outputitem_6affcc95b510819184d3325d1e7b1a0c",
+      "created_at": 1795148949,
       "datasource_item": {
         "record_index": 49,
         "case_id": "case_00049",
@@ -15712,40 +15628,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 49,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "47c67e4efaa9e39db4ca820216a48a569bea6265e3a966e0d1f78e4f3210ca96",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9de6efc8191ab5caeba9f8c4901",
-      "created_at": 1795148254,
+      "id": "outputitem_6affcc958ca4819180e3c358225842b4",
+      "created_at": 1795148949,
       "datasource_item": {
         "record_index": 48,
         "case_id": "case_00048",
@@ -15753,44 +15669,44 @@
         "expected_issue_categories": "ANTICOAGULATION_MANAGEMENT|REQUIRED_DOCUMENTATION",
         "expected_json_schema_valid": "true",
         "actual_decision": "NEEDS_FOLLOW_UP",
-        "actual_issue_categories": "ANTICOAGULATION_MANAGEMENT",
+        "actual_issue_categories": "ANTICOAGULATION_MANAGEMENT|REQUIRED_DOCUMENTATION",
         "json_schema_valid": "true"
       },
       "datasource_item_id": 48,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
-          "passed": false,
-          "score": 0.0,
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
+          "passed": true,
+          "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
-      "status": "fail",
-      "_datasource_item_content_hash": "d8de1ba3dc2cef591214c32fb09c989b98a8bb9180f9660cf7a5c16e65b8e805",
+      "status": "pass",
+      "_datasource_item_content_hash": "67970ebba9befe3f04444764c9ecde82a3246cf35b7394b8c30eeb4661ff2a07",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9de5d2c81918631a4488cea8669",
-      "created_at": 1795148254,
+      "id": "outputitem_6affcc9576248191b74867b0d048d783",
+      "created_at": 1795148949,
       "datasource_item": {
         "record_index": 47,
         "case_id": "case_00047",
@@ -15802,40 +15718,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 47,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "277225d531bb001bfe4a91de2817b01f51badf6adeda527f35c61e51e0983d06",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9de35508191bef0901003747fa2",
-      "created_at": 1795148254,
+      "id": "outputitem_6affcc956274819191f94b9debc098aa",
+      "created_at": 1795148949,
       "datasource_item": {
         "record_index": 46,
         "case_id": "case_00046",
@@ -15847,40 +15763,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 46,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "0bdeddc1ad6993a30c524f88d3848eabca007433c6803b3b79d6320d8807f8e0",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9de25908191941919195f75df71",
-      "created_at": 1795148254,
+      "id": "outputitem_6affcc954fd88191b289c4e0ff3c10e6",
+      "created_at": 1795148949,
       "datasource_item": {
         "record_index": 45,
         "case_id": "case_00045",
@@ -15892,40 +15808,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 45,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "f6de65bfb97aa0a93142444278f8db70b6a7aba2d7a697afe2fb81427f47f6a1",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9de1094819196788cb914a3ac9f",
-      "created_at": 1795148254,
+      "id": "outputitem_6affcc953cf08191a0c3c262ec272231",
+      "created_at": 1795148949,
       "datasource_item": {
         "record_index": 44,
         "case_id": "case_00044",
@@ -15937,85 +15853,85 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 44,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "5b87288bf937347408a894afef74e4b92ffddd47949016fa1f71e224678bf35e",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9ddf9488191a1ef31dabbb5f83b",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc9529f08191bc3ac8de84aba077",
+      "created_at": 1795148949,
       "datasource_item": {
         "record_index": 43,
         "case_id": "case_00043",
         "oracle_decision": "READY",
         "expected_issue_categories": "",
         "expected_json_schema_valid": "true",
-        "actual_decision": "NEEDS_FOLLOW_UP",
-        "actual_issue_categories": "MISSING_REQUIRED_DATA",
+        "actual_decision": "READY",
+        "actual_issue_categories": "",
         "json_schema_valid": "true"
       },
       "datasource_item_id": 43,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
-          "passed": false,
-          "score": 0.0,
-          "sample": null,
-          "type": null
-        },
-        {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
-          "passed": false,
-          "score": 0.0,
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
+          "passed": true,
+          "score": 1.0,
+          "sample": null,
+          "type": null
+        },
+        {
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
+          "passed": true,
+          "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
-      "status": "fail",
-      "_datasource_item_content_hash": "f58b500d74344e007ebee80b1ccdf4222e538833b2ca1cfe6d1c1cc5b675a435",
+      "status": "pass",
+      "_datasource_item_content_hash": "6d4ed9c1bf553ccee7604d5bd684b18ccfc91f4bad5f5d306373a0d8bc1b3cfe",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9ddd72881919235a427dbf9f341",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc95169481919240fd9c32153c48",
+      "created_at": 1795148949,
       "datasource_item": {
         "record_index": 42,
         "case_id": "case_00042",
@@ -16027,40 +15943,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 42,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "257a2882b686ddd9adfc12ef9744547c80fe8fdb58674e0f2af1a48ddd65fe01",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9ddb48881918c89703bf9f1c498",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc94f6c88191828529b458cde963",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 41,
         "case_id": "case_00041",
@@ -16072,40 +15988,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 41,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "1a82cfc09fa23272db746b7bffc27b6818591b73865af69b9c763d857f8fce4f",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dda470819198cf1e88fdc7e007",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc94e3608191815514a2e85685ac",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 40,
         "case_id": "case_00040",
@@ -16117,40 +16033,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 40,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "379687e1e8964c7879bb28cc4fabb67bad84d78731461c43a6a638de007569ee",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dd94d88191a1511eb663ea2661",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc94d0e08191a2d53673f8eea4da",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 39,
         "case_id": "case_00039",
@@ -16162,40 +16078,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 39,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "15fadb737959c1fb895e65819041f421f010484a81e7d48b9d7fc120c5cdb9fe",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dd7d108191800abdaf44aa44c3",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc94bc488191aadd4986b3045be4",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 38,
         "case_id": "case_00038",
@@ -16207,40 +16123,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 38,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "4e34a7463d9f457fb7c5f3569f972dbc9f6a15c198f44325a56a832c821fa9b9",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dd691481918ba2622a6dd4c4e9",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc94a2c48191a8ef8e1c54aab784",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 37,
         "case_id": "case_00037",
@@ -16252,40 +16168,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 37,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "51cef35df9a27f9797d33c94cc26970c3286e2efa5c4af4f0328136ffa12dbb8",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dd586c81919f899737eb65f408",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc9483948191872866ae5751f01e",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 36,
         "case_id": "case_00036",
@@ -16297,40 +16213,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 36,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "d42737a35956d1090332fccadeb28f2f3d93bf4e38c601ff3002f3834de77ef8",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dd3e888191a3d7f30ff379ca4e",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc9472948191874c99b7d112c430",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 35,
         "case_id": "case_00035",
@@ -16342,40 +16258,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 35,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "18af6fbea0d448bf63eca60936986ccb6953ef39d2c91fecb68c7cecb7471fd0",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dd2154819188ae28d4e27b5f2e",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc945bd88191a529ba9dba59b771",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 34,
         "case_id": "case_00034",
@@ -16387,40 +16303,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 34,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "a217096d992baeceeffca6ff2385ab5fddbe21383c2263fab2197f8a0d22212a",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dd0f2c8191bf748a66effca10e",
-      "created_at": 1795148253,
+      "id": "outputitem_6affcc9443208191ab34d6f04e6d9886",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 33,
         "case_id": "case_00033",
@@ -16432,40 +16348,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 33,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "1f9c6694c6de95d2c7276a0837c67a4e967227b7d8932e256ed15244ad6d4090",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dceee88191b3e32551a88a8ae5",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc942df081919e28e3b3be0d6f47",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 32,
         "case_id": "case_00032",
@@ -16477,40 +16393,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 32,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "4bcf04814d9f7928508a3747187a74432b88fb948b5a5eb583933027c91903f9",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dcdb748191b10331ae49f03c9c",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc9415d081919a50afe03ce6f918",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 31,
         "case_id": "case_00031",
@@ -16522,40 +16438,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 31,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "04e364a4bd7dfcfa873057e637a0252f83249dd60866b0fcc6231d755170d2e4",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dcba208191b053b1d819bff358",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc9401d48191a31b369c321f48b9",
+      "created_at": 1795148948,
       "datasource_item": {
         "record_index": 30,
         "case_id": "case_00030",
@@ -16567,40 +16483,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 30,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "5f58ba831e6d6eca23326c756d78261c928e037f9564199a921fc290a2552a1c",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dca87c8191818218b59a66ebbf",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc93ef448191ba7a2b1ddfaf58ae",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 29,
         "case_id": "case_00029",
@@ -16612,40 +16528,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 29,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "196841831a8197480a504e5724beb7d3c31e8e62d401069d73ce2eed90f1d5c9",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dc95748191932f46136f1130d3",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc93dcdc8191822b44dbbc460f3d",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 28,
         "case_id": "case_00028",
@@ -16657,40 +16573,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 28,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "12d1663c3aa396533d42c45b57acdd1baabe0848088f4cebf3c8ba78e7a01ec5",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dc82008191b3c1346b90c84083",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc93c9a48191abecd1ac25e54e8c",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 27,
         "case_id": "case_00027",
@@ -16702,40 +16618,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 27,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "abbf399f51e47ed4ddcdda650c5d696d054e69ef359abf71ea5ac6cd28c79767",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dc6a5c819181c99d1081955d9b",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc93b510819190c6fa0edf9a19f4",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 26,
         "case_id": "case_00026",
@@ -16747,40 +16663,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 26,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "a7cfc6eb52afdba727eeed814d8f53affbf7f5c379cec3e95fa456023430e0bc",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dc5ab0819191bc4bb41d8bb94f",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc93a1fc81919627d73d27397c58",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 25,
         "case_id": "case_00025",
@@ -16792,40 +16708,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 25,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "6952090d6c46624f7e940a08aba41df4a1ca0535405b9340d57374fec8089a13",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dc43e481918b4a2861bba7cc84",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc938b888191a93623d4663a2f9d",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 24,
         "case_id": "case_00024",
@@ -16837,40 +16753,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 24,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "4789d275ea7ba4d5db35a8d2cbf967aa7521133edadfc266577a6ed6d7429e9c",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dc24348191ab8cd51133b85f42",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc93755481919fb8b94f1cc8136d",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 23,
         "case_id": "case_00023",
@@ -16882,40 +16798,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 23,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "af80556f52f576adf5cd7c96b8c0ce842c67a596cadf7e8b976859a95635d355",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dc10f48191adc883e46878ec85",
-      "created_at": 1795148252,
+      "id": "outputitem_6affcc93594081918f7a69106818092b",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 22,
         "case_id": "case_00022",
@@ -16927,40 +16843,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 22,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "5c9d8b0611ece0c5d6def9077cabdb400537cc98130a5ee697e5a25d8937a7c9",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dbfb1081919ee4fd636102e7e5",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc93476481918642b6d8715f07f5",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 21,
         "case_id": "case_00021",
@@ -16972,40 +16888,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 21,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "d7fddaffa69902992af6975706c2ca74a2c5bc083a91efa207b8986adf8022ea",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dbe5b8819197abc0395feb0aa5",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc93332c8191a11013830db01d41",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 20,
         "case_id": "case_00020",
@@ -17017,85 +16933,85 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 20,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "65c485895882c3f7066e31fe99dc7b0baa88d0039fecbfc8a4a8caebb4da3e04",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dbcd1081918ddd49378b270339",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc931c9881918e1cdce98051a90f",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 19,
         "case_id": "case_00019",
         "oracle_decision": "READY",
         "expected_issue_categories": "",
         "expected_json_schema_valid": "true",
-        "actual_decision": "NEEDS_FOLLOW_UP",
-        "actual_issue_categories": "MISSING_REQUIRED_DATA",
+        "actual_decision": "READY",
+        "actual_issue_categories": "",
         "json_schema_valid": "true"
       },
       "datasource_item_id": 19,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
-          "passed": false,
-          "score": 0.0,
-          "sample": null,
-          "type": null
-        },
-        {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
-          "passed": false,
-          "score": 0.0,
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
+          "passed": true,
+          "score": 1.0,
+          "sample": null,
+          "type": null
+        },
+        {
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
+          "passed": true,
+          "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
-      "status": "fail",
-      "_datasource_item_content_hash": "159cef8f18dd79d2b6cebb60949b807089a8f58081fb714ea6f1fe64c5f28e7f",
+      "status": "pass",
+      "_datasource_item_content_hash": "53a335377c977eff6a29dfe6484940586262aa8ecd007627671e4df47671e82d",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dbb7548191ba40f4a226ade8a4",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc93091081919123aef6a829b3bc",
+      "created_at": 1795148947,
       "datasource_item": {
         "record_index": 18,
         "case_id": "case_00018",
@@ -17107,40 +17023,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 18,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "5166b5aaa50930a1ec4fc0f943025d06e28dba727cb6a9d9fe1a60a75ba16021",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dba78481919b7d730626214756",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc92f5dc8191808ee34b8b3a28b7",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 17,
         "case_id": "case_00017",
@@ -17152,40 +17068,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 17,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "1c7ba3db67aba2364719f8b3774629daf753b906011d07e238a0996041277341",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9db85808191bdd8cf5be8ab4d16",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc92e32c81919bbc381e6a2fc5a0",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 16,
         "case_id": "case_00016",
@@ -17197,40 +17113,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 16,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "ca4516fe352d91501fe57c5ed74056f61a00816a765a856ede12b9f4f8ecd163",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9db74308191b6f6185cf0833d40",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc92cf0081919c2f65a9cdfbd3a7",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 15,
         "case_id": "case_00015",
@@ -17242,40 +17158,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 15,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "0bd5a9388671b123719a5bd13c2375e73bf3187028aef9f087f8678781129995",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9db5f648191b72bfcb5c9b4776f",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc92bcac81918f816f73ba102a42",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 14,
         "case_id": "case_00014",
@@ -17287,40 +17203,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 14,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "f2180265323d17b7d79e5dbae2e0102ae0e518e5f9dc67a5c67257899017e8df",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9db4c948191a6bc649094caa018",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc92a8808191b85ad2e4823223d2",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 13,
         "case_id": "case_00013",
@@ -17328,44 +17244,44 @@
         "expected_issue_categories": "MISSING_REQUIRED_DATA|REQUIRED_DOCUMENTATION",
         "expected_json_schema_valid": "true",
         "actual_decision": "NEEDS_FOLLOW_UP",
-        "actual_issue_categories": "MISSING_REQUIRED_DATA",
+        "actual_issue_categories": "MISSING_REQUIRED_DATA|REQUIRED_DOCUMENTATION",
         "json_schema_valid": "true"
       },
       "datasource_item_id": 13,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
-          "passed": false,
-          "score": 0.0,
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
+          "passed": true,
+          "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
-      "status": "fail",
-      "_datasource_item_content_hash": "ae20a7803d5f7814eee9e2901759b90a8940e2419cb089c543ba93ab33b3d3a1",
+      "status": "pass",
+      "_datasource_item_content_hash": "c7d7a5f139ea568558fbc52a34b2513261dc19c2c842215bf83efbe9740f4391",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9db3ab48191b9ae08c0bf3c1b89",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc9295f08191811d5cc5ae6f35cd",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 12,
         "case_id": "case_00012",
@@ -17377,40 +17293,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 12,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "3a282bbd8a56fde1c42234386e66287ba3d649a0a405c723fced2b02751e110b",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9db223c81918379fd0afb7c7135",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc927f6c8191aa8dfa56d0761014",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 11,
         "case_id": "case_00011",
@@ -17422,40 +17338,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 11,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "06b1de5e89fbfbfd2965aee1fa89c6e8c95d2f40b9f28a93121041702bef0fdb",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9db11488191930bb3803f945d3c",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc92693881919c46adc630bd9bff",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 10,
         "case_id": "case_00010",
@@ -17467,40 +17383,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 10,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "01a502d15d0c4cd81d8009cffef0b06ed7511e1133f870106be426b04f60c954",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9db01608191b8558bd7bb3b1d6a",
-      "created_at": 1795148251,
+      "id": "outputitem_6affcc9256b0819194c3e1b45324f094",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 9,
         "case_id": "case_00009",
@@ -17512,40 +17428,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 9,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "564157b5cf30973245c93db429b16fda129747ea71c238d304a6d12e704e9e69",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9daecb88191bcbec715dba408da",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc9243908191a8915a8096720f64",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 8,
         "case_id": "case_00008",
@@ -17557,40 +17473,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 8,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "eb126841faea28b2de311a4ac0e2259c0bfe5d3c1f80275707afe78e6c5b2692",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9daca1c8191a5d3277d60534ef6",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc922ffc8191b765647766eda422",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 7,
         "case_id": "case_00007",
@@ -17602,40 +17518,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 7,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "4b92fd25f73d9ccdd9ad216d397f59bac47c2e2914bb495287ae51bce7b56bc7",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9dab7948191823ffe256d07ba37",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc921c5c8191bd61de3045751e32",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 6,
         "case_id": "case_00006",
@@ -17647,40 +17563,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 6,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "88ac3a37e0d4427f6c9a32f530ddd3f12061fb0b83c1621820378c6c9e36fe9e",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9daa67881918256af681680aa8b",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc920930819194563796713c15fb",
+      "created_at": 1795148946,
       "datasource_item": {
         "record_index": 5,
         "case_id": "case_00005",
@@ -17688,44 +17604,44 @@
         "expected_issue_categories": "ACUTE_SAFETY_EXCLUSION",
         "expected_json_schema_valid": "true",
         "actual_decision": "NOT_CLEARED",
-        "actual_issue_categories": "ACUTE_SAFETY_EXCLUSION|MISSING_REQUIRED_DATA",
+        "actual_issue_categories": "ACUTE_SAFETY_EXCLUSION",
         "json_schema_valid": "true"
       },
       "datasource_item_id": 5,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
-          "passed": false,
-          "score": 0.0,
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
+          "passed": true,
+          "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
-      "status": "fail",
-      "_datasource_item_content_hash": "1c40a9d7131374cb1a7e858da7aae84caa1bdf2400d6e127b125508c8074eb7f",
+      "status": "pass",
+      "_datasource_item_content_hash": "aa86638df280b603c5f50df0495f5e8891f0d33c692018d618fce56b9ebb95be",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9da95708191ab10e5f80addc339",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc91f6dc81919f1ffcc0f373b6fe",
+      "created_at": 1795148945,
       "datasource_item": {
         "record_index": 4,
         "case_id": "case_00004",
@@ -17737,40 +17653,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 4,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "e0a8c7a5ba10cdfdbaf9b3bc00b624e7ebaa857689d689848810bcdc5f84f6b9",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9da7ed88191b158328813de8242",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc91e3688191b43e53de208cfccd",
+      "created_at": 1795148945,
       "datasource_item": {
         "record_index": 3,
         "case_id": "case_00003",
@@ -17782,40 +17698,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 3,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "f7e60ff2ea0e39d2e3206c2f732f03d7b8c4c6697d4f98675503f07194459b9f",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9da6f80819188e9d6a5e4048325",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc91ce6c819197a2eaed5d34e852",
+      "created_at": 1795148945,
       "datasource_item": {
         "record_index": 2,
         "case_id": "case_00002",
@@ -17827,40 +17743,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 2,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "6677184b7833f58283ea1a644565b3387335fd142f461846063d7368d93ac82b",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9da5f5481919e48cd03dd0e6d48",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc91bb64819180d1a5b89b57923a",
+      "created_at": 1795148945,
       "datasource_item": {
         "record_index": 1,
         "case_id": "case_00001",
@@ -17872,40 +17788,40 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 1,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "e5f5f93e8a5f0300c1060444305d1cf3d5035e83c6c6ff6465cd6c9f34d7b4e8",
       "available_includes": []
     },
     {
-      "id": "outputitem_6affc9da47ec8191ad2a8296a644185c",
-      "created_at": 1795148250,
+      "id": "outputitem_6affcc91a5e88191873f1641aa4e8ed5",
+      "created_at": 1795148945,
       "datasource_item": {
         "record_index": 0,
         "case_id": "case_00000",
@@ -17917,32 +17833,32 @@
         "json_schema_valid": "true"
       },
       "datasource_item_id": 0,
-      "eval_id": "eval_6affc9d8c38881919317622cc382048c",
+      "eval_id": "eval_6affcc9037dc8191ab89959168124781",
       "object": "eval.run.output_item",
       "results": [
         {
-          "name": "decision_match_oracle-fd92e516-fccb-449a-9d07-8f577d015194",
+          "name": "decision_match_oracle-cc25a05e-53b3-403a-ad66-07064c4c3381",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "json_schema_valid-95ce7b62-3eab-44a4-b036-7616852778ba",
+          "name": "json_schema_valid-a397e32d-6e6a-46a2-a90d-438d6230edcd",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         },
         {
-          "name": "issue_categories_match_oracle-d3606560-a022-4c54-8c8e-f0110ed0960f",
+          "name": "issue_categories_match_oracle-6530e95e-fa5b-46b3-a981-8b8697269d53",
           "passed": true,
           "score": 1.0,
           "sample": null,
           "type": null
         }
       ],
-      "run_id": "evalrun_6affc9d9b5488191a877ba1a11fcfc48",
+      "run_id": "evalrun_6affcc9107fc8191883bb675ededaeca",
       "sample": null,
       "status": "pass",
       "_datasource_item_content_hash": "1b25d19f782e8a5d03ff8d682da159c8e20e21103a7c58598967c09bff738574",
