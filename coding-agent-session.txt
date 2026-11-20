@@ -1,0 +1,2656 @@
+▗ ▗   ▖ ▖  Claude Code v2.1.329
+           Fable 5.2 · Claude Ultra
+ ▘▘   ▝▝   ~/Documents/GitHub/preop-exercise
+
+
+❯ # pre-op triage: implementation plan                                          
+                                                                                
+  This plan is a handoff. It was written in a separate planning session after   
+  reading the repo, the brief, and all 50 sample cases. You (Claude) are        
+  implementing it with me one step at a time.                                   
+                                                                                
+  ## how we work                                                                
+                                                                                
+  - One step per turn. Stop when the step's "done when" is met, show me the     
+  result, and wait.                                                             
+  - Do not start a later step early, and do not change files outside the step's 
+  scope.                                                                        
+  - Tests come with the code in the same step. Run them and show the output.    
+  - Ask before any model call, and say roughly how many calls it will make. The 
+  key is in `OPENAI_API_KEY`. Never print it.                                   
+  - Items marked **decision** are mine. Ask me, lay out the tradeoff, and do    
+  not pick for me.                                                              
+  - If a label looks wrong or a rule can't reproduce it, say so. Do not bend a  
+  rule to fit a label.                                                          
+  - Treat every dataset fact in this plan as a claim. Step 0 re-derives them.   
+  If one is wrong, tell me before relying on it.                                
+  - Match the repo: flat modules next to `core.py`, double quotes, type hints,  
+  `uv` scripts. No frameworks, no abstraction without two callers.              
+  - Prompts must not contain phrases copied from the sample notes.              
+  - Commit once per step with a plain imperative message.                       
+                                                                                
+  ## the task                                                                   
+                                                                                
+  - The brief is `docs/brief.pdf` (I will add it). Its appendix policy is the   
+  only source of clearance criteria. `core.py` holds a condensed copy in        
+  `BASELINE_SYSTEM_PROMPT`.                                                     
+  - Input: one patient submission (demographics, procedure, vitals, labs,       
+  medications, conditions, free-text documents).                                
+  - Output: `decision` (`READY`, `NEEDS_FOLLOW_UP`, `NOT_CLEARED`), `issues[]`  
+  each with a `category`, and `explanation`. The evidence design is ours.       
+  - A pre-op nurse reviews every non-READY case and a sample of READY ones, so  
+  every finding has to be checkable from the output alone.                      
+  - Scoring (`run_evals.py`): schema valid, decision equals label, and the set  
+  of issue categories equals the label's set exactly.                           
+                                                                                
+  ## policy summary                                                             
+                                                                                
+  - Rule 1: H&P completed within 30 days of the procedure date, and a signed    
+  surgical consent. Missing or outdated is `NEEDS_FOLLOW_UP`.                   
+  - Rule 2: LOW or MODERATE risk needs a CBC within 30 days. HIGH needs a CBC   
+  and a CMP within 14 days. Only the most recent result of each test counts.    
+  - Rule 3: a patient currently on an anticoagulant needs a documented plan     
+  that says how the drug is managed before and after the procedure. None,       
+  incomplete, or ambiguous is `NEEDS_FOLLOW_UP`.                                
+  - Rule 4: systolic >= 180, diastolic >= 110, or temperature > 100.4 F at      
+  review is `NOT                                                                
+  ──── (244 lines hidden) ───────────────────────────────────────────────────── 
+  me model, three runs each.                                                    
+  - Report:                                                                     
+    - Decision and category match.                                              
+    - 8 of 8 exclusions caught.                                                 
+    - How many of the 33 non-READY cases came back `READY`.                     
+    - Latest BP correct in the 21 note-only cases.                              
+    - Every evidence quote verbatim in its document.                            
+  - Attribute every miss to read, verify, resolve, or rules. A miss on an       
+  unambiguous rule is a bug to fix.                                             
+  - Done when: results are saved under `results/` and each miss has an owner.   
+                                                                                
+  ### step 9: determinism                                                       
+                                                                                
+  - Five varied cases, 10 runs each, cache off.                                 
+  - Report valid outputs, decision agreement, issue agreement, and exact-output 
+  agreement separately. Only valid outputs count.                               
+  - Done when: the numbers are saved, and any instability is traced to its      
+  cause.                                                                        
+                                                                                
+  ### step 10: experiments (if time)                                            
+                                                                                
+  - One extraction call versus three focused calls.                             
+  - Pipeline with verification turned off.                                      
+  - About 8 perturbed cases: a paraphrase should not change the decision;       
+  changing the underlying fact should.                                          
+                                                                                
+  ### step 11: handoff                                                          
+                                                                                
+  - `WRITEUP.md`: approach, why the split, evidence design, results with the    
+  baseline comparison, assumptions, what I would do next.                       
+  - README: run instructions from a fresh checkout.                             
+  - Done when: from a fresh clone a reviewer can run one case, run the tests,   
+  and find the baseline-versus-final results.                                   
+                                                                                
+  ### step 12: intake (last)                                                    
+                                                                                
+  - Preserve whether a list field was omitted or supplied empty, and route both 
+  runners through the same intake path.                                         
+                                                                                
+  ## definition of done                                                         
+                                                                                
+  | area | bar |                                                                
+  |---|---|                                                                     
+  | normalizer | 13 lab pairs map correctly; 3 `entered-in-error` excluded; BMP 
+  never accepted as CMP |                                                       
+  | resolver | cases 16, 18, 20, 33 resolve as described; independent of input  
+  order |                                                                       
+  | rules | every threshold tested on both sides; every rule has a              
+  decision-changing test; case 28 three-state test passes |                     
+  | extraction | 8 of 8 exclusions; 0 of 33 non-READY returned `READY`; latest  
+  BP right in 21 note-only cases |                                              
+  | verification | every output quote verbatim; fabricated quote dropped;       
+  dropped decisive fact leaves the check unresolved |                           
+  | evidence | every issue has a source, date, and quote or value; missing      
+  items list sources checked; every rule in `checks[]` |                        
+  | api | strict schema, shared client, timeout, retries; a failed call never   
+  yields `READY` |                                                              
+  | determinism | 10 of 10 valid and identical on 5 cases, or the real number   
+  and its cause |                                                               
+  | handoff | fresh-checkout run works; write-up, README, and session export    
+  are in place |                                                                
+  this is plan we are going to follow. add it to the repo (uncommitted) as      
+  plan.md                                                                       
+
+⏺ Write(plan.md)
+  ⎿  Wrote 319 lines to plan.md
+       1 # pre-op triage: implementation plan
+       2 
+       3 This plan is a handoff. It was written in a separate planning se
+         ssion after reading the repo, the brief, and all 50 sample cases
+         . You (Claude) are implementing it with me one step at a time.
+       4 
+       5 ## how we work
+       6 
+       7 - One step per turn. Stop when the step's "done when" is met, sh
+         ow me the result, and wait.
+     … +312 lines (ctrl+o to expand)
+
+⏺ The plan is saved verbatim as plan.md in the repo root, untracked and
+  uncommitted.
+
+  I have not started step 0. It needs docs/brief.pdf, which the plan says you
+  will add — say when it is in place and I'll begin.
+
+✻ Crunched for 54s · done 10:03 PM
+
+❯ /Users/manyapn/Downloads/Cadence_Pre-Op_Scheduling_Triage.pdf move this into  
+  the repo                                                                      
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ The PDF is now at docs/brief.pdf, renamed from
+  Cadence_Pre-Op_Scheduling_Triage.pdf because that is the path the plan refers
+  to. It is untracked and uncommitted, like plan.md.
+
+  Step 0 is unblocked; say the word and I'll start it.
+
+✻ Worked for 4s · done 10:05 PM
+
+❯ start step 0                                                                  
+
+  Made 1 scratchpad edit +279, read 7 files, ran 7 shell commands · 2 failed (ctrl+o to expand)
+
+⏺ Still on step 0 with the claim-check script mostly done; I'm fixing a bug in
+  it and looking into the remaining mismatches, including vitals sort order and
+  several same-day readings. · summary
+
+  Ran 4 shell commands (ctrl+o to expand)
+
+⏺ Step 0 is done except for the baseline run, which is blocked on two things
+  from you: uv is not installed on this machine, and OPENAI_API_KEY is not set
+  in my shell (and there is no .env).
+
+  The task, as I read it
+
+  - Input and output: one patient submission in, and out comes a decision,
+    issues[] with a category each, and an explanation. The evidence design is
+    ours.
+  - Policy: the appendix in docs/brief.pdf is the only source of criteria.
+    Clinical knowledge may be used to read the record, not to add rules.
+  - Reviewer: a nurse reviews every non-READY case and a sample of READY ones,
+    so each finding must be checkable from the output alone.
+  - Scoring: schema valid, decision equals label, and the category set equals
+    the label's set exactly, each weighted equally.
+  - Starter: one responses.create call with the whole chart as JSON, strict: 
+    False, a new client per call, and no timeout, retries or refusal handling.
+  - Brief vs core.py: the condensed prompt drops two phrases from the appendix:
+    that the plan must cover "before and after the procedure" (Rule 3), and "a
+    rechecked vital within range is sufficient" (Rule 4).
+
+  Claims check
+
+  Every claim under "what the sample shows" held except the ones below. The
+  key-case table also agrees with the labels for every case it lists.
+
+  claim: No same-day conflicts between structured and note vitals
+  result: Wrong as written. Cases 8, 9, 20 and 38 each have a structured BP at
+    09:05Z and an H&P BP at 10:05 on the same date, with different values
+    (e.g. case 9: 116/78 vs 117/74). None is the latest reading in its case,
+    so no label depends on it.
+  ────────────────────────────────────────
+  claim: Structured vitals are unsorted in most cases
+  result: True only if "unsorted" means "not ascending": 33 of 50. Of those,
+    11 are exactly descending and 22 are in mixed order.
+  ────────────────────────────────────────
+  claim: 1,181 distinct lines, 856 after masking digits
+  result: Confirmed when empty lines are excluded (1,182 and 857 with them).
+  ────────────────────────────────────────
+  claim: In 21 cases the latest BP is only in note text
+  result: Confirmed at date level with a throwaway regex: cases 1, 2, 3, 4, 5,
+    6, 7, 9, 12, 16, 30, 32, 35, 38, 39, 43, 45, 46, 47, 48, 49.
+  ────────────────────────────────────────
+  claim: Consent variants
+  result: Confirmed, with one addition: case 10's (and likely 31's) unsigned
+    consent is a "consent discussion note" with no "I, name" line and no
+    Procedure: line, unlike the other consent forms.
+
+  The same-day finding matters for the resolver: the "times compared as written"
+  assumption is exercised by sample data after all, just never on a governing
+  reading.
+
+  Both harness quirks are confirmed by reading the code. Two more worth knowing:
+  - make evals needs the key and network even though scoring is local, because
+    it creates an OpenAI Eval and waits for it.
+  - run_baseline.py catches every exception per row, so a run with no key
+    "succeeds" with 50 error rows.
+
+  I did not audit all 50 labels against the policy; nothing I read looked wrong.
+
+  Tests
+
+  The 3 existing tests pass, run with system Python (python3 -m pytest tests)
+  because make test needs uv.
+
+  Repo state
+
+  No code has changed. plan.md and docs/brief.pdf are still untracked, and the
+  check script lives outside the repo in the scratchpad. I have not committed
+  anything.
+
+  What I need from you
+
+  1. uv: may I install it (brew install uv or the official installer), or would
+     you rather do it yourself?
+  2. API key: export it in the shell that launched this session, or put it in
+     .env (already gitignored) and tell me. I will not print it.
+  3. Go-ahead for the baseline run: make baseline is 50 model calls to
+     gpt-4.1-mini, one per case, sending the full sample charts. make evals
+     makes no model calls but a handful of Evals API requests carrying only case
+     ids, labels and decisions. I would point both at results/baseline/ through
+     the Makefile variables, so no code changes.
+  4. Commit: for the step 0 commit I plan to include only results/baseline/ and
+     leave plan.md and docs/brief.pdf uncommitted. Say if you want those
+     included.
+
+✻ Brewed for 3m 9s · done 10:09 PM
+
+❯ notes:                                                                        
+
+⏺ Your message came through as just "notes:" with nothing after it, so the notes
+  themselves didn't arrive. Could you paste them again?
+
+  I'm still holding at the end of step 0, waiting on uv, the API key, and your
+  go-ahead for the baseline run.
+
+✻ Churned for 1s · done 10:11 PM
+
+❯ 1) install uv, 2) i added the kye 3) go ahead ones the run rules under "ask   
+  under baseline" are confirmed 4) ommit                                        
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+⏺ The baseline run finished: 50 cases, 2 of them failed schema validation (the
+  model left out issues). Scoring it now with make evals.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+⏺ Step 0 is complete: the untouched starter scores 70.0% on the harness's
+  aggregate, and only 20 of 50 cases are fully correct (decision and category
+  set both right).
+
+  Baseline (gpt-4.1-mini, one run, 50 model calls)
+
+  ┌────────────────────────────────┬────────────────────────────────────────┐
+  │             metric             │                 result                 │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ schema valid                   │ 48 of 50 (96%)                         │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ decision matches label         │ 32 of 50 (64%)                         │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ category set matches label     │ 25 of 50 (50%)                         │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ exclusions caught (NOT_CLEARED │ 3 of 8                                 │
+  │  labels)                       │                                        │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ non-READY cases returned as    │ 1 of 33 (case 24, consent for the      │
+  │ READY                          │ wrong procedure)                       │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ READY cases returned as READY  │ 5 of 17                                │
+  └────────────────────────────────┴────────────────────────────────────────┘
+
+  How it fails:
+
+  - Missed exclusions: five of the eight NOT_CLEARED cases were missed. Cases 5
+    and 47 list an ACUTE_SAFETY_EXCLUSION issue but still decide
+    NEEDS_FOLLOW_UP, so the decision and the issues disagree. Cases 2 and 32
+    miss the note-only fever and the still-high recheck, and case 46 is one of
+    the two invalid outputs.
+  - Over-flagging READY cases: 11 of 17 came back NEEDS_FOLLOW_UP, mostly for
+    anticoagulation (antiplatelets, or brand-name drugs with a complete plan).
+    Case 16 was flagged as an exclusion on the arrival BP despite the recheck.
+  - Invalid outputs: cases 4 and 46 omitted issues entirely, which strict: False
+    allows.
+  - Empty findings: cases 7 and 15 returned NEEDS_FOLLOW_UP with no issues at
+    all.
+  - Missing temperature: never reported as MISSING_REQUIRED_DATA (cases 9, 13,
+    21, 22).
+
+  This is a single run, so individual cases may flip on a rerun; step 8 does the
+  three-run comparison.
+
+  Claims
+
+  Unchanged from my last message: everything held except the same-day claim
+  (cases 8, 9, 20 and 38 have differing structured and H&P readings on the same
+  date, none governing) and the looser "unsorted" wording.
+
+  Repo state
+
+  - Commit: 4b9c5d6 contains only results/baseline/ (outputs and eval report). I
+    made it on a new branch, triage-pipeline, rather than on main; say if you
+    would rather commit straight to main.
+  - Your edits: Makefile and README.md now load the key from .env. I left them
+    as they are and did not commit them. plan.md and docs/brief.pdf are also
+    still uncommitted — I read "ommit" as "leave them out".
+  - Code: none of the repo's code changed. uv 0.13.9 is installed via Homebrew,
+    and the 3 existing tests pass through make test.
+
+  Step 1 (observation models and the verifier) is next when you say go.
+
+✻ Churned for 3m 25s · done 10:15 PM
+
+❯ are you using -include .env?? also after start step 1                         
+
+⏺ On the .env question: for the baseline run I loaded .env into my own shell
+  (set -a; source .env) before calling make, because I only noticed your
+  -include .env edit to the Makefile afterwards. Your Makefile line was also in
+  effect during that run, and from here on I'll rely on it alone for make
+  targets, and only source .env myself for direct script runs. Either way the
+  key is never printed.
+
+  Starting step 1.
+
+⏺ Skill(anthropic-skills:manya-code)
+  ⎿  Loaded skill
+
+⏺ Write(observations.py)
+  ⎿  Wrote 122 lines to observations.py
+       1 """What the extractor reports from the notes, and what survives 
+         verification."""
+       2 
+       3 from __future__ import annotations
+       4 
+       5 from decimal import Decimal
+       6 from typing import Any, Literal
+       7 
+       8 from pydantic import BaseModel
+       9 
+     … +113 lines (ctrl+o to expand)
+
+⏺ Write(verify.py)
+  ⎿  Wrote 193 lines to verify.py
+       1 """Check each extracted observation against the document it cite
+         s.
+       2 
+       3 A quote must appear in its cited document, and the values the ob
+         servation
+       4 claims must appear in that quote. Anything that fails is dropped
+          and recorded.
+       5 """
+       6 
+       7 from __future__ import annotations
+     … +186 lines (ctrl+o to expand)
+
+⏺ Write(tests/test_verify.py)
+  ⎿  Wrote 272 lines to tests/test_verify.py
+       1 from __future__ import annotations
+       2 
+       3 from decimal import Decimal
+       4 
+       5 import pytest
+       6 
+       7 from core import PatientSubmission
+       8 from observations import (
+       9     AnticoagulantMention,
+      10     AnticoagulationPlan,
+     … +262 lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+❯ don't leave long unnecessary comments. the code should explain itself         
+
+❯ only leave comments when truly needed                                         
+
+⏺ Tests pass (17 of 17). Trimming the comments now per your note, then I'll
+  rerun and commit.
+  Ran 3 shell commands, wrote 1 memory (ctrl+o to expand)
+
+⏺ Step 1 is done: observations.py and verify.py are in, with 14 new tests, and
+  make test passes 17 of 17 with no model calls. Committed as 03f5dd4 on
+  triage-pipeline.
+
+  On your comment notes: I stripped the explanatory comments and class
+  docstrings. What remains is a one-line module docstring per file, the two
+  section banners in observations.py (matching core.py), and one single-line
+  comment in verify.py. I'll keep to that from here.
+
+  What the verifier does
+
+  - Quote location: a quote must appear in its cited document, ignoring
+    whitespace differences only. Anything else is dropped and recorded with a
+    reason and the original claim.
+  - Vitals: a BP's systolic and diastolic must both appear as numbers in the
+    quote. A verified vital becomes a Reading dated from the document's date
+    field, with Celsius converted by Decimal (38.0 C is exactly 100.4 F).
+  - Other observations: consents, anticoagulant mentions, plans, H&P documents
+    and scheduling statements each need their quotes found and their named value
+    (procedure, drug, date) present.
+
+  The four tests the plan asked for are there (verbatim, indented, fabricated,
+  wrong numbers), plus one per observation type.
+
+  Choices I made beyond the plan's wording
+
+  Each one is stricter than "the numbers appear in the quote", and each fails
+  toward a dropped fact rather than a wrong one. Say if you want any loosened.
+
+  - Temperature unit: the unit must directly follow the value in the quote (38.0
+    C, 98.2F, 97.8 °F). A reading with the wrong unit could hide a fever, so I
+    check it.
+  - Time: if the model gives a time, it must appear in the quote, since time
+    decides which reading governs.
+  - Signed consent: a yes with no signature quote is dropped.
+  - Plan drug: the drug only has to be named somewhere in the cited document,
+    not inside each side's quote, because a restart instruction often doesn't
+    repeat the drug name.
+  - Scheduling date: only numeric dates verify (03/17/2026, 2026-03-17). A
+    spelled-out month would be dropped.
+
+  One limit to know about: when a single sentence holds two readings and two
+  times, the verifier cannot tell whether the model paired them correctly.
+
+  Step 2 (case 16 through the replay path) is next when you say go.
+
+✻ Sautéed for 3m 4s · done 10:20 PM
+
+※ recap: We're building the pre-op triage pipeline from plan.md; steps 0 and 1 are done and committed, with the baseline at 70% and the verifier passing its tests. Next action: say go and I'll start step 2, case 16 through the replay path. (turn off recaps in /config)
+
+❯ note that 157/69 would be false, so don't just check both are in the quote.   
+  ensure pairs are pairs. also note that a bp quote should only conttain one bp 
+  pattern as that forces the extrator to quote the reading's own span. also     
+  time order and text order w/in one note should agree. fix and test these      
+  things, and then edit plan so that if both reasings have a time, later clok   
+  time is how they should be ordered. if one has no time & diff sourecs, order  
+  is arbitrary. after this start step 2                                         
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Verifier fixes pass all 21 tests; I'm updating the plan's ordering rules next,
+  then moving to step 2. · summary
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Write(resolve.py)
+  ⎿  Wrote 107 lines to resolve.py
+       1 """Decide which reading governs, and record what it superseded."
+         ""
+       2 
+       3 from __future__ import annotations
+       4 
+       5 import re
+       6 from decimal import Decimal
+       7 
+       8 from pydantic import BaseModel
+       9 
+     … +98 lines (ctrl+o to expand)
+
+⏺ Write(rules.py)
+  ⎿  Wrote 353 lines to rules.py
+      1 """One check per policy requirement, and the response derived fro
+        m the checks."""
+      2 
+      3 from __future__ import annotations
+      4 
+      5 from datetime import date
+      6 from decimal import Decimal
+      7 from typing import Literal
+      8 
+      9 from pydantic import BaseModel
+     … +344 lines (ctrl+o to expand)
+
+⏺ Write(pipeline.py)
+  ⎿  Wrote 31 lines to pipeline.py
+      1 """The replay path: verify, resolve, rules, respond. No model cal
+        ls."""
+      2 
+      3 from __future__ import annotations
+      4 
+      5 from core import PatientSubmission
+      6 from observations import Observations
+      7 from resolve import resolve_vitals
+      8 from rules import TriageResult, respond, run_checks
+      9 from verify import verify
+     … +22 lines (ctrl+o to expand)
+
+⏺ Write(tests/fixtures/case_00016_observations.json)
+  ⎿  Wrote 85 lines to tests/fixtures/case_00016_observations.json
+       1 {
+       2   "vitals": [
+       3     {
+       4       "doc_id": "1f5be5f7-1a56-5e66-9c45-2e94e55b0271",
+       5       "kind": "blood_pressure",
+       6       "systolic": 189,
+       7       "diastolic": 112,
+       8       "temperature": null,
+       9       "unit": null,
+      10       "time": "08:06",
+     … +75 lines (ctrl+o to expand)
+
+⏺ Write(tests/test_case_16.py)
+  ⎿  Wrote 78 lines to tests/test_case_16.py
+       1 from __future__ import annotations
+       2 
+       3 import json
+       4 import sys
+       5 from pathlib import Path
+       6 
+       7 import pytest
+       8 
+       9 from core import PatientSubmission
+      10 from observations import Observations
+     … +68 lines (ctrl+o to expand)
+
+⏺ Write(tests/test_resolve.py)
+  ⎿  Wrote 58 lines to tests/test_resolve.py
+       1 from __future__ import annotations
+       2 
+       3 from observations import Reading
+       4 from resolve import resolve_vital
+       5 from rules import check_vital
+       6 
+       7 
+       8 def blood_pressure(systolic: int, source: str, reference: str, t
+         ime: str | None, offset: int | None = None) -> Reading:
+       9     return Reading(
+     … +49 lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Step 2 code is written; 4 tests fail. One is a real verifier bug (a time
+  followed by a colon, as in "ADDENDUM 08:30:", is rejected), one is a wrong
+  expectation in my own test. Fixing both.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ The verifier fixes and step 2 are both done: case 16 comes back READY with no
+  issues through the replay path, and make test passes 31 of 31 with no model
+  calls.
+
+  Verifier fixes (commit 9cc4cf0)
+
+  - Pairs must be pairs: a BP only verifies if the quote writes it as
+    systolic/diastolic. A quote with 172/96 and HR 69 no longer verifies 172/69.
+  - One BP per quote: a BP quote holding two BP patterns is dropped, so the
+    extractor has to quote the reading's own span.
+  - Time order matches text order: within one note, if timed readings of the
+    same kind appear in a different order than their clock times, all of them
+    are dropped.
+  - Time format: I also reject 12-hour times ("2:15 PM"), because comparing them
+    as written would order them wrongly. Say if you'd rather convert them.
+
+  Each has a test. One side effect to know: any nn/nn in a BP quote counts as a
+  BP pattern, so a quote that also includes a short date like 03/15 is dropped.
+
+  Plan edits (plan.md, still uncommitted)
+
+  The resolver contract now reads: date first; same note uses text order;
+  different sources with both times uses the later clock time; different sources
+  with one time missing means neither supersedes the other, so both govern. I
+  also added the new verifier checks to the verify row and to step 1.
+
+  The "no same-day conflicts" claim further down is still in the plan as
+  originally written, though step 0 showed it is wrong for cases 8, 9, 20 and
+  38. I left it alone since you didn't ask for it.
+
+  Step 2 (commit f58fa16)
+
+  All four "done when" conditions pass in tests/test_case_16.py:
+
+  - Resolution: 137/78 at 08:30 governs, and the result records that it
+    superseded 189/112 at 08:06 ("later in the same note").
+  - Decision: the Rule 4 BP check passes and the case is READY with issues: [].
+  - Replay: the test blocks openai from being imported, and reversing the
+    structured vitals and every observation list gives an identical output.
+  - Recheck removed: the same fixture without the recheck gives NOT_CLEARED on
+    189/112.
+
+  The BP check for case 16 reads: "Most recent blood pressure 137/78 mmHg
+  (2026-03-15 08:30) is below the exclusion limit (systolic >= 180 or diastolic
+  >= 110 mmHg). It supersedes 189/112 mmHg (later in the same note)."
+
+  tests/test_resolve.py covers your ordering rules directly, including that an
+  untimed reading from another source leaves both governing and fails if either
+  is over the limit.
+
+  Things that differ from the plan or are provisional
+
+  - Structured vitals reference: the plan says "vitals index", but an index
+    changes when the input is reordered, which breaks the identical-output test.
+    I used the vital's source and timestamp instead (e.g. "Cardiology clinic,
+    2026-03-12T10:12:00Z").
+  - Rules 1 to 3 are in simplest form: steps 4 and 5 harden them. For example,
+    consent matching is plain containment of the named procedure in the
+    scheduled one, and a drug counts as taken if any source says so.
+  - Dropped facts: not yet fed into the checks. That is step 6.
+
+  Decision for you: what counts as an H&P
+
+  The H&P check currently follows the plan's resolver line and counts only
+  documents the extractor classifies as a pre-op evaluation. That is one of your
+  open decisions, and nothing in step 2 depends on it.
+
+  - Pre-op evaluations only: matches how the labeler dismisses wellness visits,
+    but adds a criterion the policy text doesn't state, and leans on a model
+    classification.
+  - Any H&P: matches the policy's literal wording, but a recent wellness visit
+    would then satisfy Rule 1. The sample never tests this, since the closest
+    wellness note is 34 days out.
+
+  It is a one-line change either way, and I need your answer before step 5.
+
+  Step 3 (the extractor) is next. It needs live model calls, so I'll state the
+  count before running anything.
+
+✻ Cogitated for 5m 42s · done 10:48 PM
+
+❯ 1) unkown same-day rule --> change to when having both readings oer the       
+  limit, fall, both under, pass, one oevr one under we an't order is unkown so  
+  it needs to be followed up w/ missing required data as required by the brief. 
+  fix the text ase as well that is pinning wrong behavrious. 2) bp pattern too  
+  greedy rn as dropping quote bc it has 3/15 in it will lose real readings.     
+  only count nn/nn as a bp if vals are plausible. 3) dropped facts are silent   
+  rn so if a verifier drops a reading, the resoler falls back to an older one   
+  that could gie a false ready. 4) fix same-day claim & commit plan.md. keep    
+  the source + timestamp reference,keep rejecting 12 hour times too, just list  
+  it as a known limit                                                           
+     h&p decision: pre-op evaluations only.                                     
+  - cases 13 and 48 say the h&p is "not yet on file for this surgical           
+    episode", so a wellness visit isn't the doc the policy is asking for        
+  - "any h&p" would let a recent wellness visit clear rule 1, which is          
+    a false READY                                                               
+  - but if the only in-window doc filed as an h&p is a wellness visit,          
+    say so in the evidence so the nurse can overrule it                         
+    then start step 3                                                           
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ All four fixes are in and the suite passes (41 tests). Tidying one clumsy
+  test, then updating and committing plan.md before starting step 3.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Write(extract.py)
+  ⎿  Wrote 101 lines to extract.py
+       1 """The one model call: read the documents and report what they s
+         ay."""
+       2 
+       3 from __future__ import annotations
+       4 
+       5 from functools import cache
+       6 
+       7 from core import PatientSubmission
+       8 from observations import Observations
+       9 
+     … +92 lines (ctrl+o to expand)
+
+⏺ Write(tests/test_extract_live.py)
+  ⎿  Wrote 55 lines to tests/test_extract_live.py
+       1 from __future__ import annotations
+       2 
+       3 import json
+       4 import os
+       5 from pathlib import Path
+       6 
+       7 import pytest
+       8 
+       9 from core import PatientSubmission
+      10 from extract import extract
+     … +45 lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Answered Claude's questions:
+  ⎿  · The extractor (extract.py) and its live test are written. May I run the 
+     live test on case 16 now? It is 1 call to gpt-4.1-mini per run (both live 
+     assertions share one extraction), and I'd cap it at 5 calls total if the 
+     prompt needs adjusting. → Go ahead, up to 5 calls
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+⏺ Your four fixes are in, and step 3 is done: case 16 returns READY end to end
+  with a real model call, and the full suite passes 43 of 43 including the live
+  test. I used 3 of the 5 model calls you approved.
+
+  Your fixes (commit 28fc7f8)
+
+  1. Unorderable readings: both over the limit fails, both under passes, and one
+     over with one under is unknown, which becomes NEEDS_FOLLOW_UP with
+     MISSING_REQUIRED_DATA. The test that pinned the old "fail if either"
+     behaviour is replaced by one covering all four combinations.
+  2. BP pattern: an nn/nn only counts as a BP when systolic is 50 to 300 and
+     diastolic is at least 20 and below the systolic. A quote containing 04/07
+     or 12/10 alongside a real reading now verifies.
+  3. Dropped facts are no longer silent:
+     - A dropped reading from a note dated on or after the governing reading
+       makes that vital check unknown.
+     - A verified exclusion still stands.
+     - An older dropped reading changes nothing.
+  4. Plan: the same-day claim is corrected (cases 8, 9, 20, 38), and plan.md is
+     committed. It also records the H&P decision and a "known limits" section
+     listing the 12-hour time rejection and the source-plus-timestamp reference.
+
+  H&P decision: pre-op evaluations only, as you decided. When the check fails
+  and a document filed as an H&P sits inside the window but reads as a wellness
+  visit, the finding says so and cites it.
+
+  One thing I added beyond what you asked: the same dropped-fact rule for the
+  other checks, because the hole was the same. A dropped anticoagulant mention
+  no longer reads as "no anticoagulant" (that was a false READY path); a dropped
+  plan, consent or H&P turns a fail into unknown. Say if you'd rather I back
+  that out until step 6.
+
+  Step 3 (commit fb7b104)
+
+  - extract.py: one responses.parse call with the strict schema, a shared client
+    with a 60-second timeout and 2 retries, and refusals or incomplete
+    responses raised as ExtractionError.
+  - Input: only the documents are sent, under short ids (D1, D2, …) that code
+    maps back to the real doc_ids.
+  - Prompt: shares no four-word run with the sample notes (I checked
+    mechanically).
+  - Live result: extraction returned 189/112 at 08:06 and 137/78 at 08:30, both
+    verified, with nothing dropped.
+
+  What the first live call showed, before I adjusted two prompt lines:
+
+  - Time outside the quote: the model quoted "T 37.1 C" for the 08:06
+    temperature, leaving the time out, so the verifier dropped it. The prompt
+    now says the quote must start at the time and run through the reading.
+  - Corrupted degree sign: the model returned "99.1 °F" with the degree sign
+    garbled, so that quote was not found. I added a line about copying symbols,
+    and it did not recur in the next two calls, but two clean calls don't prove
+    it's gone. Step 9's determinism run will show how often it happens.
+  - Outcome: with those two drops the pipeline returned NEEDS_FOLLOW_UP rather
+    than a false READY.
+
+  Two things to know:
+
+  - Live test gating: it needs RUN_LIVE_TESTS=1 as well as the key. Your
+    Makefile now always exports the key, so "skipped without a key" alone would
+    have made a model call on every make test.
+  - Aspirin: the model reports aspirin as an anticoagulant mention despite the
+    prompt. The code's drug table ignores it, so it has no effect, but it is
+    noise I can try to remove in step 4.
+
+  I also set temperature=0, store=False and an 8,000-token output cap on the
+  call; the plan didn't specify these.
+
+  Step 4 (rule 3 and plan matching) is next when you say go.
+
+✻ Sautéed for 3m 56s · done 10:56 PM
+
+❯ 1) make the verifier tolerant by  match                                       
+     quotes on letters, digits and . / : only, ignore other symbols and         
+  whitespace. 2) have the quote contain the time + the readinging 3) consider   
+  what happens when the model names a anticoagulant that isn't known by         
+  labeling it w/ an unnowkwn, unless there's a problem w/ this. then start step 
+  4                                                                             
+⏺ Write(verify.py)
+  ⎿  Couldn't write file
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ The new tolerant-matching tests are written, but my rewrite of verify.py
+  didn't save (the tool wanted a fresh read first), so one test fails as
+  expected. Re-applying the rewrite now.
+
+  Read 1 file (ctrl+o to expand)
+
+⏺ Write(verify.py)
+  ⎿  Added 68 lines, removed 46 lines
+      12      AnticoagulationPlan,
+      13      ConsentObservation,
+      14      DroppedFact,
+      15 +    HpDocument,                                                
+      16      Observations,
+      17      Reading,
+      18      SchedulingStatement,
+     ...
+      20      VitalObservation,
+      21  )
+      22 
+      23 +MATCHED = re.compile(r"[A-Za-z0-9./:]")                        
+      24  NUMBER = re.compile(r"\d+(?:\.\d+)?")
+      25  BLOOD_PRESSURE = re.compile(r"(?<![\d/])(\d{2,3})\s*/\s*(\d{2,3
+          })(?![\d/]|\.\d)")
+      24 -UNIT_AFTER_VALUE = re.compile(r"\s*(?:°|degrees?)?\s*([FC])(?:a
+         -hrenheit|elsius)?\b")                                          
+      26 +UNIT_AFTER_VALUE = re.compile(r"[^A-Za-z0-9]*(?:degrees?\s*)?([
+         +FC])(?:ahrenheit|elsius)?\b")                                  
+      27 +NOT_FOUND = "quote not found in document"                      
+      28 
+      29 
+      27 -def find_quote(quote: str, text: str) -> int | None:           
+      28 -    words = quote.split()                                      
+      29 -    if not words:                                              
+      30 +def find_quote(quote: str, text: str) -> tuple[int, str] | None
+         +:                                                              
+      31 +    """Where the quote sits in the text, and the text's own wor
+         +ding of it.                                                    
+      32 +                                                               
+      33 +    Only letters, digits and . / : have to match. Whitespace an
+         +d other symbols are ignored.                                   
+      34 +    """                                                        
+      35 +                                                               
+      36 +    wanted = "".join(MATCHED.findall(quote))                   
+      37 +    matched = [(index, char) for index, char in enumerate(text)
+         + if MATCHED.match(char)]                                       
+      38 +    at = "".join(char for _, char in matched).find(wanted)     
+      39 +    if not wanted or at < 0:                                   
+      40          return None
+      31 -    match = re.search(r"\s+".join(re.escape(word) for word in w
+         -ords), text)                                                   
+      32 -    return match.start() if match else None                    
+      41 +    start, end = matched[at][0], matched[at + len(wanted) - 1][
+         +0] + 1                                                         
+      42 +    return start, text[start:end]                              
+      43 
+      44 
+      45  def blood_pressures(text: str) -> list[tuple[int, int]]:
+     ...
+       93      return None
+       94 
+       95 
+       86 -def consent_problem(consent: ConsentObservation, text: str) ->
+          - str | None:                                                  
+       96 +def checked_hp(hp: HpDocument, text: str) -> HpDocument | str:
+       97 +    found = find_quote(hp.quote, text)                        
+       98 +    return hp.model_copy(update={"quote": found[1]}) if found 
+          +else NOT_FOUND                                                
+       99 +                                                              
+      100 +                                                              
+      101 +def checked_consent(consent: ConsentObservation, text: str) ->
+          + ConsentObservation | str:                                    
+      102      if consent.patient_signed == "yes" and consent.signature_q
+           uote is None:
+      103          return "signed consent without a signature quote"
+      104      if consent.procedure_named is not None and consent.procedu
+           re_quote is None:
+      105          return "procedure named without a procedure quote"
+       91 -    for quote in (consent.signature_quote, consent.procedure_q
+          -uote):                                                        
+       92 -        if quote is not None and find_quote(quote, text) is No
+          -ne:                                                           
+       93 -            return "quote not found in document"              
+      106 +    as_written = {}                                           
+      107 +    for field in ("signature_quote", "procedure_quote"):      
+      108 +        if (quote := getattr(consent, field)) is not None:    
+      109 +            if (found := find_quote(quote, text)) is None:    
+      110 +                return NOT_FOUND                              
+      111 +            as_written[field] = found[1]                      
+      112 +    consent = consent.model_copy(update=as_written)           
+      113      if consent.procedure_named is not None and not names(conse
+           nt.procedure_quote, consent.procedure_named):
+      114          return f"quote does not name {consent.procedure_named}
+           "
+       96 -    return None                                               
+      115 +    return consent                                            
+      116 
+      117 
+       99 -def mention_problem(mention: AnticoagulantMention, text: str) 
+          --> str | None:                                                
+      100 -    if find_quote(mention.quote, text) is None:               
+      101 -        return "quote not found in document"                  
+      102 -    if not names(mention.quote, mention.drug_as_written):     
+      118 +def checked_mention(mention: AnticoagulantMention, text: str) 
+          +-> AnticoagulantMention | str:                                
+      119 +    if (found := find_quote(mention.quote, text)) is None:    
+      120 +        return NOT_FOUND                                      
+      121 +    if not names(found[1], mention.drug_as_written):          
+      122          return f"quote does not name {mention.drug_as_written}
+           "
+      104 -    return None                                               
+      123 +    return mention.model_copy(update={"quote": found[1]})     
+      124 
+      125 
+      107 -def plan_problem(plan: AnticoagulationPlan, text: str) -> str 
+          -| None:                                                       
+      126 +def checked_plan(plan: AnticoagulationPlan, text: str) -> Anti
+          +coagulationPlan | str:                                        
+      127      # A side's quote may not repeat the drug, so the document 
+           as a whole has to name it.
+      128      if not names(text, plan.drug_as_written):
+      129          return f"document does not name {plan.drug_as_written}
+           "
+      111 -    for side in (plan.preop, plan.postop):                    
+      130 +    as_written = {}                                           
+      131 +    for field in ("preop", "postop"):                         
+      132 +        side = getattr(plan, field)                           
+      133          if side.label != "absent" and side.quote is None:
+      134              return f"{side.label} without a quote"
+      114 -        if side.quote is not None and find_quote(side.quote, t
+          -ext) is None:                                                 
+      115 -            return "quote not found in document"              
+      116 -    return None                                               
+      135 +        if side.quote is not None:                            
+      136 +            if (found := find_quote(side.quote, text)) is None
+          +:                                                             
+      137 +                return NOT_FOUND                              
+      138 +            as_written[field] = side.model_copy(update={"quote
+          +": found[1]})                                                 
+      139 +    return plan.model_copy(update=as_written)                 
+      140 
+      141 
+      119 -def scheduling_problem(statement: SchedulingStatement, text: s
+          -tr) -> str | None:                                            
+      120 -    if find_quote(statement.quote, text) is None:             
+      121 -        return "quote not found in document"                  
+      142 +def checked_scheduling(statement: SchedulingStatement, text: s
+          +tr) -> SchedulingStatement | str:                             
+      143 +    if (found := find_quote(statement.quote, text)) is None:  
+      144 +        return NOT_FOUND                                      
+      145 +    statement = statement.model_copy(update={"quote": found[1]
+          +})                                                            
+      146      if statement.procedure_date is None:
+      123 -        return None if statement.pending else "states neither 
+          -a date nor that it is pending"                                
+      147 +        return statement if statement.pending else "states nei
+          +ther a date nor that it is pending"                           
+      148      try:
+      149          stated = date.fromisoformat(statement.procedure_date)
+      150      except ValueError:
+      151          return f"{statement.procedure_date} is not an ISO date
+           "
+      152      if not {stated.year, stated.month, stated.day} <= numbers_
+           in(statement.quote):
+      153          return f"quote does not contain the date {statement.pr
+           ocedure_date}"
+      130 -    return None                                               
+      154 +    return statement                                          
+      155 
+      156 
+      157  def verify(submission: PatientSubmission, observations: Observ
+           ations) -> VerifiedObservations:
+     ...
+      173      for vital in observations.vitals:
+      174          if (document := cited("vital", vital)) is None:
+      175              continue
+      152 -        offset = find_quote(vital.quote, document.text or "") 
+      153 -        problem = "quote not found in document" if offset is N
+          -one else vital_problem(vital)                                 
+      154 -        if problem:                                           
+      176 +        found = find_quote(vital.quote, document.text or "")  
+      177 +        if found is None:                                     
+      178 +            drop("vital", vital, NOT_FOUND)                   
+      179 +            continue                                          
+      180 +        offset, as_written = found                            
+      181 +        # The claimed values are checked against the document'
+          +s words, not the model's copy of them.                        
+      182 +        if problem := vital_problem(vital.model_copy(update={"
+          +quote": as_written})):                                        
+      183              drop("vital", vital, problem)
+      184              continue
+      185          readings.append(
+     ...
+      198                      reference=vital.doc_id,
+      199                      date=document.date,
+      200                      time=vital.time.zfill(5) if vital.time els
+           e None,
+      173 -                    quote=vital.quote,                        
+      201 +                    quote=as_written,                         
+      202                      offset=offset,
+      203                  ),
+      204              )
+     ...
+      214          else:
+      215              verified.readings.append(reading)
+      216 
+      189 -    for hp in observations.hp_documents:                      
+      190 -        if (document := cited("hp_document", hp)) is None:    
+      191 -            continue                                          
+      192 -        if find_quote(hp.quote, document.text or "") is None: 
+      193 -            drop("hp_document", hp, "quote not found in docume
+          -nt")                                                          
+      194 -        else:                                                 
+      195 -            verified.hp_documents.append(hp)                  
+      196 -                                                              
+      217      checks = (
+      198 -        ("consent", observations.consents, consent_problem, ve
+          -rified.consents),                                             
+      199 -        ("anticoagulant_mention", observations.anticoagulant_m
+          -entions, mention_problem, verified.anticoagulant_mentions),   
+      200 -        ("anticoagulation_plan", observations.anticoagulation_
+          -plans, plan_problem, verified.anticoagulation_plans),         
+      201 -        ("scheduling_statement", observations.scheduling_state
+          -ments, scheduling_problem, verified.scheduling_statements),   
+      218 +        ("hp_document", observations.hp_documents, checked_hp,
+          + verified.hp_documents),                                      
+      219 +        ("consent", observations.consents, checked_consent, ve
+          +rified.consents),                                             
+      220 +        ("anticoagulant_mention", observations.anticoagulant_m
+          +entions, checked_mention, verified.anticoagulant_mentions),   
+      221 +        ("anticoagulation_plan", observations.anticoagulation_
+          +plans, checked_plan, verified.anticoagulation_plans),         
+      222 +        ("scheduling_statement", observations.scheduling_state
+          +ments, checked_scheduling, verified.scheduling_statements),   
+      223      )
+      203 -    for kind, items, find_problem, kept in checks:            
+      224 +    for kind, items, checked, kept in checks:                 
+      225          for item in items:
+      226              if (document := cited(kind, item)) is None:
+      227                  continue
+      207 -            if problem := find_problem(item, document.text or 
+          -""):                                                          
+      208 -                drop(kind, item, problem)                     
+      228 +            outcome = checked(item, document.text or "")      
+      229 +            if isinstance(outcome, str):                      
+      230 +                drop(kind, item, outcome)                     
+      231              else:
+      210 -                kept.append(item)                             
+      232 +                kept.append(outcome)                          
+      233 
+      234      return verified
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+⏺ The tolerant quote matching is committed, and the anticoagulant resolver and
+  Rule 3 check are rewritten with the suite still green. Now building the
+  fixtures for cases 18, 20, 33, 19, 25, 27 and 3.
+
+  Made 1 scratchpad edit +66, ran 3 shell commands (ctrl+o to expand)
+
+⏺ Your three changes are in and step 4 is done: all seven named cases match
+  their labels through the replay path, and make test passes 64 with the 2 live
+  tests skipped (no model calls this turn).
+
+  Your three changes
+
+  1. Tolerant quote matching (commit 25e5bc3 area, "Match quotes on letters,
+     digits and number punctuation"):
+     - Only letters, digits and . / : have to match. Whitespace and every other
+       symbol are ignored, so a garbled degree sign or a different dash no
+       longer loses a reading.
+     - Letters stay case-sensitive.
+     - After a match, the output carries the document's own wording, not the
+       model's copy. All value checks (BP pair, temperature and unit, time) run
+       against that wording.
+  2. Quote contains the time and the reading: this was already required by both
+     the prompt and the verifier. It is now checked against the document's
+     wording, and there is a test for it. If you meant something stricter (for
+     example, that the time must sit directly before the reading), tell me.
+  3. Unknown anticoagulants: I did find a problem with flagging every
+     unrecognised drug, so the rule has two parts.
+     - The problem: the live model reports aspirin as an anticoagulant (seen in
+       step 3), so a blanket "unrecognised means unknown" would flag every
+       aspirin patient. Known antiplatelets are therefore ignored through a
+       second small table.
+     - Anything else the extractor calls an anticoagulant that the table doesn't
+       know is kept and marked unrecognised. If the patient takes it and no
+       complete plan covers it, Rule 3 is unknown (MISSING_REQUIRED_DATA), not
+       "not applicable". If a complete plan covers it, the rule passes, since it
+       is satisfied whether or not the drug is an anticoagulant.
+     - Remaining weakness: if the model over-reports some other
+       non-anticoagulant (say an NSAID), that case goes to follow-up. It fails
+       toward review, not toward READY.
+
+  Step 4
+
+  How the resolver now decides, per drug:
+
+  - Status: the medication list's active flag and the newest note that mentions
+    the drug each give a status. If they agree, that is the status; if they
+    disagree, or the flag is null with nothing to settle it, the status is
+    uncertain.
+  - Plan matching: a plan is attached to the drug it names, through the
+    brand-to-generic table. A drug is covered only when one document gives an
+    instruction for both before and after.
+  - Rule 3: a recognised drug the patient takes with no complete plan fails. An
+    uncertain or unrecognised drug with no complete plan is unknown.
+
+  Results on the named cases:
+
+  ┌───────┬─────────────────────┬───────────────────────────────────────────┐
+  │ case  │       result        │                  finding                  │
+  ├───────┼─────────────────────┼───────────────────────────────────────────┤
+  │       │                     │ "Patient takes apixaban and there is no   │
+  │ 18    │ NEEDS_FOLLOW_UP,    │ documented perioperative plan for it. The │
+  │       │ anticoagulation     │  plan dated 2026-02-06 is for warfarin,   │
+  │       │                     │ which the patient no longer takes."       │
+  ├───────┼─────────────────────┼───────────────────────────────────────────┤
+  │ 20    │ NEEDS_FOLLOW_UP,    │ plan is incomplete: before is an          │
+  │       │ anticoagulation     │ instruction, after is deferred            │
+  ├───────┼─────────────────────┼───────────────────────────────────────────┤
+  │       │ NEEDS_FOLLOW_UP,    │ "It is not confirmed whether the patient  │
+  │ 33    │ missing data        │ currently takes warfarin, and no complete │
+  │       │                     │  plan covers it."                         │
+  ├───────┼─────────────────────┼───────────────────────────────────────────┤
+  │ 19,   │ READY               │ inactive warfarin; antiplatelets only;    │
+  │ 25, 3 │                     │ Eliquis with a complete plan              │
+  ├───────┼─────────────────────┼───────────────────────────────────────────┤
+  │ 27    │ NEEDS_FOLLOW_UP,    │ Eliquis reported only in the nursing      │
+  │       │ anticoagulation     │ note, no plan                             │
+  └───────┴─────────────────────┴───────────────────────────────────────────┘
+
+  Case 18 also has the reverse test: if the patient were still on warfarin, the
+  same plan makes the case READY.
+
+  Things to know
+
+  - Fixtures: I drafted the vitals, H&P, consent and scheduling parts with a
+    throwaway script that follows the sample's templates, reviewed the output,
+    and wrote the anticoagulant parts by hand. A test asserts every fixture
+    observation verifies against the chart. The script is not in the repo.
+  - One-document rule: a hold instruction in one note and a restart instruction
+    in another do not add up to a complete plan. That is the plan's wording, and
+    the stricter reading; say if you want the two sides combined across
+    documents.
+  - Table additions: dalteparin and fondaparinux, with their brand names.
+  - plan.md: updated with the new resolver and verifier rules and committed with
+    this step.
+
+  Step 5 (rules 1 and 2 hardened) is next when you say go.
+
+✻ Churned for 5m 10s · done 11:04 PM
+
+❯ after this, let's get step 5 and 6 done at the same time if you can. have     
+  multiple agents working on it to get it doen fast, then test then report      
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+⏺ The shared source changes for steps 5 and 6 are in and the suite is green. I'm
+  committing that base, then handing the fixtures and tests to three parallel
+  agents. · summary
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ 3 background agents launched (↓ to manage)
+   ├ Lab and missing-input tests
+   ├ H&P and consent tests
+   └ Response and threshold tests
+
+⏺ Three agents are now running in parallel on steps 5 and 6:
+
+  - Labs and missing inputs: fixtures for cases 4, 6, 17, 41, 11 and 29, plus
+    lab threshold and normalizer tests.
+  - H&P and consent: fixtures for cases 1, 13, 14, 7, 8 and 24, plus the 30-day
+    window and consent tests.
+  - Response and vitals: the case 28 three-state test, the vital-sign
+    thresholds, and the chart-gap versus processing-failure checks.
+
+  Each writes only its own test file and fixtures, and none of them touches the
+  source modules or makes model calls. The shared source changes they depend on
+  are already committed (b96b6b4): the lab-name normalizer, an unknown_cause
+  field on each unknown check, and a sources_checked list for missing items.
+
+  I'm waiting on their results. When they come back I'll run the full suite, fix
+  anything they report against the source, and then give you the combined
+  report along with one sample output per decision for your review.
+
+✻ Worked for 2m 56s · done 11:08 PM
+
+› Message from general-purpose
+  Both files are written, and one test fails honestly: the "every issue has
+  evidence or sources_checked" invariant does not hold for case 29. I left it
+  failing (not xfailed, since it is one parametrized case and blocks nothing).
+
+  ## Files created
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00028_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/test_response.py`
+
+  Nothing else was touched and nothing was committed.
+
+  ## Final pytest line
+  `1 failed, 35 passed in 0.13s`
+
+  The invariant test globs `tests/fixtures/` at collection, so the count grows
+  as the other agents add fixtures. The 35 passes include invariants on 22
+  fixtures present at the last run.
+
+  ## Invariant violation in the source
+  `check_lab` in `rules.py` returns a CMP check with no evidence and no
+  `sources_checked` when procedure risk is missing. The issue built from it
+  therefore points at nothing.
+
+  ```
+  FAILED tests/test_response.py::test_response_invariants_hold_for_every_fixture
+  [case_00029]
+  E  AssertionError: Procedure risk is missing, so it is unknown whether a CMP
+  is required.
+  E  assert ([] or [])
+  E   +  where [] = Issue(category='MISSING_REQUIRED_DATA', rule='Rule 2',
+  unknown_cause='chart_gap', finding='Procedure risk is missing, so it is
+  unknown whether a CMP is required.', evidence=[], sources_checked=[]).evidence
+  E   +  and   [] = Issue(...).sources_checked
+  ```
+
+  The cause is the early return for `test == "CMP" and risk is None`. A likely
+  fix is to give that branch a `sources_checked` entry naming the procedure
+  record, but I did not edit the source. All other invariants hold on every
+  fixture present.
+
+  ## What the tests cover
+  - **Case 28 in three states:**
+    - As written: `NOT_CLEARED` with exactly `ACUTE_SAFETY_EXCLUSION` and
+  `REQUIRED_DOCUMENTATION`, matching the label.
+    - With a later structured 120/80 on 2026-03-27: `NEEDS_FOLLOW_UP` with only
+  `REQUIRED_DOCUMENTATION`.
+    - With a signed consent document and observation added as well: `READY` with
+  `issues == []`.
+  - **Thresholds:** all are case 28 mutations where the passing side is
+  `NEEDS_FOLLOW_UP` (the consent issue remains) and the failing side is
+  `NOT_CLEARED`.
+    - Systolic 179 / 180.
+    - Diastolic 109 / 110.
+    - 100.4 F / 100.5 F.
+    - 38.0 C / 38.1 C, via a Celsius note observation through `evaluate`.
+  - **Unknown split:**
+    - Chart gap: case 16 with every temperature removed gives `chart_gap` on the
+  check and the issue, with `sources_checked` non-empty.
+    - Processing failure: a fabricated quote on case 16's latest temperature
+  (37.1 C) gives `processing_failure`, and `result.unverified` holds the dropped
+  fact with reason "quote not found in document".
+    - Surviving exclusion: in case 28, a fabricated consent signature quote
+  turns the consent check `unknown` / `processing_failure` while blood pressure
+  stays `fail` and the decision stays `NOT_CLEARED`.
+  - **Invariants:** the six you listed, plus one I added: the number of issues
+  equals the number of fail or unknown checks.
+
+  ## Fixture notes
+  - The draft matched the chart. I made two changes: the vital quotes now start
+  at "Vitals 10:05", and I added a second scheduling statement from the H&P plan
+  ("Thyroidectomy scheduled for 03/29/2026 with Endocrine Surgery.").
+  - I left out the nursing intake's "Planned procedure: thyroidectomy". It has
+  no date and is not pending, so the verifier would drop it.
+  - The nursing intake says "VITAL SIGNS: See flowsheet", so there are no vitals
+  to extract there. The chart has no anticoagulants or antiplatelets, so both
+  lists are empty.
+  - Nothing in the fixture is uncertain, and it verifies with `dropped == []`.
+
+  One thing to be aware of: `tests/test_response.py` changed on disk after my
+  last edit (not by me). My final run was against my own version, so it is worth
+  re-running the file once the other agents finish.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Agent "Response and threshold tests" finished · 1m 26s
+
+⏺ The response-and-vitals agent has finished: its 36 tests pass, including the
+  case 28 three-state test and all the vital-sign thresholds.
+
+  It found one real gap in my source, which I've fixed. When the procedure risk
+  is missing, the CMP check came back unknown with no evidence and nothing
+  listed as checked, so the issue pointed at nothing. It now names the empty
+  procedure_risk field as the source checked.
+
+  The other two agents (labs and missing inputs; H&P and consent) are still
+  running. Their fixtures are appearing on disk, but I haven't seen their
+  reports yet, so I can't say anything about their results. Once both report
+  back I'll run the full suite, deal with anything they raise, commit, and give
+  you the combined report with the three sample outputs.
+
+✻ Worked for 8s · done 11:10 PM
+
+› Message from general-purpose
+  Rule 1 fixtures and tests are written and all pass: `21 passed in 0.10s` (only
+  `tests/test_documentation.py` was run). All six labels reproduce with no
+  xfails and no fixture bending. One gap in the source is worth your attention,
+  described below.
+
+  ## Files created
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/test_documentation.py`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00001_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00007_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00008_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00013_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00014_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00024_ob
+  servations.json`
+
+  Nothing else was touched and nothing was committed.
+
+  ## Gap found: attestation quoted as a patient signature passes
+  Nothing deterministic stops an extractor from claiming `patient_signed: "yes"`
+  and quoting the physician's attestation as the signature. I probed this on
+  case 7 with only the pending consent, relabelled "yes" with `signature_quote`
+  = "Electronically signed by Laura Murphy, DO on 02/18/2026.". The result was
+  `READY`, consent check `pass`, nothing dropped.
+
+  The verifier only checks that the quote exists in the document, so
+  "attestation is not a patient signature" rests entirely on the extractor's
+  label. I did not add a test for this, since it would fail against current
+  source and you said not to edit source. The attestation test I did write
+  covers the correctly labelled side: `patient_signed: "no"` on a form whose
+  only signature is the physician's fails with "Consent on file is not signed by
+  the patient."
+
+  ## Fixtures
+  - **Drafts were correct as generated.** I read each against the full chart
+  text and changed nothing; all six verify with `dropped == []`.
+  - **No anticoagulants in any of the six charts.** Both anticoagulant lists are
+  empty; the aspirin in cases 8 and 24 is not reported.
+  - **Case 7** has both consents: 02/18 as "no" with "Patient signature:
+  pending", and 03/03 as "yes".
+  - **Cases 8 and 13**: the H&P line about consent "not yet completed" and the
+  anesthesia line "H&P: not yet on file" are not recorded as consent or H&P
+  observations.
+  - **Case 24**: the consent is recorded as signed, naming "coronary artery
+  bypass grafting".
+
+  Unsure points:
+  - Each H&P also has a second scheduling line in its plan section (e.g.
+  "Cataract extraction scheduled for 03/02/2026 with Ophthalmology."). I
+  recorded only the header "Planned procedure: ... (scheduled for ...)" line,
+  matching the existing case 3 fixture. It gives the same date, so Rule 1 is
+  unaffected.
+  - Case 13 has no vitals observations and no scheduling statement, because the
+  chart has neither ("VITAL SIGNS: See flowsheet."). Its `MISSING_REQUIRED_DATA`
+  label comes from the temperature check.
+
+  ## Tests
+  - **Label match**: parametrized over the six cases — fixture verifies,
+  decision matches, category set matches.
+  - **H&P window**: day 0 and day 30 are `READY`; day 31 is `NEEDS_FOLLOW_UP`
+  with `REQUIRED_DOCUMENTATION`. I moved the H&P document's date on case 1
+  rather than `procedure_date`, so lab and vitals windows stay fixed.
+  - **Case-specific tests**: everything in the brief for cases 1, 13, 14, 7, 8
+  and 24 is covered, including `sources_checked` and the case 24 finding text.
+  - **Attestation test**: case 1's consent text is swapped for case 31's real
+  blank-signature wording, with the attestation left in place.
+  - **Fabricated signature quote**: consent check becomes `unknown` /
+  `processing_failure`, and the decision is `NEEDS_FOLLOW_UP` with
+  `MISSING_REQUIRED_DATA`.
+  - **One test beyond the brief**: a wellness note dated inside the window still
+  fails and is named in the finding as not a pre-operative evaluation.
+
+  ## Other notes
+  - The consent match is a substring test of the consent's procedure inside
+  `procedure_type`, so "cataract extraction" matches "Elective cataract
+  extraction". The case 24 counterfactual therefore sets `procedure_type` to
+  "Elective coronary artery bypass grafting".
+  - An H&P dated after the procedure fails, because `check_hp` requires `0 <=
+  days`. I did not test this, as it was not in the brief.
+  - `git status` shows other agents' untracked files (`tests/test_labs.py`,
+  `tests/test_response.py`, and fixtures for cases 4, 6, 11, 17, 28, 29, 41). I
+  did not create or touch them.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Agent "H&P and consent tests" finished · 1m 35s
+
+› Message from general-purpose
+  ## Result
+
+  All six cases reproduce their labels and the lab and missing-input tests pass:
+  `32 passed in 0.12s` (only `tests/test_labs.py` was run). No source bug and
+  no label mismatch turned up, so nothing is marked `xfail`.
+
+  ## Files created (nothing else touched, nothing committed)
+
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/test_labs.py`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00004_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00006_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00017_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00041_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00011_ob
+  servations.json`
+  - `/Users/manyapn/Documents/GitHub/preop-exercise/tests/fixtures/case_00029_ob
+  servations.json`
+
+  ## What the tests cover
+
+  - **Label replay** for cases 4, 6, 17, 41, 11, 29: fixture fully verifies,
+  decision matches, category set matches.
+  - **Normalizer**: the sample has exactly the 13 `(code, display)` pairs; six
+  map to CBC or CMP (including `LAB-CBC` and `LAB-CMP` "w/ Magnesium"), and
+  `BMP`, `LAB-BMP` and the other five map to None.
+  - **Entered-in-error**: cases 4 and 41 pass on the prior final CBC (24 and 11
+  days) with "was not counted" in the summary; case 6 fails `REQUIRED_TESTING`
+  at 44 days.
+  - **Case 17**: only the `cmp` check fails ("No final CMP result among 3 lab
+  results."); `cbc` passes.
+  - **Thresholds**, each decision-changing on a mutated case 16: CBC day 30
+  READY and day 31 NEEDS_FOLLOW_UP for LOW and for MODERATE; for HIGH, CBC 14/15
+  and CMP 14/15, plus HIGH with no CMP.
+  - **Most recent final only**: a recent CBC plus an older one is READY in
+  either list order; an old final CBC stays failed alone, with a newer
+  entered-in-error or preliminary CBC, or with a newer BMP and CMP; a lone
+  entered-in-error CBC fails.
+  - **Missing inputs**: case 11 (`cbc`, and `history_and_physical`) and case 29
+  (`cbc` and `cmp`) are `unknown` with `unknown_cause == "chart_gap"`, and all
+  issues are `MISSING_REQUIRED_DATA`. With the CBC removed, `cbc` is `fail` in
+  both cases and the categories become `REQUIRED_TESTING` plus
+  `MISSING_REQUIRED_DATA`.
+
+  ## Fixture notes
+
+  - The drafts from `draft_fixture.py` matched the chart text for all six cases;
+  I changed nothing in them except adding the warfarin entries to case 4.
+  - **Case 4 warfarin**: three `taking` mentions (hematology consult, nursing
+  intake, H&P) and one plan from the hematology consult.
+    - Pre-op quote: "Stop warfarin 5 days before surgery (last dose 02/27/2026);
+  check INR the day before surgery with goal <1.5."
+    - Post-op quote: "Resume warfarin at the usual home dose the evening of
+  surgery if hemostasis is adequate, with enoxaparin bridging restarted 48-72
+  hours post-op until INR is therapeutic."
+    - Enoxaparin is not reported as a medication; it appears only inside that
+  post-op quote.
+  - **Case 11**: no temperature anywhere, so the fixture has only the H&P blood
+  pressure. The scheduling statement is `pending: true` with a null date.
+  - **Cases 41 and 11**: aspirin is not reported.
+  - Nothing in the fixtures that I am unsure about.
+
+  ## Limits of the threshold tests
+
+  - Synthetic labs in the threshold tests use `code` and `display` both set to
+  the bare test name ("CBC", "CMP", "BMP") and an 08:00Z timestamp. The
+  calendar-day rule is therefore not tested against a late-evening lab time.
+  - The helper asserts that case 16's procedure date is still 2026-03-17 rather
+  than overwriting it, so the H&P window is undisturbed.
+
+⏺ Agent "Lab and missing-input tests" finished · 1m 35s
+
+❯ don't wait idle. while they run, you do step 7: wire                          
+  triage_submission to the pipeline, keep the starter callable as               
+  baseline.py, and fix the old tests in test_triage_submission.py.              
+  that's core.py and one test file, so it won't collide with the                
+  three agents. commit when green.                                              
+                                                                                
+  at 11:30, whatever is still open, run the final system once on all            
+  50 into results/final/ and give me the table next to the step 0               
+  baseline, plus each miss in one line with the stage that owns it.             
+                                                                                
+  after the eval starts, spin up one more agent that only edits                 
+  WRITEUP.md (draft is in the repo root): check "known limits",                 
+  "how the pieces fail safely" and "assumptions" against the code,              
+  fix what's wrong, fill in "how to run", leave the [FILL] rows                 
+
+  Ran 2 shell commands (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+❯ continue                                                                      
+
+  Searched for 1 pattern, ran 2 shell commands (ctrl+o to expand)
+
+⏺ Write(tests/test_triage_submission.py)
+  ⎿  Added 171 lines, removed 78 lines
+       8  import pytest
+       9  from pydantic import ValidationError
+      10 
+      11 -from core import (                                             
+      12 -    BASELINE_SYSTEM_PROMPT,                                    
+      13 -    PatientSubmission,                                         
+      14 -    TriageOutput,                                              
+      15 -    triage_output_json_schema,                                 
+      16 -    triage_submission,                                         
+      17 -)                                                              
+      11 +import baseline                                                
+      12 +import extract                                                 
+      13 +from core import PatientSubmission, triage_submission          
+      14 +from observations import Observations                          
+      15 +from rules import TriageResult                                 
+      16 
+      17 +HP_TEXT = "PRE-OPERATIVE EVALUATION\nSeen ahead of the planned 
+         +hernia repair.\nBP 120/80, temperature 98.6 F."                
+      18 +CONSENT_TEXT = "CONSENT\nOperation: hernia repair\nSigned by th
+         +e patient on 01/22/2026."                                      
+      19 
+      20 -@pytest.fixture                                                
+      21 -def openai_client(monkeypatch: pytest.MonkeyPatch) -> Mock:    
+      22 -    client = Mock()                                            
+      23 -    client.responses.create.return_value = SimpleNamespace(    
+      24 -        output_text=json.dumps(                                
+      25 -            {                                                  
+      26 -                "decision": "READY",                           
+      27 -                "issues": [],                                  
+      28 -                "explanation": "All required criteria are satis
+         -fied.",                                                        
+      29 -            }                                                  
+      30 -        ),                                                     
+      31 -    )                                                          
+      20 
+      33 -    monkeypatch.setitem(sys.modules, "openai", SimpleNamespace(
+         -OpenAI=lambda: client))                                        
+      34 -    return client                                              
+      35 -                                                               
+      36 -                                                               
+      21  @pytest.fixture
+      22  def submission_payload() -> dict[str, object]:
+      23      return {
+      40 -        "patient": {"id": "patient-1"},                        
+      24 +        "patient": {"id": "patient-1", "name": {"given": "Ines"
+         +, "family": "Okoro"}},                                         
+      25          "procedure": {
+      26              "case_id": "case-1",
+      27 +            "procedure_type": "Elective hernia repair",        
+      28              "procedure_risk": "LOW",
+      29              "procedure_date": "2026-02-01",
+      30          },
+      46 -        "vitals": [                                            
+      47 -            {                                                  
+      48 -                "type": "blood_pressure",                      
+      49 -                "systolic": 120,                               
+      50 -                "diastolic": 80,                               
+      51 -                "date": "2026-01-25",                          
+      52 -            }                                                  
+      53 -        ],                                                     
+      31 +        "vitals": [],                                          
+      32          "labs": [
+      33              {
+      34                  "code": "CBC",
+     ...
+       40          "medications": [],
+       41          "conditions": [],
+       42          "documents": [
+       65 -            {                                                 
+       66 -                "type": "history_and_physical",               
+       67 -                "date": "2026-01-20",                         
+       68 -                "text": "History and physical completed.",    
+       69 -            },                                                
+       70 -            {                                                 
+       71 -                "type": "surgical_consent",                   
+       72 -                "date": "2026-01-22",                         
+       73 -                "text": "Signed surgical consent.",           
+       74 -            },                                                
+       43 +            {"doc_id": "hp-1", "type": "history_and_physical",
+          + "date": "2026-01-20", "text": HP_TEXT},                      
+       44 +            {"doc_id": "consent-1", "type": "surgical_consent"
+          +, "date": "2026-01-22", "text": CONSENT_TEXT},                
+       45          ],
+       46      }
+       47 
+       48 
+       79 -def test_triage_submission_returns_structured_output(         
+       49 +def vital(kind: str, quote: str, **values) -> dict[str, object
+          +]:                                                            
+       50 +    empty = {"systolic": None, "diastolic": None, "temperature
+          +": None, "unit": None, "time": None}                          
+       51 +    return {"doc_id": "D1", "kind": kind, "quote": quote, **em
+          +pty, **values}                                                
+       52 +                                                              
+       53 +                                                              
+       54 +@pytest.fixture                                               
+       55 +def extracted() -> Observations:                              
+       56 +    return Observations.model_validate(                       
+       57 +        {                                                     
+       58 +            "vitals": [                                       
+       59 +                vital("blood_pressure", "BP 120/80", systolic=
+          +120, diastolic=80),                                           
+       60 +                vital("temperature", "temperature 98.6 F", tem
+          +perature=98.6, unit="F"),                                     
+       61 +            ],                                                
+       62 +            "hp_documents": [{"doc_id": "D1", "kind": "preop_e
+          +valuation", "quote": "PRE-OPERATIVE EVALUATION"}],            
+       63 +            "consents": [                                     
+       64 +                {                                             
+       65 +                    "doc_id": "D2",                           
+       66 +                    "patient_signed": "yes",                  
+       67 +                    "signature_quote": "Signed by the patient 
+          +on 01/22/2026.",                                              
+       68 +                    "procedure_named": "hernia repair",       
+       69 +                    "procedure_quote": "Operation: hernia repa
+          +ir",                                                          
+       70 +                }                                             
+       71 +            ],                                                
+       72 +            "anticoagulant_mentions": [],                     
+       73 +            "anticoagulation_plans": [],                      
+       74 +            "scheduling_statements": [],                      
+       75 +        }                                                     
+       76 +    )                                                         
+       77 +                                                              
+       78 +                                                              
+       79 +@pytest.fixture                                               
+       80 +def openai_client(monkeypatch: pytest.MonkeyPatch, extracted: 
+          +Observations) -> Mock:                                        
+       81 +    client = Mock()                                           
+       82 +    client.responses.parse.return_value = SimpleNamespace(stat
+          +us="completed", output=[], output_parsed=extracted)           
+       83 +    client.responses.create.return_value = SimpleNamespace(   
+       84 +        output_text=json.dumps({"decision": "READY", "issues":
+          + [], "explanation": "All required criteria are satisfied."}), 
+       85 +    )                                                         
+       86 +    monkeypatch.setitem(sys.modules, "openai", SimpleNamespace
+          +(OpenAI=lambda **settings: client))                           
+       87 +    extract.shared_client.cache_clear()                       
+       88 +    yield client                                              
+       89 +    extract.shared_client.cache_clear()                       
+       90 +                                                              
+       91 +                                                              
+       92 +def test_triage_submission_makes_one_strict_extraction_call(  
+       93      openai_client: Mock,
+       94      submission_payload: dict[str, object],
+       95  ) -> None:
+       96      output = triage_submission(submission_payload, model="test
+           -model")
+       97 
+       85 -    assert isinstance(output, TriageOutput)                   
+       98 +    assert isinstance(output, TriageResult)                   
+       99      assert output.decision == "READY"
+      100      assert output.issues == []
+       88 -    assert output.explanation == "All required criteria are sa
+          -tisfied."                                                     
+      101 +    assert output.unverified == []                            
+      102 
+       90 -    assert openai_client.responses.create.call_count == 1     
+       91 -    call = openai_client.responses.create.call_args.kwargs    
+      103 +    assert openai_client.responses.parse.call_count == 1      
+      104 +    assert openai_client.responses.create.call_count == 0     
+      105 +    call = openai_client.responses.parse.call_args.kwargs     
+      106      assert call["model"] == "test-model"
+       93 -    assert call["instructions"] == BASELINE_SYSTEM_PROMPT     
+      107 +    assert call["instructions"] == extract.EXTRACTION_PROMPT  
+      108 +    assert call["text_format"] is Observations                
+      109 
+       95 -    text_config = call["text"]                                
+       96 -    assert isinstance(text_config, dict)                      
+       97 -    response_format = text_config["format"]                   
+       98 -    assert isinstance(response_format, dict)                  
+       99 -    assert response_format["type"] == "json_schema"           
+      100 -    assert response_format["name"] == "preop_triage_output"   
+      101 -    assert response_format["schema"] == triage_output_json_sch
+          -ema()                                                         
+      102 -    assert response_format["strict"] is False                 
+      110 
+      111 +def test_triage_submission_sends_only_the_documents(          
+      112 +    openai_client: Mock,                                      
+      113 +    submission_payload: dict[str, object],                    
+      114 +) -> None:                                                    
+      115 +    triage_submission(PatientSubmission.model_validate(submiss
+          +ion_payload), model="test-model")                             
+      116 
+      105 -def test_triage_submission_builds_prompt_from_validated_submis
+          -sion(                                                         
+      117 +    chart = openai_client.responses.parse.call_args.kwargs["in
+          +put"]                                                         
+      118 +    assert HP_TEXT in chart and CONSENT_TEXT in chart         
+      119 +    assert "=== document D1 | type: history_and_physical | dat
+          +e: 2026-01-20 ===" in chart                                   
+      120 +    assert "Okoro" not in chart and "patient-1" not in chart  
+      121 +                                                              
+      122 +                                                              
+      123 +def test_one_client_is_shared_across_calls(                   
+      124      openai_client: Mock,
+      125      submission_payload: dict[str, object],
+      126 +    monkeypatch: pytest.MonkeyPatch,                          
+      127  ) -> None:
+      109 -    submission = PatientSubmission.model_validate(submission_p
+          -ayload)                                                       
+      128 +    built = Mock(return_value=openai_client)                  
+      129 +    monkeypatch.setitem(sys.modules, "openai", SimpleNamespace
+          +(OpenAI=built))                                               
+      130 
+      111 -    triage_submission(submission, model="test-model")         
+      131 +    triage_submission(submission_payload, model="test-model") 
+      132 +    triage_submission(submission_payload, model="test-model") 
+      133 
+      134 +    assert built.call_count == 1                              
+      135 +    assert built.call_args.kwargs == {"timeout": 60.0, "max_re
+          +tries": 2}                                                    
+      136 +                                                              
+      137 +                                                              
+      138 +def unresolved(output: TriageResult) -> dict[str, str]:       
+      139 +    return {check.name: check.status for check in output.check
+          +s}                                                            
+      140 +                                                              
+      141 +                                                              
+      142 +@pytest.mark.parametrize(                                     
+      143 +    "response",                                               
+      144 +    [                                                         
+      145 +        SimpleNamespace(status="incomplete", incomplete_detail
+          +s="max_output_tokens", output=[], output_parsed=None),        
+      146 +        SimpleNamespace(                                      
+      147 +            status="completed",                               
+      148 +            output=[SimpleNamespace(content=[SimpleNamespace(t
+          +ype="refusal", refusal="cannot help")])],                     
+      149 +            output_parsed=None,                               
+      150 +        ),                                                    
+      151 +        SimpleNamespace(status="completed", output=[], output_
+          +parsed=None),                                                 
+      152 +    ],                                                        
+      153 +    ids=["incomplete", "refusal", "no parsed output"],        
+      154 +)                                                             
+      155 +def test_unusable_model_response_is_follow_up_not_ready(      
+      156 +    openai_client: Mock,                                      
+      157 +    submission_payload: dict[str, object],                    
+      158 +    response: SimpleNamespace,                                
+      159 +) -> None:                                                    
+      160 +    openai_client.responses.parse.return_value = response     
+      161 +                                                              
+      162 +    output = triage_submission(submission_payload, model="test
+          +-model")                                                      
+      163 +                                                              
+      164 +    assert output.decision == "NEEDS_FOLLOW_UP"               
+      165 +    assert unresolved(output) == {                            
+      166 +        "history_and_physical": "unknown",                    
+      167 +        "surgical_consent": "unknown",                        
+      168 +        "cbc": "pass",                                        
+      169 +        "cmp": "not_applicable",                              
+      170 +        "anticoagulation_plan": "unknown",                    
+      171 +        "blood_pressure": "unknown",                          
+      172 +        "temperature": "unknown",                             
+      173 +    }                                                         
+      174 +    assert {issue.category for issue in output.issues} == {"MI
+          +SSING_REQUIRED_DATA"}                                         
+      175 +    assert {issue.unknown_cause for issue in output.issues} ==
+          + {"processing_failure"}                                       
+      176 +    assert "ExtractionError" in output.issues[0].finding      
+      177 +                                                              
+      178 +                                                              
+      179 +def test_failed_model_call_is_follow_up_not_a_crash(          
+      180 +    openai_client: Mock,                                      
+      181 +    submission_payload: dict[str, object],                    
+      182 +) -> None:                                                    
+      183 +    openai_client.responses.parse.side_effect = TimeoutError("
+          +request timed out")                                           
+      184 +    submission_payload["vitals"] = [                          
+      185 +        {"type": "blood_pressure", "systolic": 190, "diastolic
+          +": 115, "date": "2026-01-25T09:00:00Z"}                       
+      186 +    ]                                                         
+      187 +                                                              
+      188 +    output = triage_submission(submission_payload, model="test
+          +-model")                                                      
+      189 +                                                              
+      190 +    assert output.decision == "NEEDS_FOLLOW_UP"               
+      191 +    assert "TimeoutError: request timed out" in output.explana
+          +tion                                                          
+      192 +    blood_pressure = next(check for check in output.checks if 
+          +check.name == "blood_pressure")                               
+      193 +    assert blood_pressure.status == "unknown"                 
+      194 +    assert "190/115 mmHg" in blood_pressure.summary           
+      195 +                                                              
+      196 +                                                              
+      197 +def test_fabricated_extraction_is_not_ready(                  
+      198 +    openai_client: Mock,                                      
+      199 +    submission_payload: dict[str, object],                    
+      200 +    extracted: Observations,                                  
+      201 +) -> None:                                                    
+      202 +    for vital_observation in extracted.vitals:                
+      203 +        vital_observation.quote = "not in the chart"          
+      204 +                                                              
+      205 +    output = triage_submission(submission_payload, model="test
+          +-model")                                                      
+      206 +                                                              
+      207 +    assert output.decision == "NEEDS_FOLLOW_UP"               
+      208 +    assert len(output.unverified) == 2                        
+      209 +                                                              
+      210 +                                                              
+      211 +def test_baseline_is_still_callable_with_its_one_loose_call(  
+      212 +    openai_client: Mock,                                      
+      213 +    submission_payload: dict[str, object],                    
+      214 +) -> None:                                                    
+      215 +    output = baseline.triage_submission(submission_payload, mo
+          +del="test-model")                                             
+      216 +                                                              
+      217 +    assert isinstance(output, baseline.TriageOutput)          
+      218 +    assert output.decision == "READY"                         
+      219      assert openai_client.responses.create.call_count == 1
+      220      call = openai_client.responses.create.call_args.kwargs
+      115 -    message = call["input"][0]                                
+      116 -    content = message["content"][0]                           
+      117 -    prompt = content["text"]                                  
+      221 +    assert call["instructions"] == baseline.BASELINE_SYSTEM_PR
+          +OMPT                                                          
+      222 +    assert call["text"]["format"]["schema"] == baseline.triage
+          +_output_json_schema()                                         
+      223 +    assert call["text"]["format"]["strict"] is False          
+      224 
+      119 -    assert message["type"] == "message"                       
+      120 -    assert message["role"] == "user"                          
+      121 -    assert content["type"] == "input_text"                    
+      122 -    assert json.loads(prompt.split("Submission JSON:\n", 1)[1]
+          -) == submission.model_dump()                                  
+      225 
+      124 -                                                              
+      125 -def test_triage_submission_rejects_invalid_model_json(        
+      226 +def test_baseline_rejects_invalid_model_json(                 
+      227      openai_client: Mock,
+      228      submission_payload: dict[str, object],
+      229  ) -> None:
+      230      openai_client.responses.create.return_value = SimpleNamesp
+           ace(
+      130 -        output_text=json.dumps(                               
+      131 -            {                                                 
+      132 -                "decision": "MAYBE",                          
+      133 -                "issues": [],                                 
+      134 -                "explanation": "Not a valid triage decision.",
+      135 -            }                                                 
+      136 -        )                                                     
+      231 +        output_text=json.dumps({"decision": "MAYBE", "issues":
+          + [], "explanation": "Not a valid triage decision."})          
+      232      )
+      233 
+      234      with pytest.raises(ValidationError):
+      140 -        triage_submission(submission_payload, model="test-mode
+          -l")                                                           
+      141 -                                                              
+      142 -    assert openai_client.responses.create.call_count == 1     
+      235 +        baseline.triage_submission(submission_payload, model="
+          +test-model")                                                  
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Step 7 is wired and green (161 tests). Committing it, then starting the
+  50-case run of the final system.
+
+  Ran 4 shell commands (ctrl+o to expand)
+⏺ Steps 5, 6 and 7 are committed and the suite is green (161 passed, 2 live
+  tests skipped). The 50-case run of the final system is in progress in the
+  background; I'll post the comparison table and the per-miss list when it
+  finishes.
+
+  One thing is blocking part of your request: there is no WRITEUP.md in the repo
+  root, on either branch or in the stash, so I have not started the write-up
+  agent. Its job was to check your draft against the code, and without the draft
+  there is nothing for it to check. Drop the file in and I'll start that agent
+  straight away.
+
+  What landed
+
+  ┌──────┬────────────┬─────────────────────────────────────────────────────┐
+  │ step │   commit   │                        what                         │
+  ├──────┼────────────┼─────────────────────────────────────────────────────┤
+  │ 5 +  │ b96b6b4,   │ lab-name normalizer, every threshold tested on both │
+  │ 6    │ 8a3a903    │  sides, case 28 in three states, chart-gap vs       │
+  │      │            │ processing-failure split                            │
+  ├──────┼────────────┼─────────────────────────────────────────────────────┤
+  │ 7    │ 843925f    │ triage_submission runs extract then the pipeline;   │
+  │      │            │ the starter lives on as baseline.py                 │
+  └──────┴────────────┴─────────────────────────────────────────────────────┘
+
+  - Step 5: all 12 named cases match their labels through the replay path (4, 6,
+    17, 41, 1, 13, 14, 7, 8, 24, 11, 29). The 13 lab pairs map correctly, and a
+    BMP never counts as a CMP.
+  - Step 6: case 28 goes NOT_CLEARED with both issues, then NEEDS_FOLLOW_UP with
+    consent only once a normal later BP is added, then READY once a signed
+    consent is added. Every unknown check now carries a cause, and every dropped
+    fact is listed in the output under unverified.
+  - Step 7: a timeout, a refusal, an incomplete response or an empty parse all
+    come back as NEEDS_FOLLOW_UP with the note-dependent checks unresolved. The
+    lab checks still run, because they need no notes.
+
+  Two source gaps the agents found, both fixed
+
+  - Attestation as signature: an extractor could label a consent as
+    patient-signed while quoting the physician's attestation, and the case came
+    back READY. The verifier now requires a signed consent's signature quote to
+    contain "patient" or the patient's name; otherwise it is dropped and the
+    check goes to unknown.
+  - Empty issue: with the procedure risk missing, the CMP check was unknown with
+    nothing to point at. It now names the empty procedure_risk field.
+
+  For your review
+
+  One replayed output per decision is saved, uncommitted, in results/samples/:
+  - case_00016_ready.json
+  - case_00018_needs_follow_up.json
+  - case_00028_not_cleared.json
+
+  run_baseline.py now runs the final system, since it calls triage_submission
+  from core.py. For step 8's back-to-back comparison I'll need a way to point it
+  at baseline.py; I haven't touched that script yet.
+
+✻ Churned for 1m 37s · done 11:13 PM
+
+※ recap: We're building the pre-op triage pipeline step by step; steps 0 to 7 are committed and the final system's 50-case run is still in progress. Next I'll post the comparison table against the baseline, and I need your WRITEUP.md draft, which isn't in the repo. (turn off recaps in /config)
+
+⏺ Background command "Run the final system once on all 50 cases and score it (50
+  model calls)" completed (exit code 0)
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+⏺ The final system scored 95.33% on its one run over all 50 cases, against 70.0%
+  for the step 0 baseline. It caught all 8 exclusions and returned no non-READY
+  case as READY. I ran it at about 23:13 instead of waiting for 11:30, because
+  steps 5 to 7 were already done.
+
+  ┌─────────────────────────────────────────┬───────────────────┬─────────┐
+  │                 metric                  │ baseline (step 0) │  final  │
+  ├─────────────────────────────────────────┼───────────────────┼─────────┤
+  │ harness aggregate score                 │ 70.0%             │ 95.33%  │
+  ├─────────────────────────────────────────┼───────────────────┼─────────┤
+  │ schema valid                            │ 48 / 50           │ 50 / 50 │
+  ├─────────────────────────────────────────┼───────────────────┼─────────┤
+  │ decision matches label                  │ 32 / 50           │ 48 / 50 │
+  ├─────────────────────────────────────────┼───────────────────┼─────────┤
+  │ category set matches label              │ 25 / 50           │ 45 / 50 │
+  ├─────────────────────────────────────────┼───────────────────┼─────────┤
+  │ fully correct (decision and categories) │ 20 / 50           │ 45 / 50 │
+  ├─────────────────────────────────────────┼───────────────────┼─────────┤
+  │ exclusions caught                       │ 3 / 8             │ 8 / 8   │
+  ├─────────────────────────────────────────┼───────────────────┼─────────┤
+  │ non-READY returned as READY             │ 1 / 33            │ 0 / 33  │
+  ├─────────────────────────────────────────┼───────────────────┼─────────┤
+  │ READY cases returned as READY           │ 5 / 17            │ 15 / 17 │
+  └─────────────────────────────────────────┴───────────────────┴─────────┘
+
+  Both are single runs on gpt-4.1-mini, so treat the gap as indicative until
+  step 8's three-run comparison.
+
+  The five misses
+
+  case: 5
+  label: NOT_CLEARED, exclusion only
+  got: same decision, plus MISSING_REQUIRED_DATA
+  stage that owns it: read: the extractor gave the 09:05 temperature a time
+    but left the time out of the quote, so the verifier dropped it and the
+    temperature check went unknown
+  ────────────────────────────────────────
+  case: 13
+  label: follow-up: documentation + missing data
+  got: follow-up: missing data only
+  stage that owns it: read: the extractor reported the pre-anesthesia note as
+    a pre-op H&P, so the missing H&P was not flagged
+  ────────────────────────────────────────
+  case: 48
+  label: follow-up: anticoagulation + documentation
+  got: follow-up: anticoagulation only
+  stage that owns it: read: same as 13
+  ────────────────────────────────────────
+  case: 19
+  label: READY
+  got: NEEDS_FOLLOW_UP, missing data
+  stage that owns it: verify: a bug of mine, now fixed (below)
+  ────────────────────────────────────────
+  case: 43
+  label: READY
+  got: NEEDS_FOLLOW_UP, missing data
+  stage that owns it: verify: same bug as 19
+
+  - Cases 19 and 43 (fixed, unconfirmed): when a quoted drug name ended in a
+    symbol, as in "warfarin (Coumadin)", the verifier's document wording stopped
+    before the closing bracket and the name check then failed. The mention was
+    dropped and Rule 3 went unknown. Name matching now uses the same
+    letters-and-digits comparison as quote matching, with a regression test. The
+    table above is from before the fix; I did not rerun, since you asked for
+    one run.
+  - Cases 13 and 48 (not fixed): nothing in code checks that a document the
+    model calls an H&P really is one. The overall decision was still non-READY
+    in both, but on a chart with no other problem this would be a false READY.
+    The fix is a prompt line saying an anesthesia assessment is not an H&P,
+    which needs a couple of model calls to confirm.
+  - Case 5 (not fixed): same failure seen in step 3, despite the prompt line
+    added then. Options are a firmer prompt, or keeping a reading whose time
+    isn't in its quote but treating it as untimed.
+
+  Still open
+
+  - WRITEUP.md: there is no draft in the repo root (or on any branch, or in the
+    stash), so I did not start the write-up agent. Add the file and I'll launch
+    it.
+  - Model calls for the read fixes: say whether I may spend about 5 calls to fix
+    and confirm cases 5, 13 and 48 before step 8.
+  - Committed: the results are in results/final/ and the three sample outputs in
+    results/samples/, both in 577b77f along with the fix. The suite is at 162
+    passed, 2 live tests skipped.
+
+✻ Churned for 50s · done 11:18 PM
+
+❯ fix case 13 in the code by only accepting h&p classification is acepted only  
+  if doc type or hearder says it's h&p. also let's stop dropping readings oer   
+  time, leave it as untimed.                                                    
+
+  Ran 1 shell command (ctrl+o to expand)
+
+❯ Pre-Op Triage Take-Home                                                       
+  Objective                                                                     
+  Implement triage_submission(...) in core.py - it is a pre-op triage function  
+  for a single submission package. It is currently a naive LLM-based solution   
+  that makes a real model API call. The starter implementation intentionally    
+  does not follow some best practices in using the OpenAI API. You may use      
+  whatever file structure makes sense for your solution.                        
+                                                                                
+  Your output must match this schema:                                           
+                                                                                
+  decision: READY | NEEDS_FOLLOW_UP | NOT_CLEARED                               
+  issues[]: category + evidence (how you design this is up to you)              
+  explanation                                                                   
+  What Is Provided                                                              
+  data/patients_sample_50.jsonl includes:                                       
+  case_id                                                                       
+  submission                                                                    
+  label (what a human labeled this case as)                                     
+  run_baseline.py runs your triage_submission implementation and writes         
+  outputs.                                                                      
+  run_evals.py scores outputs against provided label and can run determinism    
+  checks.                                                                       
+  Completion                                                                    
+  Note: this exercise is evaluated on engineering judgment. You may not reach a 
+  100% score, and that is OK! We are looking to understand how you approached   
+  the problem and designed a working solution.                                  
+                                                                                
+  Setup                                                                         
+  Confirm uv is installed.                                                      
+  uv --version                                                                  
+  Set your OpenAI API key.                                                      
+  export OPENAI_API_KEY="<your_api_key>"                                        
+  Recommended Workflow                                                          
+  Implement triage_submission in core.py.                                       
+  Run baseline outputs:                                                         
+  make baseline                                                                 
+  Run eval scoring:                                                             
+  make evals                                                                    
+  Run determinism check:                                                        
+  make determinism                                                              
+  Print score:                                                                  
+  make score                                                                    
+  View the interactive report (TUI):                                            
+  make report                                                                   
+  This opens a terminal UI (view_report.py) that shows per-case results         
+  side-by-side with oracle expectations. You can browse records, see metric     
+  pass/fail status, and inspect submission data. Press f on a metric row to     
+  filter the case list to failures. Press q to quit.                            
+                                                                                
+  Tests                                                                         
+  Run the unit tests with:                                                      
+                                                                                
+  make test                                                                     
+  Outputs                                                                       
+  Baseline outputs: data/baseline_outputs.jsonl                                 
+  Eval report: data/eval_report.json                                            
+  Determinism report: data/determinism_report.json                              
+  Configurable Variables                                                        
+  MODEL (default gpt-4.1-mini)                                                  
+  INPUT (default data/patients_sample_50.jsonl)                                 
+  OUTPUT (default data/baseline_outputs.jsonl)                                  
+  REPORT (default data/eval_report.json)                                        
+  DETERMINISM_REPORT (default data/determinism_report.json)                     
+  then run these tests and make sure it's okay                                  
+
+  Ran 2 shell commands, did not run 1 other call (ctrl+o to expand)
+  ⎿  $ git add verify.py resolve.py rules.py plan.md tests && git commit -q -m "Keep unbacked times as untimed and require the document to call itself an H&P" && git log --oneline -1 && make baseline 2>&1 | tail -1 && make evals 2>&1 | tail -2 && make determinism 2>&1 | tail -1 && echo "score: $(make sc…
+  ⎿  1 action blocked by auto mode
+     │ Auto mode: [Destructive or Unwanted Actions]
+
+⏺ Both fixes are written and the suite passes (165 tests). My combined
+  commit-and-run command was blocked, so I'm committing on its own first and
+  running only the no-model-call checks.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Both fixes are committed (c91a9bd) and make test passes: 165 passed, 2 live
+  tests skipped. I have not run the rest of the README workflow yet, because
+  make baseline and make determinism make about 60 model calls and I need your
+  go-ahead for that.
+
+  The two fixes
+
+  - H&P classification (case 13):
+    - The extractor's "pre-op evaluation" label now counts only when the
+      document's own type or first heading calls it an H&P ("H&P", "H and P",
+      "History and/& Physical", including the "Pyhsical" typo and underscores).
+    - All 15 H&P-like types in the sample are accepted; anesthesia, nursing,
+      consult and consent types are not.
+    - When a rejected document is the reason the check fails, the finding says
+      so and cites it.
+    - A test replays case 13 with the anesthesia note reported as an H&P, and
+      the case still matches its label.
+    - There is no fixture for case 48, so that case is covered only by the same
+      rule, not by its own test.
+  - Times no longer drop readings:
+    - A time the quote doesn't back up (missing from the quote, not a clock
+      time, or a 12-hour time) is discarded and the reading is kept as untimed.
+    - An untimed reading can still be ordered by date or by its place in the
+      note, just not by clock time against another source.
+    - This should clear case 5.
+    - I left one time-related drop in place: readings in one note whose time
+      order contradicts their text order are still dropped, since you asked for
+      that check specifically. Say if you want those kept as untimed too.
+
+  Neither fix is confirmed against the live model yet. The 95.33% run predates
+  them, as it does the name-matching fix for cases 19 and 43.
+
+  plan.md has both changes under "known limits", including the new weakness: a
+  real H&P filed and headed as something else would be missed and sent to
+  follow-up.
+
+  README workflow
+
+  ┌───────────────┬─────────────────────────────────────────────────────────┐
+  │     step      │                         status                          │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ uv --version  │ works (0.13.9)                                          │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make test     │ 165 passed, 2 skipped                                   │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make score    │ works; prints 95.33 against the saved                   │
+  │               │ results/final/eval_report.json                          │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make baseline │ not run: 50 model calls                                 │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make evals    │ not run: needs fresh baseline outputs                   │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make          │ not run: 10 model calls                                 │
+  │ determinism   │                                                         │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make report   │ not run: it is an interactive terminal UI I can't       │
+  │               │ drive; the script parses                                │
+  └───────────────┴─────────────────────────────────────────────────────────┘
+
+  Running the full workflow would also give a fresh score with all three fixes
+  in. It writes to the default data/ paths, which are gitignored. Reply "go" and
+  I'll run make baseline, make evals, make determinism and make score in order,
+  about 60 calls to gpt-4.1-mini.
+
+  WRITEUP.md is still not in the repo, so the write-up agent has not been
+  started.
+
+✻ Crunched for 1m 22s · done 11:24 PM
+
+❯ an you run make baseline and make determinism and make report                 
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ make baseline finished: 50 cases, no errors. Running make determinism next (10
+  model calls), then scoring so make report has a report to open.
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+❯ how long is this going to take                                                
+
+⏺ About a minute more: make baseline and make determinism are done, and I'm just
+  checking that the report viewer opens on the fresh report without me needing
+  to drive it by hand.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ All three ran, and it's finished. With the three fixes in, the final system
+  scored 100% on this run: all 50 cases valid, with the decision and the
+  category set matching the label on every one.
+
+  ┌───────────────┬─────────────────────────────────────────────────────────┐
+  │    command    │                         result                          │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make baseline │ 50 cases, 0 errors                                      │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make evals    │ 100.0% (I ran this too, because make report needs its   │
+  │               │ output; it makes no model calls)                        │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make          │ case 0, 10 runs: 10 of 10 valid, 10 of 10 READY, 8 of   │
+  │ determinism   │ 10 with byte-identical output                           │
+  ├───────────────┼─────────────────────────────────────────────────────────┤
+  │ make report   │ the viewer opened on the fresh report, took a keypress  │
+  │               │ and quit cleanly                                        │
+  └───────────────┴─────────────────────────────────────────────────────────┘
+
+  - The 100% is one run. The earlier run scored 95.33% before the fixes, so
+    cases 5, 13, 19, 43 and 48 now pass, but one clean run doesn't show it's
+    stable. Step 8's three runs will.
+  - Determinism is not exact. Two of the ten runs on case 0 gave the same
+    decision with a different output. I haven't traced why; the harness's report
+    doesn't keep the outputs, so that needs step 9's run. The likely cause is
+    the model quoting a different span or reporting a different set of
+    observations, which changes the evidence but not the decision.
+  - make report was driven by a script, not by hand. It is an interactive
+    terminal UI, so I opened it headlessly, pressed a key and quit. To browse it
+    yourself, run make report in your terminal.
+
+  These outputs are in the default data/ paths, which are gitignored, so nothing
+  new is committed. results/final/ still holds the earlier 95.33% run; say if
+  you want this run saved there instead.
+
+✻ Sautéed for 5m 2s · done 11:29 PM
+
+❯ yeah i want that saved                                                        
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Saved and committed (3a174ab): results/final/ now holds the 100% run.
+
+  - final_outputs.jsonl: the 50 outputs
+  - eval_report.json: the score report (make score 
+    REPORT=results/final/eval_report.json prints 100.0)
+  - determinism_report.json: the 10-run check on case 0
+
+  This replaced the earlier 95.33% run in that folder. That run is still in git
+  history at 577b77f if you want it for the write-up's before-and-after. I
+  removed its run.log, since it described the old run.
+
+  Still open: WRITEUP.md isn't in the repo, so the write-up agent hasn't
+  started, and steps 8 and 9 (three-run comparison against the baseline, and
+  determinism on five cases) haven't been run.
+
+✻ Churned for 8s · done 11:31 PM
+
+❯ did you do steps 8 and 9?                                                     
+
+⏺ No, neither step 8 nor step 9 is done. What I have run covers only part of
+  each.
+
+  Step 8 (evaluate) asks for three runs each of the final system and the
+  baseline, back to back, with every miss attributed to a stage.
+
+  - Done: two single runs of the final system (95.33% before the three fixes,
+    100% after) and one baseline run from step 0. The five misses in the first
+    run each have an owner.
+  - Not done:
+    - the three-run comparison of the final system against the baseline;
+    - the check that the latest BP is correct in the 21 note-only cases;
+    - the check that every evidence quote is verbatim in its document across a
+      live run.
+
+  Step 9 (determinism) asks for five varied cases at 10 runs each, reporting
+  valid outputs, decision agreement, issue agreement and exact-output agreement
+  separately, with any instability traced.
+
+  - Done: one case (case 0), 10 runs: 10 valid, 10 READY, 8 byte-identical.
+  - Not done:
+    - the other four cases;
+    - issue agreement as its own number;
+    - tracing why 2 of the 10 outputs differed. The harness's determinism report
+      doesn't keep the outputs, so tracing needs a small runner that does.
+
+  Two things I'd need to build first, neither large:
+  - run_baseline.py now calls the final system through core.py, so the baseline
+    needs its own way to run for the back-to-back comparison.
+  - A determinism runner that saves each output so differences can be diffed.
+
+  Cost in model calls on gpt-4.1-mini:
+
+  ┌──────┬─────────────────────────────────────┐
+  │ step │                calls                │
+  ├──────┼─────────────────────────────────────┤
+  │ 8    │ 300 (3 runs × 50 cases × 2 systems) │
+  ├──────┼─────────────────────────────────────┤
+  │ 9    │ 50 (5 cases × 10 runs)              │
+  └──────┴─────────────────────────────────────┘
+
+  Say "go" and I'll do both, step 8 first.
+
+✻ Cooked for 6s · done 11:32 PM
+
+❯ workon this while i'm working on my thing                                     
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Write(run_determinism.py)
+  ⎿  Wrote 73 lines to run_determinism.py
+       1 #!/usr/bin/env -S uv run --script
+       2 # /// script
+       3 # requires-python = ">=3.11"
+       4 # dependencies = [
+       5 #   "openai>=2.0.0",
+       6 #   "pydantic>=2.8.0",
+       7 # ]
+       8 # ///
+       9 
+      10 """Run one case many times, keep every output, and report how of
+     … +64 lines (~3 KB) (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Step 9's 50 runs are all valid and decisions agree on all five cases, though
+  exact output differs on three; I'm tracing those differences while step 8's
+  runs finish. · summary
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Step 9 is done and traced; step 8's six runs (300 calls) are still going in
+  the background, and I'll report the comparison when they finish.
+
+  Step 9: determinism (5 cases × 10 runs, gpt-4.1-mini, no cache)
+
+  ┌──────┬─────────────────┬───────┬──────────────┬─────────────┬──────────┐
+  │ case │      label      │ valid │  decision    │   issue     │  exact   │
+  │      │                 │       │  agreement   │  agreement  │  output  │
+  ├──────┼─────────────────┼───────┼──────────────┼─────────────┼──────────┤
+  │ 9    │ NEEDS_FOLLOW_UP │ 10 /  │ 10 / 10      │ 10 / 10     │ 5 / 10   │
+  │      │                 │ 10    │              │             │          │
+  ├──────┼─────────────────┼───────┼──────────────┼─────────────┼──────────┤
+  │ 16   │ READY           │ 10 /  │ 10 / 10      │ 10 / 10     │ 10 / 10  │
+  │      │                 │ 10    │              │             │          │
+  ├──────┼─────────────────┼───────┼──────────────┼─────────────┼──────────┤
+  │ 18   │ NEEDS_FOLLOW_UP │ 10 /  │ 10 / 10      │ 10 / 10     │ 3 / 10   │
+  │      │                 │ 10    │              │             │          │
+  ├──────┼─────────────────┼───────┼──────────────┼─────────────┼──────────┤
+  │ 28   │ NOT_CLEARED     │ 10 /  │ 10 / 10      │ 10 / 10     │ 10 / 10  │
+  │      │                 │ 10    │              │             │          │
+  ├──────┼─────────────────┼───────┼──────────────┼─────────────┼──────────┤
+  │ 33   │ NEEDS_FOLLOW_UP │ 10 /  │ 10 / 10      │ 10 / 10     │ 6 / 10   │
+  │      │                 │ 10    │              │             │          │
+  └──────┴─────────────────┴───────┴──────────────┴─────────────┴──────────┘
+
+  Every run gave the right decision and the right issue categories. The plan's
+  bar of "10 of 10 identical on 5 cases" is met on two cases and missed on
+  three.
+
+  Cause of the differences: the model quotes a longer or shorter span for the
+  same fact from run to run, even at temperature 0. For example, in case 33 the
+  signature quote appears with and without its closing bracket, and the H&P
+  quote is sometimes the heading alone and sometimes the heading plus the next
+  three lines. Code copies the document's wording for whatever span the model
+  chose, so the evidence text differs while every check status, finding and
+  decision stays the same.
+
+  Case 18 has a second source: in 9 of 10 runs the model also reported a
+  scheduling statement that failed verification (for example "last dose
+  03/13/2026" offered as a procedure date). Those are dropped and listed under
+  unverified, and which ones appear varies. They don't feed any check today.
+
+  I have not tried to fix this. The options are to pin the evidence quote to a
+  fixed unit (the whole line containing the match), which would make most of it
+  stable, or to accept it and report it as is.
+
+  Every output is saved in results/determinism/, with a summary per case. The
+  runner is run_determinism.py; unlike make determinism, it counts only valid
+  outputs and keeps them so differences can be traced. Nothing from steps 8 or 9
+  is committed yet; I'll commit both together.
+
+✻ Worked for 2m 20s · done 11:35 PM
+⏺ Background command "Step 8: run the final system and the baseline three times
+  each on all 50 cases, in parallel (300 model calls)" completed (exit code 0)
+
+  Ran 4 shell commands (ctrl+o to expand)
+
+⏺ Steps 8 and 9 are both done and committed (8fe672b). Across three runs each on
+  gpt-4.1-mini, the final system got 149 of 150 cases fully right and the
+  baseline got 63 of 150.
+
+  Step 8: final versus baseline, three runs each
+
+  metric (out of 50 unless noted): valid output
+  final 1: 50
+  final 2: 50
+  final 3: 50
+  baseline 1: 49
+  baseline 2: 49
+  baseline 3: 50
+  ────────────────────────────────────────
+  metric (out of 50 unless noted): decision matches label
+  final 1: 50
+  final 2: 50
+  final 3: 50
+  baseline 1: 32
+  baseline 2: 31
+  baseline 3: 34
+  ────────────────────────────────────────
+  metric (out of 50 unless noted): category set matches label
+  final 1: 50
+  final 2: 49
+  final 3: 50
+  baseline 1: 27
+  baseline 2: 25
+  baseline 3: 29
+  ────────────────────────────────────────
+  metric (out of 50 unless noted): both correct
+  final 1: 50
+  final 2: 49
+  final 3: 50
+  baseline 1: 20
+  baseline 2: 18
+  baseline 3: 25
+  ────────────────────────────────────────
+  metric (out of 50 unless noted): exclusions caught (of 8)
+  final 1: 8
+  final 2: 8
+  final 3: 8
+  baseline 1: 4
+  baseline 2: 4
+  baseline 3: 5
+  ────────────────────────────────────────
+  metric (out of 50 unless noted): non-READY returned as READY (of 33)
+  final 1: 0
+  final 2: 0
+  final 3: 0
+  baseline 1: 1
+  baseline 2: 2
+  baseline 3: 0
+  ────────────────────────────────────────
+  metric (out of 50 unless noted): READY returned as READY (of 17)
+  final 1: 17
+  final 2: 17
+  final 3: 17
+  baseline 1: 5
+  baseline 2: 4
+  baseline 3: 4
+  ────────────────────────────────────────
+  metric (out of 50 unless noted): latest BP correct in the 21 note-only cases
+  final 1: 21
+  final 2: 21
+  final 3: 21
+  baseline 1: n/a
+  baseline 2: n/a
+  baseline 3: n/a
+  ────────────────────────────────────────
+  metric (out of 50 unless noted): evidence quotes not verbatim
+  final 1: 0 of 240
+  final 2: 0 of 241
+  final 3: 0 of 242
+  baseline 1: n/a
+  baseline 2: n/a
+  baseline 3: n/a
+
+  - Scoring difference: my category count requires a valid output, so the
+    baseline's numbers are one or two lower than the harness would give. The
+    harness counts an invalid output as matching an empty label.
+  - "Latest BP" answer key: it is a regex over the sample's note formats that I
+    wrote for this check. It is independent of the pipeline, but it is my
+    reading of the charts, not a provided label.
+
+  The one miss, and its owner
+
+  Case 42, run 2 (label: REQUIRED_TESTING; got that plus MISSING_REQUIRED_DATA).
+
+  - Read: the model misspelled the drug inside a quote ("rivaroaxaban"), so the
+    verifier dropped that mention.
+  - Rules: my rule then reopened Rule 3 as unknown, even though the same drug
+    was already established as taken and covered by a complete plan.
+
+  The second part was a bug, and I fixed it: a dropped claim that the patient
+  takes a drug already known to be taken can't change the check, so it no longer
+  reopens it. A dropped mention of a drug not otherwise known still does. Both
+  directions have tests (167 passing). The table predates this fix.
+
+  Step 9: determinism
+
+  As reported in my last message: all 50 outputs valid, with decisions and issue
+  categories agreeing 10 of 10 on all five cases. Exact output agreed on 10,
+  10, 6, 5 and 3 of 10 runs. The cause is the model choosing a longer or shorter
+  quote span for the same fact, plus unverifiable scheduling statements that
+  vary in case 18. No check status or decision changed in any run.
+
+  What was added
+
+  - run_baseline.py --system baseline runs the starter from baseline.py; the
+    default still runs the final system.
+  - compare_runs.py scores any saved output files and prints the table above.
+  - run_determinism.py runs one case N times and keeps every output.
+  - Results are in results/comparison/ (six output files and summary.json) and
+    results/determinism/ (outputs and a summary per case).
+
+  Decisions for you
+
+  - Evidence stability: pinning each evidence quote to the whole line it sits on
+    would likely make most outputs byte-identical. It is a small change to the
+    verifier, but quotes would get longer. Say if you want it.
+  - WRITEUP.md: still not in the repo, so that agent hasn't run.
+
+  Steps 10 (experiments), 11 (write-up and README) and 12 (intake) remain.
+
+✻ Cooked for 45s · done 11:38 PM
+
+※ recap: We're building the pre-op triage pipeline per plan.md; steps 0 through 9 are done and committed, with the final system at 149 of 150 across three runs. Next: add your WRITEUP.md draft so I can start step 11. (turn off recaps in /config)
+
+❯ do step 10                                                                    
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+⏺ Writing the step 10 experiment script now. No model calls yet; I'll give you
+  the call count before running anything.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Answered Claude's questions:
+  ⎿  · The step 10 experiment script is written and checked offline. May I run 
+     it? It needs about 216 calls to gpt-4.1-mini: 200 for one-call versus 
+     three-focused-calls on all 50 cases (the verification on/off comparison 
+     reuses those extractions), and 16 for the 8 perturbed charts. → Run all, 
+     ~216 calls
+
+  Ran 1 shell command (ctrl+o to expand)
+
+❯ make it fast                                                                  
+
+⏺ The experiments are already running, 8 cases in parallel, so the 216 calls
+  should take a few minutes rather than the 15 or so a sequential run would.
+  I'll report as soon as they finish.
+
+✻ Cooked for 2m 12s · done 11:48 PM
+
+❯ can you push the github repo btw                                              
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ I haven't pushed, because the only remote is Cadence's own repo, not one of
+  yours.
+
+  - Remote: origin is cadencerpm/preop-exercise, which is public, and your
+    account has read-only access to it. A push would be rejected, and it isn't
+    where a take-home solution should go anyway.
+  - What's waiting: 15 commits on the triage-pipeline branch are unpushed.
+  - Not committed yet: run_experiments.py and a small change to extract.py (step
+    10, still running), your Makefile and README.md edits, and docs/brief.pdf.
+
+  To push, I'd create a repo under your own GitHub account and push the branch
+  there. Tell me two things and I'll do it:
+
+  1. Visibility: private is the safe default for a take-home, since the repo
+     holds the brief and your solution. Private or public?
+  2. Name: preop-exercise under your account, or something else?
+
+  Also say whether you want your Makefile and README.md edits and docs/brief.pdf
+  committed before the push, or left out. I'd wait for step 10 to finish and
+  commit its results first, so the push includes them.
+
+✻ Churned for 10s · done 11:48 PM
+
+⏺ Background command "Run the three step 10 experiments and print the summary
+  (about 216 model calls)" completed (exit code 0)
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Step 10 is done and committed (a9df7d6). The three experiments support the
+  current design: one call beats three, verification is what protects the
+  exclusions, and rewording a chart did not change any decision.
+
+  1. One extraction call versus three focused calls
+
+  Same 50 cases, same model, one run each.
+
+  ┌─────────────────────────┬──────────┬─────────────────────┐
+  │                         │ one call │ three focused calls │
+  ├─────────────────────────┼──────────┼─────────────────────┤
+  │ cases fully correct     │ 50 / 50  │ 44 / 50             │
+  ├─────────────────────────┼──────────┼─────────────────────┤
+  │ observations reported   │ 375      │ 415                 │
+  ├─────────────────────────┼──────────┼─────────────────────┤
+  │ dropped by the verifier │ 6        │ 20                  │
+  ├─────────────────────────┼──────────┼─────────────────────┤
+  │ failed calls            │ 0        │ 0                   │
+  └─────────────────────────┴──────────┴─────────────────────┘
+
+  The three-call version was worse, not better. Its six misses all carried an
+  extra MISSING_REQUIRED_DATA, and in case 35 that came with the fever exclusion
+  being lost: the case returned NEEDS_FOLLOW_UP, not NOT_CLEARED. That is still
+  not a false READY, but it is a weaker result.
+
+  The cause is one behaviour: the vitals-only call stitched quotes together,
+  joining a time to a temperature while skipping the blood pressure written
+  between them (for example "10:05  T 98.5 F"). A stitched quote is not in the
+  document, so the verifier drops it; 18 of the 20 drops were this. The single
+  call does it far less often (2 drops).
+
+  2. Verification on versus off
+
+  - On real extractions: turning verification off changed no decision. All 50
+    were correct either way, because on this run the model's extractions were
+    accurate.
+  - With one fabricated fact: I added a made-up normal reading, dated later than
+    everything else, to each of the 8 exclusion cases.
+
+  ┌──────────────────┬───────────────────┐
+  │                  │ still NOT_CLEARED │
+  ├──────────────────┼───────────────────┤
+  │ verification on  │ 8 / 8             │
+  ├──────────────────┼───────────────────┤
+  │ verification off │ 0 / 8             │
+  └──────────────────┴───────────────────┘
+
+  So verification costs nothing when the model is right, and is the only thing
+  holding the exclusions when it is wrong. The fabricated reading is my own
+  injection, not something the model produced.
+
+  3. Perturbed charts
+
+  Eight cases, each rewritten two ways and run live.
+
+  ┌────────────────────────────────────────────────┬─────────────────────┐
+  │                    variant                     │ behaved as expected │
+  ├────────────────────────────────────────────────┼─────────────────────┤
+  │ reworded, same meaning (decision should hold)  │ 8 / 8               │
+  ├────────────────────────────────────────────────┼─────────────────────┤
+  │ deciding fact changed (decision should change) │ 7 / 8               │
+  └────────────────────────────────────────────────┴─────────────────────┘
+
+  The rewordings included a spelled-out "degrees Celsius", "B/P" with a
+  bracketed note, a deferred restart phrased without the original words, and a
+  signature written as a sentence.
+
+  The one that didn't behave as expected: case 47 with the diastolic lowered
+  from 117 to 97 should have become READY. The blood pressure check did pass,
+  but the case came back NEEDS_FOLLOW_UP because the model stitched the
+  temperature quote in the same way as above, and the temperature check went
+  unknown. The decision did change, and in the safe direction, but not to the
+  right answer.
+
+  What this points to
+
+  The stitched quote is now the system's main remaining failure: it caused this
+  miss, most of the three-call drops, and case 42's dropped vital in step 8. It
+  always fails toward follow-up, never toward READY. I haven't changed anything
+  for it. The option I'd suggest is to have the extractor quote the time and the
+  value as two separate short quotes instead of one span, so there is nothing
+  to skip over; that changes the schema, the prompt and the verifier, so it is
+  your call.
+
+  Still waiting on you
+
+  - GitHub push: private or public, and what repo name under your account.
+  - WRITEUP.md: still not in the repo.
+
+  Steps 11 (write-up and README) and 12 (intake) remain.
+
+✻ Worked for 26s · done 11:49 PM
+
+❯ public, cadence-takehome                                                      
+
+  Ran 1 shell command (ctrl+o to expand)
+
+❯ do not put writeup in repo                                                    
+
+  Ran 1 shell command (ctrl+o to expand)
+
+❯ don't push brief, keep plan                                                   
+
+  Ran 1 shell command, wrote 1 memory (ctrl+o to expand)
+
+⏺ The repo is pushed and public: https://github.com/manyapn/cadence-takehome
+
+  - Branches: triage-pipeline holds the solution (all 16 commits, through
+    step 10) and main holds the untouched starter. I set triage-pipeline as the
+    default branch so the solution is what a visitor sees first; say if you'd
+    rather have it on main.
+  - Brief: not pushed. docs/brief.pdf was never committed, so it isn't in the
+    repo or its history.
+  - Write-up: none in the repo, and I won't add one. Note that plan.md step 11
+    still describes a WRITEUP.md in the repo; I've left the plan's text alone.
+  - Plan: plan.md is in the repo, as you asked.
+  - Secrets: I scanned the pushed commits for anything key-shaped and found
+    nothing; .env is ignored and untracked.
+
+  Two things are on your machine but not in the repo: your Makefile and
+  README.md edits (loading the key from .env) are still uncommitted. Without
+  them, a fresh clone needs export OPENAI_API_KEY=... as the original README
+  says, so the repo works as pushed. Tell me if you want them committed and
+  pushed.
+
+  Your local branch now tracks the new remote (takehome), so later pushes go
+  there. origin still points at Cadence's repo, which you can't push to.
+
+✻ Brewed for 40s · done 11:51 PM
