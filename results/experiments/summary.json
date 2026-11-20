@@ -1,0 +1,94 @@
+{
+  "one_call_vs_three": {
+    "single": {
+      "correct": 50,
+      "observations": 375,
+      "dropped": 6,
+      "failed_calls": 0,
+      "misses": []
+    },
+    "focused": {
+      "correct": 44,
+      "observations": 415,
+      "dropped": 20,
+      "failed_calls": 0,
+      "misses": [
+        {
+          "case": 6,
+          "got": [
+            "NEEDS_FOLLOW_UP",
+            "MISSING_REQUIRED_DATA",
+            "REQUIRED_TESTING"
+          ]
+        },
+        {
+          "case": 35,
+          "got": [
+            "NEEDS_FOLLOW_UP",
+            "MISSING_REQUIRED_DATA"
+          ]
+        },
+        {
+          "case": 37,
+          "got": [
+            "NEEDS_FOLLOW_UP",
+            "MISSING_REQUIRED_DATA"
+          ]
+        },
+        {
+          "case": 43,
+          "got": [
+            "NEEDS_FOLLOW_UP",
+            "MISSING_REQUIRED_DATA"
+          ]
+        },
+        {
+          "case": 46,
+          "got": [
+            "NOT_CLEARED",
+            "ACUTE_SAFETY_EXCLUSION",
+            "MISSING_REQUIRED_DATA"
+          ]
+        },
+        {
+          "case": 47,
+          "got": [
+            "NOT_CLEARED",
+            "ACUTE_SAFETY_EXCLUSION",
+            "MISSING_REQUIRED_DATA"
+          ]
+        }
+      ]
+    }
+  },
+  "verification_off_on_real_extractions": {
+    "correct": 50,
+    "decisions_changed_by_verification": []
+  },
+  "fabricated_normal_reading_added_to_exclusions": {
+    "exclusion_cases": 8,
+    "still_not_cleared_with_verification": 8,
+    "still_not_cleared_without": 0
+  },
+  "perturbations": {
+    "reworded": {
+      "as_expected": 8,
+      "total": 8,
+      "not_as_expected": []
+    },
+    "fact_changed": {
+      "as_expected": 7,
+      "total": 8,
+      "not_as_expected": [
+        {
+          "case": 47,
+          "expected": "READY",
+          "got": "NEEDS_FOLLOW_UP",
+          "categories": [
+            "MISSING_REQUIRED_DATA"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,245 @@
+[
+  {
+    "case": 16,
+    "variant": "reworded",
+    "original": "READY",
+    "expected": "READY",
+    "got": "READY",
+    "categories": [],
+    "open_checks": {},
+    "unverified": []
+  },
+  {
+    "case": 16,
+    "variant": "fact_changed",
+    "original": "READY",
+    "expected": "NOT_CLEARED",
+    "got": "NOT_CLEARED",
+    "categories": [
+      "ACUTE_SAFETY_EXCLUSION"
+    ],
+    "open_checks": {
+      "blood_pressure": "Most recent blood pressure 184/101 mmHg (2026-03-15 08:30) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg)."
+    },
+    "unverified": []
+  },
+  {
+    "case": 35,
+    "variant": "reworded",
+    "original": "NOT_CLEARED",
+    "expected": "NOT_CLEARED",
+    "got": "NOT_CLEARED",
+    "categories": [
+      "ACUTE_SAFETY_EXCLUSION"
+    ],
+    "open_checks": {
+      "temperature": "Most recent temperature 101.66 F (2026-04-02 08:30) meets the exclusion limit (> 100.4 F)."
+    },
+    "unverified": []
+  },
+  {
+    "case": 35,
+    "variant": "fact_changed",
+    "original": "NOT_CLEARED",
+    "expected": "READY",
+    "got": "READY",
+    "categories": [],
+    "open_checks": {},
+    "unverified": []
+  },
+  {
+    "case": 47,
+    "variant": "reworded",
+    "original": "NOT_CLEARED",
+    "expected": "NOT_CLEARED",
+    "got": "NOT_CLEARED",
+    "categories": [
+      "ACUTE_SAFETY_EXCLUSION"
+    ],
+    "open_checks": {
+      "blood_pressure": "Most recent blood pressure 161/117 mmHg (2026-02-28 09:05) meets the exclusion limit (systolic >= 180 or diastolic >= 110 mmHg)."
+    },
+    "unverified": []
+  },
+  {
+    "case": 47,
+    "variant": "fact_changed",
+    "original": "NOT_CLEARED",
+    "expected": "READY",
+    "got": "NEEDS_FOLLOW_UP",
+    "categories": [
+      "MISSING_REQUIRED_DATA"
+    ],
+    "open_checks": {
+      "temperature": "A temperature reading extracted from a note could not be verified against its document, so the most recent temperature is not established. The latest verified reading is 98.9 F (2026-02-26 10:15)."
+    },
+    "unverified": [
+      {
+        "kind": "vital",
+        "doc_id": "3157bf54-3877-55e3-bd50-a2a25aba56d2",
+        "reason": "quote not found in document",
+        "claim": {
+          "doc_id": "3157bf54-3877-55e3-bd50-a2a25aba56d2",
+          "kind": "temperature",
+          "systolic": null,
+          "diastolic": null,
+          "temperature": 37.2,
+          "unit": "C",
+          "time": "09:05",
+          "quote": "09:05  37.2 \u00b0C tympanic"
+        }
+      },
+      {
+        "kind": "vital",
+        "doc_id": "8136a0b1-4121-5687-b67b-e4329966a365",
+        "reason": "quote not found in document",
+        "claim": {
+          "doc_id": "8136a0b1-4121-5687-b67b-e4329966a365",
+          "kind": "temperature",
+          "systolic": null,
+          "diastolic": null,
+          "temperature": 97.9,
+          "unit": "F",
+          "time": "10:05",
+          "quote": "Vitals 10:05  Temperature 97.9 \u00b0F"
+        }
+      }
+    ]
+  },
+  {
+    "case": 20,
+    "variant": "reworded",
+    "original": "NEEDS_FOLLOW_UP",
+    "expected": "NEEDS_FOLLOW_UP",
+    "got": "NEEDS_FOLLOW_UP",
+    "categories": [
+      "ANTICOAGULATION_MANAGEMENT"
+    ],
+    "open_checks": {
+      "anticoagulation_plan": "Patient takes warfarin, and the plan dated 2026-03-15 is incomplete: before the procedure is instruction, after the procedure is deferred."
+    },
+    "unverified": []
+  },
+  {
+    "case": 20,
+    "variant": "fact_changed",
+    "original": "NEEDS_FOLLOW_UP",
+    "expected": "READY",
+    "got": "READY",
+    "categories": [],
+    "open_checks": {},
+    "unverified": []
+  },
+  {
+    "case": 10,
+    "variant": "reworded",
+    "original": "NEEDS_FOLLOW_UP",
+    "expected": "NEEDS_FOLLOW_UP",
+    "got": "NEEDS_FOLLOW_UP",
+    "categories": [
+      "REQUIRED_DOCUMENTATION"
+    ],
+    "open_checks": {
+      "surgical_consent": "Consent on file is not signed by the patient."
+    },
+    "unverified": []
+  },
+  {
+    "case": 10,
+    "variant": "fact_changed",
+    "original": "NEEDS_FOLLOW_UP",
+    "expected": "READY",
+    "got": "READY",
+    "categories": [],
+    "open_checks": {},
+    "unverified": []
+  },
+  {
+    "case": 27,
+    "variant": "reworded",
+    "original": "NEEDS_FOLLOW_UP",
+    "expected": "NEEDS_FOLLOW_UP",
+    "got": "NEEDS_FOLLOW_UP",
+    "categories": [
+      "ANTICOAGULATION_MANAGEMENT"
+    ],
+    "open_checks": {
+      "anticoagulation_plan": "Patient takes apixaban and there is no documented perioperative plan for it."
+    },
+    "unverified": []
+  },
+  {
+    "case": 27,
+    "variant": "fact_changed",
+    "original": "NEEDS_FOLLOW_UP",
+    "expected": "READY",
+    "got": "READY",
+    "categories": [],
+    "open_checks": {},
+    "unverified": []
+  },
+  {
+    "case": 19,
+    "variant": "reworded",
+    "original": "READY",
+    "expected": "READY",
+    "got": "READY",
+    "categories": [],
+    "open_checks": {},
+    "unverified": []
+  },
+  {
+    "case": 19,
+    "variant": "fact_changed",
+    "original": "READY",
+    "expected": "NEEDS_FOLLOW_UP",
+    "got": "NEEDS_FOLLOW_UP",
+    "categories": [
+      "MISSING_REQUIRED_DATA"
+    ],
+    "open_checks": {
+      "anticoagulation_plan": "It is not confirmed whether the patient currently takes warfarin, and no complete plan covers it."
+    },
+    "unverified": [
+      {
+        "kind": "vital",
+        "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
+        "reason": "quote not found in document",
+        "claim": {
+          "doc_id": "98b7e014-fc98-580a-a2f0-9aea7fbea8d1",
+          "kind": "temperature",
+          "systolic": null,
+          "diastolic": null,
+          "temperature": 99.1,
+          "unit": "F",
+          "time": "10:05",
+          "quote": "10:05  Temperature 99.1 \u00b0F"
+        }
+      }
+    ]
+  },
+  {
+    "case": 7,
+    "variant": "reworded",
+    "original": "READY",
+    "expected": "READY",
+    "got": "READY",
+    "categories": [],
+    "open_checks": {},
+    "unverified": []
+  },
+  {
+    "case": 7,
+    "variant": "fact_changed",
+    "original": "READY",
+    "expected": "NEEDS_FOLLOW_UP",
+    "got": "NEEDS_FOLLOW_UP",
+    "categories": [
+      "REQUIRED_DOCUMENTATION"
+    ],
+    "open_checks": {
+      "surgical_consent": "Consent on file is not signed by the patient."
+    },
+    "unverified": []
+  }
+]

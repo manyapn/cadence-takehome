@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from functools import cache
 
+from pydantic import BaseModel
+
 from core import PatientSubmission
 from observations import Observations
 
@@ -73,13 +75,19 @@ def render_documents(submission: PatientSubmission) -> tuple[str, dict[str, str]
     return "\n\n".join(blocks), doc_ids
 
 
-def extract(submission: PatientSubmission, *, model: str) -> Observations:
+def extract(
+    submission: PatientSubmission,
+    *,
+    model: str,
+    instructions: str = EXTRACTION_PROMPT,
+    schema: type[BaseModel] = Observations,
+):
     chart, doc_ids = render_documents(submission)
     response = shared_client().responses.parse(
         model=model,
-        instructions=EXTRACTION_PROMPT,
+        instructions=instructions,
         input=chart,
-        text_format=Observations,
+        text_format=schema,
         temperature=0,
         max_output_tokens=8000,
         store=False,
@@ -95,7 +103,7 @@ def extract(submission: PatientSubmission, *, model: str) -> Observations:
     if observations is None:
         raise ExtractionError("response had no parsed output")
 
-    for items in (getattr(observations, name) for name in Observations.model_fields):
+    for items in (getattr(observations, name) for name in schema.model_fields):
         for item in items:
             item.doc_id = doc_ids.get(item.doc_id) or item.doc_id
     return observations
