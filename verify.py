@@ -32,6 +32,12 @@ def find_quote(quote: str, text: str) -> int | None:
     return match.start() if match else None
 
 
+def blood_pressures(text: str) -> list[tuple[int, int]]:
+    pairs = [(int(systolic), int(diastolic)) for systolic, diastolic in BLOOD_PRESSURE.findall(text)]
+    # A date like 03/15 or 12/10 is not a blood pressure.
+    return [(systolic, diastolic) for systolic, diastolic in pairs if 50 <= systolic <= 300 and 20 <= diastolic < systolic]
+
+
 def numbers_in(text: str) -> set[Decimal]:
     return {Decimal(number) for number in NUMBER.findall(text)}
 
@@ -49,7 +55,7 @@ def vital_problem(vital: VitalObservation) -> str | None:
     if vital.kind == "blood_pressure":
         if vital.systolic is None or vital.diastolic is None:
             return "blood pressure without both systolic and diastolic"
-        pairs = [(int(systolic), int(diastolic)) for systolic, diastolic in BLOOD_PRESSURE.findall(vital.quote)]
+        pairs = blood_pressures(vital.quote)
         if len(pairs) > 1:
             return f"quote contains {len(pairs)} blood pressures"
         if pairs != [(vital.systolic, vital.diastolic)]:

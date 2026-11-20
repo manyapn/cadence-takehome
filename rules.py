@@ -9,7 +9,7 @@ from typing import Literal
 from pydantic import BaseModel
 
 from core import Decision, IssueCategory, PatientSubmission
-from observations import Reading, VerifiedObservations
+from observations import DroppedFact, Reading, VerifiedObservations
 from resolve import VitalResolution, anticoagulant
 from verify import names
 
@@ -74,28 +74,31 @@ def check_hp(submission: PatientSubmission, verified: VerifiedObservations) -> C
     documents = {document.doc_id: document for document in submission.documents}
     preop = [hp for hp in verified.hp_documents if hp.kind == "preop_evaluation" and documents[hp.doc_id].date]
     if not preop:
-        return Check(
-            **check,
-            status="fail",
-            summary=f"No pre-operative H&P found in {len(submission.documents)} documents.",
-        )
-    newest = max(preop, key=lambda hp: documents[hp.doc_id].date)
-    completed = documents[newest.doc_id].date
-    evidence = [Evidence(source="note", reference=newest.doc_id, date=completed, quote=newest.quote)]
-    days = days_before_procedure(submission, completed)
-    if days is None:
-        return Check(
-            **check,
-            status="unknown",
-            summary=f"H&P dated {completed}, but the procedure date is missing, so the 30-day window cannot be checked.",
-            evidence=evidence,
-        )
-    return Check(
-        **check,
-        status="pass" if 0 <= days <= 30 else "fail",
-        summary=f"H&P dated {completed} is {days} days before the procedure (limit 30).",
-        evidence=evidence,
-    )
+        status, evidence = "fail", []
+        summary = f"No pre-operative H&P found in {len(submission.documents)} documents."
+    else:
+        newest = max(preop, key=lambda hp: documents[hp.doc_id].date)
+        completed = documents[newest.doc_id].date
+        evidence = [Evidence(source="note", reference=newest.doc_id, date=completed, quote=newest.quote)]
+        days = days_before_procedure(submission, completed)
+        if days is None:
+            status = "unknown"
+            summary = f"H&P dated {completed}, but the procedure date is missing, so the 30-day window cannot be checked."
+        else:
+            status = "pass" if 0 <= days <= 30 else "fail"
+            summary = f"H&P dated {completed} is {days} days before the procedure (limit 30)."
+
+    if status == "fail":
+        for other in verified.hp_documents:
+            document = documents[other.doc_id]
+            days = days_before_procedure(submission, document.date) if document.date else None
+            if other.kind == "wellness_or_other" and days is not None and 0 <= days <= 30:
+                summary += (
+                    f" A document filed as '{document.type}' and dated {document.date} is inside the window,"
+                    " but it reads as a wellness or other visit, not a pre-operative evaluation."
+                )
+                evidence.append(Evidence(source="note", reference=other.doc_id, date=document.date, quote=other.quote))
+    return Check(**check, status=status, summary=summary, evidence=evidence)
 
 
 def check_consent(submission: PatientSubmission, verified: VerifiedObservations) -> Check:
@@ -288,27 +291,65 @@ def reading_evidence(reading: Reading) -> Evidence:
     )
 
 
-def check_vital(kind: str, resolution: VitalResolution) -> Check:
+def dropped_evidence(dropped: list[DroppedFact]) -> list[Evidence]:
+    return [Evidence(source="note", reference=fact.doc_id, value=f"unverified {fact.kind}: {fact.reason}") for fact in dropped]
+
+
+def dropped_readings_that_matter(
+    kind: str,
+    resolution: VitalResolution,
+    submission: PatientSubmission,
+    verified: VerifiedObservations,
+) -> list[DroppedFact]:
+    documents = {document.doc_id: document for document in submission.documents}
+    dates = [reading.date for reading in resolution.governing]
+    governing_date = min(dates) if dates and all(dates) else None
+
+    def could_be_latest(fact: DroppedFact) -> bool:
+        document = documents.get(fact.doc_id)
+        return governing_date is None or document is None or not document.date or document.date >= governing_date
+
+    return [fact for fact in verified.dropped if fact.kind == "vital" and fact.claim["kind"] == kind and could_be_latest(fact)]
+
+
+def check_vital(kind: str, resolution: VitalResolution, dropped: list[DroppedFact]) -> Check:
     check = {"name": kind, "rule": "Rule 4", "category": "ACUTE_SAFETY_EXCLUSION"}
     label = kind.replace("_", " ")
-    if not resolution.governing:
-        return Check(**check, status="unknown", summary=f"No {label} reading in the structured vitals or the notes.")
-
-    excluded = any(exceeds_limit(reading) for reading in resolution.governing)
+    over = [exceeds_limit(reading) for reading in resolution.governing]
     latest = " and ".join(
         f"{reading_value(reading)} ({' '.join(filter(None, [reading.date, reading.time]))})"
         for reading in resolution.governing
     )
-    summary = f"Most recent {label} {latest} {'meets' if excluded else 'is below'} the exclusion limit ({VITAL_LIMITS[kind]})."
-    overridden = [entry for entry in resolution.superseded if exceeds_limit(entry.reading)]
-    for entry in overridden:
-        summary += f" It supersedes {reading_value(entry.reading)} ({entry.reason})."
-    return Check(
-        **check,
-        status="fail" if excluded else "pass",
-        summary=summary,
-        evidence=[reading_evidence(reading) for reading in resolution.governing + [entry.reading for entry in overridden]],
-    )
+    overridden = []
+
+    if over and all(over):
+        status, summary = "fail", f"Most recent {label} {latest} meets the exclusion limit ({VITAL_LIMITS[kind]})."
+    elif dropped:
+        status = "unknown"
+        summary = (
+            f"A {label} reading extracted from a note could not be verified against its document,"
+            f" so the most recent {label} is not established."
+        )
+        if latest:
+            summary += f" The latest verified reading is {latest}."
+    elif not over:
+        status, summary = "unknown", f"No {label} reading in the structured vitals or the notes."
+    elif any(over):
+        status = "unknown"
+        summary = (
+            f"{label.capitalize()} readings {latest} cannot be put in order, and only one side of them"
+            f" meets the exclusion limit ({VITAL_LIMITS[kind]})."
+        )
+    else:
+        status, summary = "pass", f"Most recent {label} {latest} is below the exclusion limit ({VITAL_LIMITS[kind]})."
+        overridden = [entry for entry in resolution.superseded if exceeds_limit(entry.reading)]
+        for entry in overridden:
+            summary += f" It supersedes {reading_value(entry.reading)} ({entry.reason})."
+
+    evidence = [reading_evidence(reading) for reading in resolution.governing + [entry.reading for entry in overridden]]
+    if status == "unknown":
+        evidence += dropped_evidence(dropped)
+    return Check(**check, status=status, summary=summary, evidence=evidence)
 
 
 # -------------------------
@@ -321,14 +362,31 @@ def run_checks(
     verified: VerifiedObservations,
     vitals: dict[str, VitalResolution],
 ) -> list[Check]:
+    def unsettled_by_drops(check: Check, when: tuple[str, ...], *kinds: str) -> Check:
+        dropped = [fact for fact in verified.dropped if fact.kind in kinds]
+        if check.status not in when or not dropped:
+            return check
+        return check.model_copy(
+            update={
+                "status": "unknown",
+                "summary": f"{check.summary} This is not settled: an extracted {dropped[0].kind.replace('_', ' ')} could not be verified against its document.",
+                "evidence": check.evidence + dropped_evidence(dropped),
+            }
+        )
+
+    anticoagulation = check_anticoagulation(submission, verified)
+    anticoagulation = unsettled_by_drops(anticoagulation, ("not_applicable", "pass"), "anticoagulant_mention")
+    anticoagulation = unsettled_by_drops(anticoagulation, ("fail",), "anticoagulation_plan")
     return [
-        check_hp(submission, verified),
-        check_consent(submission, verified),
+        unsettled_by_drops(check_hp(submission, verified), ("fail",), "hp_document"),
+        unsettled_by_drops(check_consent(submission, verified), ("fail",), "consent"),
         check_lab("CBC", submission),
         check_lab("CMP", submission),
-        check_anticoagulation(submission, verified),
-        check_vital("blood_pressure", vitals["blood_pressure"]),
-        check_vital("temperature", vitals["temperature"]),
+        anticoagulation,
+        *(
+            check_vital(kind, vitals[kind], dropped_readings_that_matter(kind, vitals[kind], submission, verified))
+            for kind in ("blood_pressure", "temperature")
+        ),
     ]
 
 

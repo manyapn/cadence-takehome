@@ -132,6 +132,15 @@ def test_blood_pressure_quote_must_hold_one_blood_pressure(submission: PatientSu
     assert result.dropped[0].reason == "quote contains 2 blood pressures"
 
 
+def test_a_date_in_the_quote_is_not_a_second_blood_pressure() -> None:
+    text = "Seen 04/07, 12/10 visit reviewed. 08:20 BP 150/88"
+    submission = PatientSubmission.model_validate({"documents": [{"doc_id": "nursing", "date": "2026-04-07", "text": text}]})
+    result = verify(submission, observations(vitals=[blood_pressure(text, 150, 88, time="08:20")]))
+
+    assert result.dropped == []
+    assert len(result.readings) == 1
+
+
 def test_time_order_must_agree_with_text_order_within_a_note() -> None:
     def note(doc_id: str, first: str, second: str) -> dict[str, str]:
         return {"doc_id": doc_id, "date": "2026-04-07", "text": f"{first} BP 172/96\n{second} BP 150/88"}
