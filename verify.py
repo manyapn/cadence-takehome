@@ -82,15 +82,18 @@ def vital_problem(vital: VitalObservation) -> str | None:
         )
         if not stated:
             return f"quote does not contain {value} {vital.unit}"
-    if vital.time is not None:
-        if not re.fullmatch(r"\d{1,2}:\d{2}", vital.time):
-            return f"{vital.time} is not a clock time"
-        written = re.search(rf"(?<![\d:]){vital.time}(?!\d|:\d)(\s*[ap]\.?m\b)?", vital.quote, re.IGNORECASE)
-        if written is None:
-            return f"quote does not contain the time {vital.time}"
-        if written.group(1):
-            return f"{vital.time} is a 12-hour time"
     return None
+
+
+def verified_time(vital: VitalObservation) -> str | None:
+    """The reading's time, or None when the quote does not back it up as a 24-hour clock time."""
+
+    if vital.time is None or not re.fullmatch(r"\d{1,2}:\d{2}", vital.time):
+        return None
+    written = re.search(rf"(?<![\d:]){vital.time}(?!\d|:\d)(\s*[ap]\.?m\b)?", vital.quote, re.IGNORECASE)
+    if written is None or written.group(1):
+        return None
+    return vital.time.zfill(5)
 
 
 def checked_hp(hp: HpDocument, text: str) -> HpDocument | str:
@@ -184,7 +187,8 @@ def verify(submission: PatientSubmission, observations: Observations) -> Verifie
             continue
         offset, as_written = found
         # The claimed values are checked against the document's words, not the model's copy of them.
-        if problem := vital_problem(vital.model_copy(update={"quote": as_written})):
+        vital_as_written = vital.model_copy(update={"quote": as_written})
+        if problem := vital_problem(vital_as_written):
             drop("vital", vital, problem)
             continue
         readings.append(
@@ -202,7 +206,7 @@ def verify(submission: PatientSubmission, observations: Observations) -> Verifie
                     source="note",
                     reference=vital.doc_id,
                     date=document.date,
-                    time=vital.time.zfill(5) if vital.time else None,
+                    time=verified_time(vital_as_written),
                     quote=as_written,
                     offset=offset,
                 ),

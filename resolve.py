@@ -8,7 +8,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from core import LabResult, Medication, PatientSubmission
+from core import Document, LabResult, Medication, PatientSubmission
 from observations import AnticoagulantMention, AnticoagulationPlan, Reading, VerifiedObservations
 
 ANTICOAGULANTS = {
@@ -66,6 +66,14 @@ class DrugStatus(BaseModel):
     medications: list[Medication] = []
     mentions: list[AnticoagulantMention] = []
     plans: list[AnticoagulationPlan] = []
+
+
+HP_NAME = re.compile(r"\bh[\s_]*(?:&|and)[\s_]*p\b|history[\s_]*(?:&|and)[\s_]*p\w*", re.IGNORECASE)
+
+
+def says_hp(document: Document) -> bool:
+    heading = next((line for line in (document.text or "").splitlines() if line.strip()), "")
+    return bool(HP_NAME.search(document.type or "") or HP_NAME.search(heading))
 
 
 class LabResolution(BaseModel):

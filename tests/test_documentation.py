@@ -6,6 +6,7 @@ import pytest
 
 from cases import load_case
 from core import PatientSubmission
+from observations import HpDocument
 from pipeline import evaluate
 from rules import Check, TriageResult
 from verify import verify
@@ -183,3 +184,18 @@ def test_consent_with_a_fabricated_signature_quote_is_unknown_not_pass_or_fail()
     assert [fact.kind for fact in result.unverified] == ["consent"]
     assert result.decision == "NEEDS_FOLLOW_UP"
     assert categories(result) == ["MISSING_REQUIRED_DATA"]
+
+
+def test_anesthesia_note_called_an_h_and_p_by_the_extractor_does_not_count() -> None:
+    submission, label, observations = load_case(13)
+    note = next(document for document in submission["documents"] if "anesthesia" in document["type"].lower())
+    observations.hp_documents.append(
+        HpDocument(doc_id=note["doc_id"], kind="preop_evaluation", quote=note["text"].splitlines()[0])
+    )
+
+    result = evaluate(submission, observations)
+
+    check = next(check for check in result.checks if check.name == "history_and_physical")
+    assert check.status == "fail"
+    assert "not counted, because neither its type nor its heading calls it an H&P" in check.summary
+    assert sorted({issue.category for issue in result.issues}) == sorted(label["categories"])

@@ -218,7 +218,8 @@ Every clearance criterion cites the appendix. Every ambiguity below states the a
 
 ## known limits
 
-- 12-hour clock times ("2:15 PM") are rejected by the verifier, not converted. The reading is dropped and its check goes to `unknown`.
+- A time the quote does not back up (missing from the quote, not a clock time, or a 12-hour time like "2:15 PM") is discarded, not converted. The reading is kept as untimed, so it can still be ordered by date or by its place in the note, but not by clock time against another source.
+- An H&P classification from the extractor only counts when the document's own type or first heading calls it an H&P. A real H&P filed and headed as something else would be missed and flagged for follow-up.
 - Structured timestamps and note times are compared as written. Notes give no timezone.
 - A structured vital is referenced by its source and timestamp, not its list index, so the output does not change with input order.
 

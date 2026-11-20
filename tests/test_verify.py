@@ -210,14 +210,14 @@ def test_time_followed_by_a_colon_passes(submission: PatientSubmission) -> None:
     assert result.dropped == []
 
 
-def test_twelve_hour_time_is_dropped() -> None:
+def test_twelve_hour_time_leaves_the_reading_untimed() -> None:
     submission = PatientSubmission.model_validate(
         {"documents": [{"doc_id": "nursing", "date": "2026-04-07", "text": "2:15 PM BP 150/88"}]}
     )
     result = verify(submission, observations(vitals=[blood_pressure("2:15 PM BP 150/88", 150, 88, time="2:15")]))
 
-    assert result.readings == []
-    assert result.dropped[0].reason == "2:15 is a 12-hour time"
+    assert result.dropped == []
+    assert result.readings[0].time is None
 
 
 def test_quote_from_a_different_document_is_dropped(submission: PatientSubmission) -> None:
@@ -234,11 +234,13 @@ def test_unknown_document_is_dropped(submission: PatientSubmission) -> None:
     assert result.dropped[0].reason == "cited document is not in the submission"
 
 
-def test_time_must_be_in_the_quote(submission: PatientSubmission) -> None:
-    result = verify(submission, observations(vitals=[blood_pressure("BP 150/88 on repeat", 150, 88, time="09:15")]))
+@pytest.mark.parametrize("time", ["09:15", "08:20", "this morning"])
+def test_time_the_quote_does_not_back_up_leaves_the_reading_untimed(submission: PatientSubmission, time: str) -> None:
+    result = verify(submission, observations(vitals=[blood_pressure("BP 150/88 on repeat", 150, 88, time=time)]))
 
-    assert result.readings == []
-    assert result.dropped[0].reason == "quote does not contain the time 09:15"
+    assert result.dropped == []
+    (reading,) = result.readings
+    assert (reading.systolic, reading.time) == (150, None)
 
 
 def test_celsius_converts_exactly(submission: PatientSubmission) -> None:

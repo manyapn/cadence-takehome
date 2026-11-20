@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 from core import Decision, IssueCategory, PatientSubmission
 from observations import DroppedFact, Reading, VerifiedObservations
-from resolve import DrugStatus, VitalResolution, resolve_lab
+from resolve import DrugStatus, VitalResolution, resolve_lab, says_hp
 from verify import names
 
 Status = Literal["pass", "fail", "unknown", "not_applicable"]
@@ -81,7 +81,10 @@ def days_before_procedure(submission: PatientSubmission, when: str) -> int | Non
 def check_hp(submission: PatientSubmission, verified: VerifiedObservations) -> Check:
     check = {"name": "history_and_physical", "rule": "Rule 1", "category": "REQUIRED_DOCUMENTATION"}
     documents = {document.doc_id: document for document in submission.documents}
-    preop = [hp for hp in verified.hp_documents if hp.kind == "preop_evaluation" and documents[hp.doc_id].date]
+    # The extractor's label alone is not enough: the document's own type or heading has to call it an H&P.
+    reported = [hp for hp in verified.hp_documents if says_hp(documents[hp.doc_id])]
+    not_counted = [hp for hp in verified.hp_documents if hp not in reported and hp.kind == "preop_evaluation"]
+    preop = [hp for hp in reported if hp.kind == "preop_evaluation" and documents[hp.doc_id].date]
     if not preop:
         status, evidence = "fail", []
         summary = f"No pre-operative H&P found in {len(submission.documents)} documents."
@@ -99,7 +102,14 @@ def check_hp(submission: PatientSubmission, verified: VerifiedObservations) -> C
             summary = f"H&P dated {completed} is {days} days before the procedure (limit 30)."
 
     if status == "fail":
-        for other in verified.hp_documents:
+        for other in not_counted:
+            document = documents[other.doc_id]
+            summary += (
+                f" A '{document.type}' dated {document.date} was read as a pre-operative evaluation but not counted,"
+                " because neither its type nor its heading calls it an H&P."
+            )
+            evidence.append(Evidence(source="note", reference=other.doc_id, date=document.date, quote=other.quote))
+        for other in reported:
             document = documents[other.doc_id]
             days = days_before_procedure(submission, document.date) if document.date else None
             if other.kind == "wellness_or_other" and days is not None and 0 <= days <= 30:
