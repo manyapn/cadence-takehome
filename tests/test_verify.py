@@ -101,6 +101,41 @@ def test_quote_with_collapsed_indentation_passes(submission: PatientSubmission) 
     assert len(result.readings) == 1
 
 
+def test_quote_matches_on_letters_digits_and_number_punctuation_only() -> None:
+    text = "Oral temp:  99.5 °F  (repeat),  BP 150/88 - seated"
+    submission = PatientSubmission.model_validate({"documents": [{"doc_id": "nursing", "date": "2026-04-07", "text": text}]})
+    result = verify(
+        submission,
+        observations(
+            vitals=[
+                temperature("Oral temp: 99.5 \x17F (repeat)", 99.5, "F"),
+                blood_pressure("BP 150/88 \u2013 seated", 150, 88),
+            ]
+        ),
+    )
+
+    assert result.dropped == []
+    assert [reading.quote for reading in result.readings] == ["Oral temp:  99.5 °F  (repeat", "BP 150/88 - seated"]
+
+
+@pytest.mark.parametrize("quote", ["BP 150/89 - seated", "BP 15088 seated", "BP 150/88 standing", "bp 150/88 - seated"])
+def test_changed_letters_digits_or_number_punctuation_do_not_match(quote: str) -> None:
+    text = "Oral temp:  99.5 °F  (repeat),  BP 150/88 - seated"
+    submission = PatientSubmission.model_validate({"documents": [{"doc_id": "nursing", "date": "2026-04-07", "text": text}]})
+    result = verify(submission, observations(vitals=[blood_pressure(quote, 150, 88)]))
+
+    assert result.readings == []
+    assert result.dropped[0].reason == "quote not found in document"
+
+
+def test_time_and_reading_are_checked_in_the_documents_own_words(submission: PatientSubmission) -> None:
+    result = verify(submission, observations(vitals=[blood_pressure("08:20 BP 150/88", 150, 88, time="08:20")]))
+
+    (reading,) = result.readings
+    assert reading.time == "08:20"
+    assert "08:20" in reading.quote and "150/88" in reading.quote
+
+
 def test_fabricated_quote_is_dropped_and_recorded(submission: PatientSubmission) -> None:
     result = verify(submission, observations(vitals=[blood_pressure("08:40 BP 128/76 after rest", 128, 76)]))
 

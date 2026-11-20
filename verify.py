@@ -12,6 +12,7 @@ from observations import (
     AnticoagulationPlan,
     ConsentObservation,
     DroppedFact,
+    HpDocument,
     Observations,
     Reading,
     SchedulingStatement,
@@ -19,17 +20,26 @@ from observations import (
     VitalObservation,
 )
 
+MATCHED = re.compile(r"[A-Za-z0-9./:]")
 NUMBER = re.compile(r"\d+(?:\.\d+)?")
 BLOOD_PRESSURE = re.compile(r"(?<![\d/])(\d{2,3})\s*/\s*(\d{2,3})(?![\d/]|\.\d)")
-UNIT_AFTER_VALUE = re.compile(r"\s*(?:°|degrees?)?\s*([FC])(?:ahrenheit|elsius)?\b")
+UNIT_AFTER_VALUE = re.compile(r"[^A-Za-z0-9]*(?:degrees?\s*)?([FC])(?:ahrenheit|elsius)?\b")
+NOT_FOUND = "quote not found in document"
 
 
-def find_quote(quote: str, text: str) -> int | None:
-    words = quote.split()
-    if not words:
+def find_quote(quote: str, text: str) -> tuple[int, str] | None:
+    """Where the quote sits in the text, and the text's own wording of it.
+
+    Only letters, digits and . / : have to match. Whitespace and other symbols are ignored.
+    """
+
+    wanted = "".join(MATCHED.findall(quote))
+    matched = [(index, char) for index, char in enumerate(text) if MATCHED.match(char)]
+    at = "".join(char for _, char in matched).find(wanted)
+    if not wanted or at < 0:
         return None
-    match = re.search(r"\s+".join(re.escape(word) for word in words), text)
-    return match.start() if match else None
+    start, end = matched[at][0], matched[at + len(wanted) - 1][0] + 1
+    return start, text[start:end]
 
 
 def blood_pressures(text: str) -> list[tuple[int, int]]:
@@ -83,51 +93,65 @@ def vital_problem(vital: VitalObservation) -> str | None:
     return None
 
 
-def consent_problem(consent: ConsentObservation, text: str) -> str | None:
+def checked_hp(hp: HpDocument, text: str) -> HpDocument | str:
+    found = find_quote(hp.quote, text)
+    return hp.model_copy(update={"quote": found[1]}) if found else NOT_FOUND
+
+
+def checked_consent(consent: ConsentObservation, text: str) -> ConsentObservation | str:
     if consent.patient_signed == "yes" and consent.signature_quote is None:
         return "signed consent without a signature quote"
     if consent.procedure_named is not None and consent.procedure_quote is None:
         return "procedure named without a procedure quote"
-    for quote in (consent.signature_quote, consent.procedure_quote):
-        if quote is not None and find_quote(quote, text) is None:
-            return "quote not found in document"
+    as_written = {}
+    for field in ("signature_quote", "procedure_quote"):
+        if (quote := getattr(consent, field)) is not None:
+            if (found := find_quote(quote, text)) is None:
+                return NOT_FOUND
+            as_written[field] = found[1]
+    consent = consent.model_copy(update=as_written)
     if consent.procedure_named is not None and not names(consent.procedure_quote, consent.procedure_named):
         return f"quote does not name {consent.procedure_named}"
-    return None
+    return consent
 
 
-def mention_problem(mention: AnticoagulantMention, text: str) -> str | None:
-    if find_quote(mention.quote, text) is None:
-        return "quote not found in document"
-    if not names(mention.quote, mention.drug_as_written):
+def checked_mention(mention: AnticoagulantMention, text: str) -> AnticoagulantMention | str:
+    if (found := find_quote(mention.quote, text)) is None:
+        return NOT_FOUND
+    if not names(found[1], mention.drug_as_written):
         return f"quote does not name {mention.drug_as_written}"
-    return None
+    return mention.model_copy(update={"quote": found[1]})
 
 
-def plan_problem(plan: AnticoagulationPlan, text: str) -> str | None:
+def checked_plan(plan: AnticoagulationPlan, text: str) -> AnticoagulationPlan | str:
     # A side's quote may not repeat the drug, so the document as a whole has to name it.
     if not names(text, plan.drug_as_written):
         return f"document does not name {plan.drug_as_written}"
-    for side in (plan.preop, plan.postop):
+    as_written = {}
+    for field in ("preop", "postop"):
+        side = getattr(plan, field)
         if side.label != "absent" and side.quote is None:
             return f"{side.label} without a quote"
-        if side.quote is not None and find_quote(side.quote, text) is None:
-            return "quote not found in document"
-    return None
+        if side.quote is not None:
+            if (found := find_quote(side.quote, text)) is None:
+                return NOT_FOUND
+            as_written[field] = side.model_copy(update={"quote": found[1]})
+    return plan.model_copy(update=as_written)
 
 
-def scheduling_problem(statement: SchedulingStatement, text: str) -> str | None:
-    if find_quote(statement.quote, text) is None:
-        return "quote not found in document"
+def checked_scheduling(statement: SchedulingStatement, text: str) -> SchedulingStatement | str:
+    if (found := find_quote(statement.quote, text)) is None:
+        return NOT_FOUND
+    statement = statement.model_copy(update={"quote": found[1]})
     if statement.procedure_date is None:
-        return None if statement.pending else "states neither a date nor that it is pending"
+        return statement if statement.pending else "states neither a date nor that it is pending"
     try:
         stated = date.fromisoformat(statement.procedure_date)
     except ValueError:
         return f"{statement.procedure_date} is not an ISO date"
     if not {stated.year, stated.month, stated.day} <= numbers_in(statement.quote):
         return f"quote does not contain the date {statement.procedure_date}"
-    return None
+    return statement
 
 
 def verify(submission: PatientSubmission, observations: Observations) -> VerifiedObservations:
@@ -149,9 +173,13 @@ def verify(submission: PatientSubmission, observations: Observations) -> Verifie
     for vital in observations.vitals:
         if (document := cited("vital", vital)) is None:
             continue
-        offset = find_quote(vital.quote, document.text or "")
-        problem = "quote not found in document" if offset is None else vital_problem(vital)
-        if problem:
+        found = find_quote(vital.quote, document.text or "")
+        if found is None:
+            drop("vital", vital, NOT_FOUND)
+            continue
+        offset, as_written = found
+        # The claimed values are checked against the document's words, not the model's copy of them.
+        if problem := vital_problem(vital.model_copy(update={"quote": as_written})):
             drop("vital", vital, problem)
             continue
         readings.append(
@@ -170,7 +198,7 @@ def verify(submission: PatientSubmission, observations: Observations) -> Verifie
                     reference=vital.doc_id,
                     date=document.date,
                     time=vital.time.zfill(5) if vital.time else None,
-                    quote=vital.quote,
+                    quote=as_written,
                     offset=offset,
                 ),
             )
@@ -186,27 +214,21 @@ def verify(submission: PatientSubmission, observations: Observations) -> Verifie
         else:
             verified.readings.append(reading)
 
-    for hp in observations.hp_documents:
-        if (document := cited("hp_document", hp)) is None:
-            continue
-        if find_quote(hp.quote, document.text or "") is None:
-            drop("hp_document", hp, "quote not found in document")
-        else:
-            verified.hp_documents.append(hp)
-
     checks = (
-        ("consent", observations.consents, consent_problem, verified.consents),
-        ("anticoagulant_mention", observations.anticoagulant_mentions, mention_problem, verified.anticoagulant_mentions),
-        ("anticoagulation_plan", observations.anticoagulation_plans, plan_problem, verified.anticoagulation_plans),
-        ("scheduling_statement", observations.scheduling_statements, scheduling_problem, verified.scheduling_statements),
+        ("hp_document", observations.hp_documents, checked_hp, verified.hp_documents),
+        ("consent", observations.consents, checked_consent, verified.consents),
+        ("anticoagulant_mention", observations.anticoagulant_mentions, checked_mention, verified.anticoagulant_mentions),
+        ("anticoagulation_plan", observations.anticoagulation_plans, checked_plan, verified.anticoagulation_plans),
+        ("scheduling_statement", observations.scheduling_statements, checked_scheduling, verified.scheduling_statements),
     )
-    for kind, items, find_problem, kept in checks:
+    for kind, items, checked, kept in checks:
         for item in items:
             if (document := cited(kind, item)) is None:
                 continue
-            if problem := find_problem(item, document.text or ""):
-                drop(kind, item, problem)
+            outcome = checked(item, document.text or "")
+            if isinstance(outcome, str):
+                drop(kind, item, outcome)
             else:
-                kept.append(item)
+                kept.append(outcome)
 
     return verified
