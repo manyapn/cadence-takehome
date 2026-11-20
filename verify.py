@@ -69,7 +69,7 @@ def vital_problem(vital: VitalObservation) -> str | None:
     if vital.time is not None:
         if not re.fullmatch(r"\d{1,2}:\d{2}", vital.time):
             return f"{vital.time} is not a clock time"
-        written = re.search(rf"(?<![\d:]){vital.time}(?![\d:])(\s*[ap]\.?m\b)?", vital.quote, re.IGNORECASE)
+        written = re.search(rf"(?<![\d:]){vital.time}(?!\d|:\d)(\s*[ap]\.?m\b)?", vital.quote, re.IGNORECASE)
         if written is None:
             return f"quote does not contain the time {vital.time}"
         if written.group(1):

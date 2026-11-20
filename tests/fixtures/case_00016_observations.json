@@ -1,0 +1,85 @@
+{
+  "vitals": [
+    {
+      "doc_id": "1f5be5f7-1a56-5e66-9c45-2e94e55b0271",
+      "kind": "blood_pressure",
+      "systolic": 189,
+      "diastolic": 112,
+      "temperature": null,
+      "unit": null,
+      "time": "08:06",
+      "quote": "08:06  NIBP 189/112"
+    },
+    {
+      "doc_id": "1f5be5f7-1a56-5e66-9c45-2e94e55b0271",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 37.1,
+      "unit": "C",
+      "time": "08:06",
+      "quote": "08:06  NIBP 189/112, T 37.1 C"
+    },
+    {
+      "doc_id": "1f5be5f7-1a56-5e66-9c45-2e94e55b0271",
+      "kind": "blood_pressure",
+      "systolic": 137,
+      "diastolic": 78,
+      "temperature": null,
+      "unit": null,
+      "time": "08:30",
+      "quote": "ADDENDUM 08:30: Re-measured 137/78 mmHg following 24 minutes in a quiet room."
+    },
+    {
+      "doc_id": "81e2f72a-f558-5c73-853d-5383ea9f59b1",
+      "kind": "blood_pressure",
+      "systolic": 132,
+      "diastolic": 76,
+      "temperature": null,
+      "unit": null,
+      "time": "10:05",
+      "quote": "Vitals 10:05  132/76 mmHg"
+    },
+    {
+      "doc_id": "81e2f72a-f558-5c73-853d-5383ea9f59b1",
+      "kind": "temperature",
+      "systolic": null,
+      "diastolic": null,
+      "temperature": 99.1,
+      "unit": "F",
+      "time": "10:05",
+      "quote": "Vitals 10:05  132/76 mmHg, HR 78, Temperature 99.1 °F (oral)"
+    }
+  ],
+  "hp_documents": [
+    {
+      "doc_id": "89fbc4a7-5a5e-5b71-85eb-d5b254e0ba55",
+      "kind": "wellness_or_other",
+      "quote": "Encounter: annual wellness / establish care"
+    },
+    {
+      "doc_id": "81e2f72a-f558-5c73-853d-5383ea9f59b1",
+      "kind": "preop_evaluation",
+      "quote": "referred by General Surgery for pre-operative evaluation prior to inguinal hernia repair"
+    }
+  ],
+  "consents": [
+    {
+      "doc_id": "08378923-717b-50f8-9bb1-0d78e19d1f66",
+      "patient_signed": "yes",
+      "signature_quote": "Patient signature on file - signed in clinic 03/13/2026 12:06 (scanned copy attached).",
+      "procedure_named": "inguinal hernia repair",
+      "procedure_quote": "Procedure: inguinal hernia repair"
+    }
+  ],
+  "anticoagulant_mentions": [],
+  "anticoagulation_plans": [],
+  "scheduling_statements": [
+    {
+      "doc_id": "81e2f72a-f558-5c73-853d-5383ea9f59b1",
+      "procedure_date": "2026-03-17",
+      "pending": false,
+      "quote": "Planned procedure: inguinal hernia repair (scheduled for 03/17/2026)"
+    }
+  ]
+}

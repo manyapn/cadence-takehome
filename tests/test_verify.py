@@ -157,6 +157,14 @@ def test_time_order_must_agree_with_text_order_within_a_note() -> None:
     ] * 2
 
 
+def test_time_followed_by_a_colon_passes(submission: PatientSubmission) -> None:
+    document = submission.documents[0]
+    document.text += "\nLATE ENTRY 08:40: BP 128/76 after rest"
+    result = verify(submission, observations(vitals=[blood_pressure("LATE ENTRY 08:40: BP 128/76", 128, 76, time="08:40")]))
+
+    assert result.dropped == []
+
+
 def test_twelve_hour_time_is_dropped() -> None:
     submission = PatientSubmission.model_validate(
         {"documents": [{"doc_id": "nursing", "date": "2026-04-07", "text": "2:15 PM BP 150/88"}]}
