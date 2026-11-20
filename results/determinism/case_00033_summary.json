@@ -1,0 +1,15 @@
+{
+  "case_id": "case_00033",
+  "label": "NEEDS_FOLLOW_UP",
+  "model": "gpt-4.1-mini",
+  "runs": 10,
+  "valid_outputs": 10,
+  "decision_agreement": 10,
+  "issue_agreement": 10,
+  "exact_output_agreement": 6,
+  "decisions": {
+    "NEEDS_FOLLOW_UP": 10
+  },
+  "runs_with_unverified_facts": 0,
+  "errors": []
+}

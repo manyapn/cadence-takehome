@@ -1,0 +1,1055 @@
+{
+  "results/comparison/final_run1.jsonl": {
+    "valid": 50,
+    "decision": 50,
+    "categories": 50,
+    "both": 50,
+    "exclusions_caught": 8,
+    "non_ready_returned_ready": 0,
+    "ready_returned_ready": 17,
+    "misses": [],
+    "latest_bp_note_only": {
+      "cases": 21,
+      "correct": 21,
+      "wrong": []
+    },
+    "evidence_quotes": {
+      "checked": 240,
+      "not_verbatim": []
+    }
+  },
+  "results/comparison/final_run2.jsonl": {
+    "valid": 50,
+    "decision": 50,
+    "categories": 49,
+    "both": 49,
+    "exclusions_caught": 8,
+    "non_ready_returned_ready": 0,
+    "ready_returned_ready": 17,
+    "misses": [
+      {
+        "case": 42,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_TESTING"
+        ]
+      }
+    ],
+    "latest_bp_note_only": {
+      "cases": 21,
+      "correct": 21,
+      "wrong": []
+    },
+    "evidence_quotes": {
+      "checked": 241,
+      "not_verbatim": []
+    }
+  },
+  "results/comparison/final_run3.jsonl": {
+    "valid": 50,
+    "decision": 50,
+    "categories": 50,
+    "both": 50,
+    "exclusions_caught": 8,
+    "non_ready_returned_ready": 0,
+    "ready_returned_ready": 17,
+    "misses": [],
+    "latest_bp_note_only": {
+      "cases": 21,
+      "correct": 21,
+      "wrong": []
+    },
+    "evidence_quotes": {
+      "checked": 242,
+      "not_verbatim": []
+    }
+  },
+  "results/comparison/baseline_run1.jsonl": {
+    "valid": 49,
+    "decision": 32,
+    "categories": 27,
+    "both": 20,
+    "exclusions_caught": 4,
+    "non_ready_returned_ready": 1,
+    "ready_returned_ready": 5,
+    "misses": [
+      {
+        "case": 0,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 2,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 3,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 4,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 5,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 7,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 8,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 9,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 11,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 13,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 15,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 16,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 17,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 20,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 21,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 22,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 25,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 26,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "READY"
+        ]
+      },
+      {
+        "case": 28,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 32,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 33,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      },
+      {
+        "case": 34,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 37,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 39,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 40,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "INVALID"
+        ]
+      },
+      {
+        "case": 41,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      },
+      {
+        "case": 43,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 47,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 48,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 49,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      }
+    ]
+  },
+  "results/comparison/baseline_run2.jsonl": {
+    "valid": 49,
+    "decision": 31,
+    "categories": 25,
+    "both": 18,
+    "exclusions_caught": 4,
+    "non_ready_returned_ready": 2,
+    "ready_returned_ready": 4,
+    "misses": [
+      {
+        "case": 0,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 2,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 3,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 4,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 5,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 7,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 8,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 9,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 13,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 14,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 15,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 16,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      },
+      {
+        "case": 17,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 18,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ],
+        "got": [
+          "READY"
+        ]
+      },
+      {
+        "case": 20,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 21,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 22,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 25,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 26,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "READY"
+        ]
+      },
+      {
+        "case": 28,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 31,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 32,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 33,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      },
+      {
+        "case": 34,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "INVALID"
+        ]
+      },
+      {
+        "case": 37,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 39,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 41,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 43,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 44,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 45,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION",
+          "ANTICOAGULATION_MANAGEMENT",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 47,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 49,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      }
+    ]
+  },
+  "results/comparison/baseline_run3.jsonl": {
+    "valid": 50,
+    "decision": 34,
+    "categories": 29,
+    "both": 25,
+    "exclusions_caught": 5,
+    "non_ready_returned_ready": 0,
+    "ready_returned_ready": 4,
+    "misses": [
+      {
+        "case": 0,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      },
+      {
+        "case": 2,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 3,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 4,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 5,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 7,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 9,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 13,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 15,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 16,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 17,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 20,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 21,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 24,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 25,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP"
+        ]
+      },
+      {
+        "case": 28,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 31,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_DOCUMENTATION"
+        ],
+        "got": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION"
+        ]
+      },
+      {
+        "case": 32,
+        "label": [
+          "NOT_CLEARED",
+          "ACUTE_SAFETY_EXCLUSION",
+          "REQUIRED_TESTING"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 33,
+        "label": [
+          "NEEDS_FOLLOW_UP",
+          "MISSING_REQUIRED_DATA"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      },
+      {
+        "case": 34,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 37,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 41,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT"
+        ]
+      },
+      {
+        "case": 43,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_TESTING"
+        ]
+      },
+      {
+        "case": 45,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      },
+      {
+        "case": 49,
+        "label": [
+          "READY"
+        ],
+        "got": [
+          "NEEDS_FOLLOW_UP",
+          "ANTICOAGULATION_MANAGEMENT",
+          "REQUIRED_DOCUMENTATION"
+        ]
+      }
+    ]
+  }
+}

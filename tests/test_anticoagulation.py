@@ -124,3 +124,27 @@ def test_plan_must_cover_both_sides_in_one_document() -> None:
 
     assert rule_3(SUBMISSION, anticoagulation_plans=[before_only]) == "fail"
     assert rule_3(SUBMISSION, anticoagulation_plans=[before_only, complete]) == "pass"
+
+
+def test_dropped_repeat_of_a_drug_already_known_to_be_taken_changes_nothing() -> None:
+    submission, _, observations = load_case(3)
+    repeat = observations.anticoagulant_mentions[0].model_copy(update={"quote": "Eliqius 5 mg PO BID"})
+    observations.anticoagulant_mentions.append(repeat)
+
+    result = evaluate(submission, observations)
+
+    assert len(result.unverified) == 1
+    assert result.decision == "READY"
+
+
+def test_dropped_mention_of_a_drug_not_otherwise_known_leaves_the_check_open() -> None:
+    submission, _, observations = load_case(3)
+    other = observations.anticoagulant_mentions[0].model_copy(
+        update={"drug_as_written": "warfarin", "generic_name": "warfarin", "quote": "also on warfarin"}
+    )
+    observations.anticoagulant_mentions.append(other)
+
+    result = evaluate(submission, observations)
+
+    assert next(check for check in result.checks if check.name == "anticoagulation_plan").status == "unknown"
+    assert result.decision == "NEEDS_FOLLOW_UP"

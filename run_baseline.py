@@ -51,6 +51,12 @@ def parse_args() -> argparse.Namespace:
         help="OpenAI model id",
     )
     parser.add_argument(
+        "--system",
+        choices=["final", "baseline"],
+        default="final",
+        help="final runs core.triage_submission; baseline runs the untouched starter in baseline.py",
+    )
+    parser.add_argument(
         "--max-records",
         type=int,
         default=0,
@@ -92,6 +98,10 @@ def main() -> None:
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
+    triage = triage_submission
+    if args.system == "baseline":
+        from baseline import triage_submission as triage
+
     cases = load_cases(input_path)
     if args.max_records > 0:
         cases = cases[: args.max_records]
@@ -110,7 +120,7 @@ def main() -> None:
             }
 
             try:
-                output = triage_submission(
+                output = triage(
                     submission=submission,
                     model=args.model,
                 )

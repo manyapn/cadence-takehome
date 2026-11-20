@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 from core import Decision, IssueCategory, PatientSubmission
 from observations import DroppedFact, Reading, VerifiedObservations
-from resolve import DrugStatus, VitalResolution, resolve_lab, says_hp
+from resolve import DrugStatus, VitalResolution, anticoagulant, resolve_lab, says_hp
 from verify import names
 
 Status = Literal["pass", "fail", "unknown", "not_applicable"]
@@ -418,8 +418,10 @@ def run_checks(
     vitals: dict[str, VitalResolution],
     drugs: list[DrugStatus],
 ) -> list[Check]:
-    def unsettled_by_drops(check: Check, when: tuple[str, ...], *kinds: str) -> Check:
-        dropped = [fact for fact in verified.dropped if fact.kind in kinds]
+    def dropped(kind: str) -> list[DroppedFact]:
+        return [fact for fact in verified.dropped if fact.kind == kind]
+
+    def unsettled_by_drops(check: Check, when: tuple[str, ...], dropped: list[DroppedFact]) -> Check:
         if check.status not in when or not dropped:
             return check
         return check.model_copy(
@@ -432,11 +434,21 @@ def run_checks(
         )
 
     anticoagulation = check_anticoagulation(submission, drugs)
-    anticoagulation = unsettled_by_drops(anticoagulation, ("not_applicable", "pass"), "anticoagulant_mention")
-    anticoagulation = unsettled_by_drops(anticoagulation, ("fail",), "anticoagulation_plan")
+    taking = {drug.drug for drug in drugs if drug.status == "taking"}
+    # A dropped claim that the patient takes a drug already known to be taken could not change the check.
+    new_mentions = [
+        fact
+        for fact in dropped("anticoagulant_mention")
+        if not (
+            fact.claim["status"] == "taking"
+            and (anticoagulant(fact.claim["drug_as_written"]) or anticoagulant(fact.claim["generic_name"])) in taking
+        )
+    ]
+    anticoagulation = unsettled_by_drops(anticoagulation, ("not_applicable", "pass"), new_mentions)
+    anticoagulation = unsettled_by_drops(anticoagulation, ("fail",), dropped("anticoagulation_plan"))
     return [
-        unsettled_by_drops(check_hp(submission, verified), ("fail",), "hp_document"),
-        unsettled_by_drops(check_consent(submission, verified), ("fail",), "consent"),
+        unsettled_by_drops(check_hp(submission, verified), ("fail",), dropped("hp_document")),
+        unsettled_by_drops(check_consent(submission, verified), ("fail",), dropped("consent")),
         check_lab("CBC", submission),
         check_lab("CMP", submission),
         anticoagulation,
