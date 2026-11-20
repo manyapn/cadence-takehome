@@ -442,6 +442,18 @@ def run_checks(
     ]
 
 
+def notes_unread(check: Check, error: str) -> Check:
+    if check.name in ("cbc", "cmp"):
+        return check
+    return check.model_copy(
+        update={
+            "status": "unknown",
+            "unknown_cause": "processing_failure",
+            "summary": f"The notes could not be read ({error}), so this check is unresolved. Structured data alone: {check.summary}",
+        }
+    )
+
+
 def respond(checks: list[Check], unverified: list[DroppedFact] = []) -> TriageResult:
     issues = [
         Issue(
